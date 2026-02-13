@@ -28,14 +28,14 @@ public:
 
 	void Update(float deltaTime);
 
-	sf::Vector2f GetPosition() const;
-	std::vector<LetterPart> GetLetterParts() const;
+	[[nodiscard]] sf::Vector2f GetPosition() const;
+	[[nodiscard]] std::vector<LetterPart> GetLetterParts() const;
 
 private:
 	sf::Vector2f m_position;
 	float m_floor;
 	float m_velocityY = 0;
-	const float m_acceleration = 980.0f;
+	const float m_acceleration = 1000.0f;
 	const float m_jumpForce = -500.0f;
 	std::vector<LetterPart> m_letterParts{};
 	float m_jumpDelay;

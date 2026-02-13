@@ -2,7 +2,6 @@
 #define LETTERS_SIMULATION_H
 
 #include "../Model/Letter.h"
-#include "../View/LetterView.h"
 #include <SFML/Graphics.hpp>
 
 class Simulation
@@ -14,7 +13,6 @@ public:
 private:
 	sf::RenderWindow m_window;
 	std::vector<Letter> m_letters;
-	LetterView m_view;
 	sf::Clock m_clock;
 
 	void SetupLetters();

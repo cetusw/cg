@@ -1,4 +1,5 @@
 #include "Simulation.h"
+#include "../View/LetterView.h"
 
 Simulation::Simulation()
 {
@@ -53,7 +54,7 @@ void Simulation::SetupLetters()
 
 void Simulation::ProcessEvents()
 {
-	sf::Event event;
+	sf::Event event{};
 	while (m_window.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
@@ -76,7 +77,7 @@ void Simulation::Render()
 	m_window.clear(sf::Color::White);
 	for (const auto& letter : m_letters)
 	{
-		m_view.Render(m_window, letter);
+		LetterView::Render(m_window, letter);
 	}
 	m_window.display();
 }
