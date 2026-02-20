@@ -12,7 +12,7 @@ add_executable(Viewer
         View/BackgroundView.cpp
         View/MenuView.cpp
         Controller/Application.cpp
-        Utils/PipeWrapper.cpp
+        Utils/PipeDescriptor.cpp
 )
 
 target_link_libraries(Viewer PRIVATE

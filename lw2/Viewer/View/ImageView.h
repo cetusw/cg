@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "../Model/Image.h"
+#include <SFML/Graphics.hpp>
 
 class ImageView
 {

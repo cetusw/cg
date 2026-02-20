@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "../Utils/PipeWrapper.h"
+#include "../Utils/PipeDescriptor.h"
 
 Application::Application()
 	: m_window(sf::VideoMode(1920, 1080), "Image Viewer")
@@ -67,7 +67,7 @@ void Application::OpenFileDialog()
 {
 	std::string result;
 
-	const PipeWrapper pipe("zenity --file-selection --title=\"Open Image\" --file-filter=\"*.png *.jpg *.jpeg *.bmp\"", "r");
+	const PipeDescriptor pipe("zenity --file-selection --title=\"Open Image\" --file-filter=\"*.png *.jpg *.jpeg *.bmp\"", "r");
 
 	if (pipe.IsOpen())
 	{
