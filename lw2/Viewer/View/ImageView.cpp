@@ -1,5 +1,30 @@
 #include "ImageView.h"
 
+void ImageView::Draw(sf::RenderWindow& window, const Image& image)
+{
+	if (!image.IsLoaded())
+	{
+		return;
+	}
+
+	if (m_needsUpdate)
+	{
+		UpdateLayout(window.getSize(), image.GetSize());
+		m_needsUpdate = false;
+	}
+
+	const sf::View oldView = window.getView();
+	window.setView(m_view);
+	const sf::Sprite s(image.GetTexture());
+	window.draw(s);
+	window.setView(oldView);
+}
+
+void ImageView::OnModelChanged()
+{
+	m_needsUpdate = true;
+}
+
 void ImageView::UpdateLayout(const sf::Vector2u windowSize, const sf::Vector2f imageSize)
 {
 	if (windowSize.x == 0 || windowSize.y == 0)
@@ -28,17 +53,4 @@ void ImageView::UpdateLayout(const sf::Vector2u windowSize, const sf::Vector2f i
 
 	m_view.reset({ 0, 0, imageSize.x, imageSize.y });
 	m_view.setViewport({ viewportX, viewportY, viewportWidth, viewportHeight });
-}
-
-void ImageView::Draw(sf::RenderWindow& window, const Image& image) const
-{
-	if (!image.IsLoaded())
-	{
-		return;
-	}
-	const sf::View oldView = window.getView();
-	window.setView(m_view);
-	const sf::Sprite s(image.GetTexture());
-	window.draw(s);
-	window.setView(oldView);
 }

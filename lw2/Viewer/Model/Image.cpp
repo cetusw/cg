@@ -2,7 +2,12 @@
 
 bool Image::LoadImage(const std::string& filename)
 {
-	return m_image.loadFromFile(filename);
+	if (!m_image.loadFromFile(filename))
+	{
+		return false;
+	}
+	Notify();
+	return true;
 }
 
 bool Image::IsLoaded() const

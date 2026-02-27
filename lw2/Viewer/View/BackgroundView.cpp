@@ -29,31 +29,18 @@ BackgroundView::BackgroundView()
 {
 }
 
-void BackgroundView::Draw(sf::RenderWindow& window, const ViewerSettings& settings) const
+void BackgroundView::Draw(sf::RenderWindow& window) const
 {
-	const sf::View fixedView({ 0.f, 0.f,
+	window.setView(sf::View({ 0.f, 0.f,
 		static_cast<float>(window.getSize().x),
-		static_cast<float>(window.getSize().y) });
-
-	window.setView(fixedView);
+		static_cast<float>(window.getSize().y) }));
 
 	sf::RectangleShape rect(static_cast<sf::Vector2f>(window.getSize()));
-
-	if (settings.bgType == BackgroundType::Chessboard)
-	{
-		rect.setTexture(&m_texture);
-
-		rect.setTextureRect({ 0, 0,
-			static_cast<int>(window.getSize().x),
-			static_cast<int>(window.getSize().y) });
-
-		rect.setFillColor(sf::Color::White);
-	}
-	else
-	{
-		rect.setTexture(nullptr);
-		rect.setFillColor(sf::Color::White);
-	}
+	rect.setTexture(&m_texture);
+	rect.setTextureRect({ 0, 0,
+		static_cast<int>(window.getSize().x),
+		static_cast<int>(window.getSize().y) });
+	rect.setFillColor(sf::Color::White);
 
 	window.draw(rect);
 }

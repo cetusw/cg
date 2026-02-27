@@ -1,29 +1,22 @@
 #pragma once
+
+#include "../Model/Menu.h"
 #include <SFML/Graphics.hpp>
 
-class MenuView
+class MenuView final : public IObserver
 {
 public:
-	enum class MenuAction
-	{
-		None,
-		OpenFile
-	};
-
 	MenuView();
-	void Draw(sf::RenderWindow& window);
-	MenuAction HandleClick(sf::Vector2i mousePos);
+	void Draw(sf::RenderWindow& window, const Menu& menu);
+	void OnModelChanged() override;
 
 private:
-	void DrawTopBar(sf::RenderWindow& window);
-	void DrawButtons(sf::RenderWindow& window) const;
-	void DrawText(sf::RenderWindow& window, const std::string& str, sf::Vector2f textPosition) const;
-
-	static constexpr float TOP_BAR_HEIGHT = 70.f;
-	static constexpr float DROPDOWN_WIDTH = 240.f;
+	void DrawText(sf::RenderWindow& window, const std::string& str, sf::Vector2f textPosition);
+	void UpdateLayout(const sf::RenderWindow& window, const Menu& menu);
 
 	sf::Font m_font;
 	sf::RectangleShape m_topBar;
 	sf::RectangleShape m_dropdown;
-	bool m_isFileMenuOpen = false;
+	sf::Text m_text;
+	bool m_needsUpdate = true;
 };

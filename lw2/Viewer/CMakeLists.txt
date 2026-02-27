@@ -11,8 +11,19 @@ add_executable(Viewer
         View/ImageView.cpp
         View/BackgroundView.cpp
         View/MenuView.cpp
-        Controller/Application.cpp
+        Application.cpp
         Utils/PipeDescriptor.cpp
+        View/Observer/IObserver.h
+        Model/Observable/Observable.cpp
+        Model/Observable/Observable.h
+        Controller/ImageController.cpp
+        Controller/ImageController.h
+        Controller/AppController.cpp
+        Controller/AppController.h
+        Model/WindowSettings.cpp
+        Model/WindowSettings.h
+        Model/Menu.cpp
+        Model/Menu.h
 )
 
 target_link_libraries(Viewer PRIVATE

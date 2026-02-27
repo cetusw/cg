@@ -1,9 +1,10 @@
 #pragma once
 
+#include "Observable/Observable.h"
 #include <SFML/Graphics.hpp>
 #include <string>
 
-class Image
+class Image : public Observable
 {
 public:
 	bool LoadImage(const std::string& filename);
