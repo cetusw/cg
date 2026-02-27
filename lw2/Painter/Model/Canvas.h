@@ -21,12 +21,13 @@ public:
 	bool Contains(const sf::Vector2f& position) const;
 
 	sf::Vector2u GetDefaultSize() const;
-	const sf::Sprite& GetSprite() const;
+	const sf::Sprite& GetSprite();
 	sf::Color GetColor() const;
 	float GetBrushSize() const;
 	sf::Vector2u GetSize() const;
 	void SetBrushSize(float size);
 	void SetColor(sf::Color color);
+	void SetSpritePosition(float x, float y);
 
 private:
 	sf::Vector2u m_defaultSize;

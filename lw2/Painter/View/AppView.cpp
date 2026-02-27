@@ -146,5 +146,5 @@ void AppView::CenterPicture() const
 	const float x = (static_cast<float>(windowSize.x) - spriteBounds.width) / 2.f;
 	const float y = (static_cast<float>(windowSize.y) - spriteBounds.height) / 2.f;
 
-	const_cast<sf::Sprite&>(m_canvas.GetSprite()).setPosition(x, y);
+	m_canvas.SetSpritePosition(x, y);
 }

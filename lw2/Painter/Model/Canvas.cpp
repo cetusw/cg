@@ -116,7 +116,7 @@ sf::Vector2u Canvas::GetDefaultSize() const
 	return m_defaultSize;
 }
 
-const sf::Sprite& Canvas::GetSprite() const
+const sf::Sprite& Canvas::GetSprite()
 {
 	return m_sprite;
 }
@@ -124,6 +124,11 @@ const sf::Sprite& Canvas::GetSprite() const
 void Canvas::SetColor(const sf::Color color)
 {
 	m_currentColor = color;
+}
+
+void Canvas::SetSpritePosition(const float x, const float y)
+{
+	m_sprite.setPosition(x, y);
 }
 
 sf::Color Canvas::GetColor() const
