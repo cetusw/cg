@@ -1,4 +1,5 @@
 #include "AsteroidsApplication.h"
+#include "view/GameView.h"
 #include <GL/glut.h>
 
 AsteroidsApplication::AsteroidsApplication(
