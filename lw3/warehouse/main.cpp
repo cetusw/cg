@@ -9,8 +9,19 @@ int main(const int argc, char* argv[])
 		return 1;
 	}
 
-	Application app(std::stoi(argv[1]), std::stoi(argv[2]), std::stoi(argv[3]), 100);
-	app.Run();
+	try
+	{
+		const int numSuppliers = std::stoi(argv[1]);
+		const int numClients = std::stoi(argv[2]);
+		const int numAuditors = std::stoi(argv[3]);
+		constexpr int capacity = 100;
+		Application app(numSuppliers, numClients, numAuditors, capacity);
+		app.Run();
+	}
+	catch (const std::exception& e)
+	{
+		throw std::runtime_error(e.what());
+	}
 
 	return 0;
 }
