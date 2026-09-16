@@ -18,6 +18,7 @@ void Ship::Update(const float deltaTime, const float worldWidth, const float wor
 	m_x += m_dx * deltaTime;
 	m_y += m_dy * deltaTime;
 
+	// TODO физический смысл вычислений
 	constexpr float friction = 0.5f;
 	m_dx -= m_dx * friction * deltaTime;
 	m_dy -= m_dy * friction * deltaTime;
