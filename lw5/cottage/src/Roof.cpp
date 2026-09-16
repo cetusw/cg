@@ -8,8 +8,8 @@ Roof::Roof(
     const float height
 )
     : m_width(width)
-    , m_depth(depth)
-    , m_height(height)
+      , m_depth(depth)
+      , m_height(height)
 {
 }
 
@@ -23,15 +23,17 @@ void Roof::draw() const
 
     glBegin(GL_TRIANGLES);
 
-    // Задний фронтон
-    glVertex3f(-halfWidth, -halfDepth, bottom);
-    glVertex3f( halfWidth, -halfDepth, bottom);
-    glVertex3f(0.0f,       -halfDepth, top);
-
     // Передний фронтон
-    glVertex3f( halfWidth, halfDepth, 0.0f);
+    glNormal3f(0.0f, -1.0f, 0.0f);
+    glVertex3f(halfWidth, halfDepth, 0.0f);
     glVertex3f(-halfWidth, halfDepth, 0.0f);
-    glVertex3f(0.0f,       halfDepth, top);
+    glVertex3f(0.0f, halfDepth, top);
+
+    // Задний фронтон
+    glNormal3f(0.0f, 1.0f, 0.0f);
+    glVertex3f(-halfWidth, -halfDepth, bottom);
+    glVertex3f(halfWidth, -halfDepth, bottom);
+    glVertex3f(0.0f, -halfDepth, top);
 
     glEnd();
 
@@ -39,15 +41,15 @@ void Roof::draw() const
 
     // Левая плоскость крыши
     glVertex3f(-halfWidth, -halfDepth, 0.0f);
-    glVertex3f(0.0f,       -halfDepth, top);
-    glVertex3f(0.0f,        halfDepth, top);
-    glVertex3f(-halfWidth,  halfDepth, 0.0f);
+    glVertex3f(0.0f, -halfDepth, top);
+    glVertex3f(0.0f, halfDepth, top);
+    glVertex3f(-halfWidth, halfDepth, 0.0f);
 
     // Правая плоскость крыши
-    glVertex3f(0.0f,       -halfDepth, top);
-    glVertex3f( halfWidth, -halfDepth, 0.0f);
-    glVertex3f( halfWidth,  halfDepth, 0.0f);
-    glVertex3f(0.0f,        halfDepth, top);
+    glVertex3f(0.0f, -halfDepth, top);
+    glVertex3f(halfWidth, -halfDepth, 0.0f);
+    glVertex3f(halfWidth, halfDepth, 0.0f);
+    glVertex3f(0.0f, halfDepth, top);
 
     glEnd();
 }

@@ -23,37 +23,43 @@ void Box::draw() const
 
     glBegin(GL_QUADS);
 
-    // Задняя грань
-    glVertex3f(-halfWidth, -halfDepth, bottom);
-    glVertex3f( halfWidth, -halfDepth, bottom);
-    glVertex3f( halfWidth, -halfDepth, top);
-    glVertex3f(-halfWidth, -halfDepth, top);
-
     // Передняя грань
+    glNormal3f(0.0f, -1.0f, 0.0f);
     glVertex3f( halfWidth, halfDepth, bottom);
     glVertex3f(-halfWidth, halfDepth, bottom);
     glVertex3f(-halfWidth, halfDepth, top);
     glVertex3f( halfWidth, halfDepth, top);
 
-    // Правая грань
-    glVertex3f(-halfWidth,  halfDepth, bottom);
+    // Задняя грань
+    glNormal3f(0.0f, 1.0f, 0.0f);
     glVertex3f(-halfWidth, -halfDepth, bottom);
+    glVertex3f( halfWidth, -halfDepth, bottom);
+    glVertex3f( halfWidth, -halfDepth, top);
     glVertex3f(-halfWidth, -halfDepth, top);
-    glVertex3f(-halfWidth,  halfDepth, top);
 
     // Левая грань
+    glNormal3f(-1.0f, 0.0f, 0.0f);
     glVertex3f(halfWidth, -halfDepth, bottom);
     glVertex3f(halfWidth,  halfDepth, bottom);
     glVertex3f(halfWidth,  halfDepth, top);
     glVertex3f(halfWidth, -halfDepth, top);
 
+    // Правая грань
+    glNormal3f(1.0f, 0.0f, 0.0f);
+    glVertex3f(-halfWidth,  halfDepth, bottom);
+    glVertex3f(-halfWidth, -halfDepth, bottom);
+    glVertex3f(-halfWidth, -halfDepth, top);
+    glVertex3f(-halfWidth,  halfDepth, top);
+
     // Верх
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(-halfWidth, -halfDepth, top);
     glVertex3f( halfWidth, -halfDepth, top);
     glVertex3f( halfWidth,  halfDepth, top);
     glVertex3f(-halfWidth,  halfDepth, top);
 
     // Низ
+    glNormal3f(0.0f, 0.0f, -1.0f);
     glVertex3f(-halfWidth,  halfDepth, bottom);
     glVertex3f( halfWidth,  halfDepth, bottom);
     glVertex3f( halfWidth, -halfDepth, bottom);
