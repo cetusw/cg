@@ -6,6 +6,7 @@ Application::Application()
 	, m_appController(m_image, m_imageController, m_windowSettings, m_menu, m_window)
 {
 	m_window.setFramerateLimit(60);
+	m_image.Add(&m_imageView);
 	m_windowSettings.Add(&m_imageView);
 	m_windowSettings.Add(&m_menuView);
 	m_menu.Add(&m_menuView);

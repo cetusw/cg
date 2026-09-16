@@ -17,5 +17,5 @@ private:
 	sf::View m_view;
 	bool m_needsUpdate = false;
 
-	void UpdateLayout(sf::Vector2u windowSize, sf::Vector2f imageSize);
+	void UpdateLayout(sf::Vector2u windowSize, sf::Vector2f imageViewCenter);
 };

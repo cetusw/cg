@@ -15,10 +15,12 @@ public:
 		WindowSettings& windowSettings,
 		Menu& menu,
 		sf::RenderWindow& window);
-	void DispatchEvent(const sf::Event& event) const;
+	void DispatchEvent(const sf::Event& event);
 
 private:
-	void HandleMouseClick(const sf::Event::MouseButtonEvent& mouse) const;
+	void HandleMouseClick(const sf::Event::MouseButtonEvent& mouse);
+	void HandleMouseRelease(const sf::Event::MouseButtonEvent& mouse);
+	void HandleMouseMove(const sf::Event::MouseMoveEvent& mouse);
 
 	sf::RenderWindow& m_window;
 
@@ -27,4 +29,7 @@ private:
 	Menu& m_menu;
 
 	ImageController& m_imageController;
+
+	bool m_isDragging = false;
+	sf::Vector2i m_lastMousePos;
 };

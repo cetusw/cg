@@ -9,7 +9,7 @@ void ImageView::Draw(sf::RenderWindow& window, const Image& image)
 
 	if (m_needsUpdate)
 	{
-		UpdateLayout(window.getSize(), image.GetSize());
+		UpdateLayout(window.getSize(), image.GetViewCenter());
 		m_needsUpdate = false;
 	}
 
@@ -25,32 +25,46 @@ void ImageView::OnModelChanged()
 	m_needsUpdate = true;
 }
 
-void ImageView::UpdateLayout(const sf::Vector2u windowSize, const sf::Vector2f imageSize)
+void ImageView::UpdateLayout(const sf::Vector2u windowSize, const sf::Vector2f imageViewCenter)
 {
 	if (windowSize.x == 0 || windowSize.y == 0)
 	{
 		return;
 	}
 
-	const float windowRatio = static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y);
-	const float imageRatio = imageSize.x / imageSize.y;
+	m_view.setSize(static_cast<sf::Vector2f>(windowSize));
 
-	float viewportWidth = VIEWPORT_FULL_SCALE;
-	float viewportHeight = VIEWPORT_FULL_SCALE;
-	float viewportX = VIEWPORT_START;
-	float viewportY = VIEWPORT_START;
+	m_view.setCenter(imageViewCenter);
 
-	if (windowRatio > imageRatio)
-	{
-		viewportWidth = imageRatio / windowRatio;
-		viewportX = (VIEWPORT_FULL_SCALE - viewportWidth) / 2.0f;
-	}
-	else
-	{
-		viewportHeight = windowRatio / imageRatio;
-		viewportY = (VIEWPORT_FULL_SCALE - viewportHeight) / 2.0f;
-	}
-
-	m_view.reset({ 0, 0, imageSize.x, imageSize.y });
-	m_view.setViewport({ viewportX, viewportY, viewportWidth, viewportHeight });
+	m_view.setViewport({ 0.f, 0.f, 1.f, 1.f });
 }
+
+// void ImageView::UpdateLayout(const sf::Vector2u windowSize, const sf::Vector2f imageSize)
+// {
+// 	if (windowSize.x == 0 || windowSize.y == 0)
+// 	{
+// 		return;
+// 	}
+//
+// 	const float windowRatio = static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y);
+// 	const float imageRatio = imageSize.x / imageSize.y;
+//
+// 	float viewportWidth = VIEWPORT_FULL_SCALE;
+// 	float viewportHeight = VIEWPORT_FULL_SCALE;
+// 	float viewportX = VIEWPORT_START;
+// 	float viewportY = VIEWPORT_START;
+//
+// 	if (windowRatio > imageRatio)
+// 	{
+// 		viewportWidth = imageRatio / windowRatio;
+// 		viewportX = (VIEWPORT_FULL_SCALE - viewportWidth) / 2.0f;
+// 	}
+// 	else
+// 	{
+// 		viewportHeight = windowRatio / imageRatio;
+// 		viewportY = (VIEWPORT_FULL_SCALE - viewportHeight) / 2.0f;
+// 	}
+//
+// 	m_view.reset({ 0, 0, imageSize.x, imageSize.y });
+// 	m_view.setViewport({ viewportX, viewportY, viewportWidth, viewportHeight });
+// }
