@@ -35,6 +35,6 @@ private:
 	sf::Sprite m_sprite;
 	sf::Color m_currentColor;
 	float m_brushSize;
-	sf::Vector2f m_lastMousePosition;
+	sf::Vector2f m_lastMousePosition; // TODO придумать другое имя. не работает с mouse
 	bool m_isDrawing;
 };
