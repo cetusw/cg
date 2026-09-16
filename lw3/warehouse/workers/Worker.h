@@ -8,7 +8,7 @@ public:
 	virtual ~Worker() = default;
 
 	virtual void Run(std::stop_token stopToken) = 0;
-	int GetTotalProcessed() const;
+	[[nodiscard]] int GetTotalProcessed() const;
 
 protected:
 	Warehouse& m_warehouse;
