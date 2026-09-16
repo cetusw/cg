@@ -102,11 +102,9 @@ int main()
         1.0f
     );
 
-    const Box houseBody(
-        6.0f,
-        4.0f,
-        3.0f
-    );
+    Box foundation(7.0f, 5.0f, 0.4f);
+    const Box houseBody(6.0f, 4.0f, 3.0f);
+    Box garage(3.0f, 4.0f, 2.5f);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -124,7 +122,20 @@ int main()
             0.0, 0.0, 1.0
         );
 
+        glPushMatrix();
+        glTranslatef(0.0f, 0.0f, 0.0f);
+        foundation.draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(0.0f, 0.0f, 0.4f);
         houseBody.draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(5.0f, 0.0f, 0.0f);
+        garage.draw();
+        glPopMatrix();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
