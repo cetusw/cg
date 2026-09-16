@@ -2,6 +2,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "Box.h"
 
 #include <iostream>
 
@@ -27,61 +28,6 @@ void setupProjection(const int width, int height)
     );
 
     glMatrixMode(GL_MODELVIEW);
-}
-
-void drawCube()
-{
-    glBegin(GL_QUADS);
-
-    // Передняя грань
-    glColor3f(1.0f, 0.0f, 0.0f);
-
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-
-    // Задняя грань
-    glColor3f(0.0f, 1.0f, 0.0f);
-
-    glVertex3f(1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
-
-    // Левая грань
-    glColor3f(0.0f, 0.0f, 1.0f);
-
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-
-    // Правая грань
-    glColor3f(1.0f, 1.0f, 0.0f);
-
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
-
-    // Верхняя грань
-    glColor3f(1.0f, 0.0f, 1.0f);
-
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-
-    // Нижняя грань
-    glColor3f(0.0f, 1.0f, 1.0f);
-
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-
-    glEnd();
 }
 
 void framebufferSizeCallback(
@@ -156,6 +102,12 @@ int main()
         1.0f
     );
 
+    const Box houseBody(
+        6.0f,
+        4.0f,
+        3.0f
+    );
+
     while (!glfwWindowShouldClose(window))
     {
         glClear(
@@ -167,12 +119,12 @@ int main()
         glLoadIdentity();
 
         gluLookAt(
-            4.0, -6.0, 4.0,
-            0.0, 0.0, 0.0,
+            5.0, 10.0, 7.0,
+            0.0, 0.0, 1.5,
             0.0, 0.0, 1.0
         );
 
-        drawCube();
+        houseBody.draw();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

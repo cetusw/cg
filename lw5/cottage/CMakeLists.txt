@@ -11,6 +11,8 @@ find_package(GLEW REQUIRED)
 
 add_executable(cottage
         src/main.cpp
+        src/Box.cpp
+        src/Box.h
 )
 
 target_link_libraries(cottage PRIVATE
