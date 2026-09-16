@@ -17,6 +17,8 @@ add_executable(polyhedron main.cpp
         view/Polyhedron.h
         controller/DirectLight.cpp
         controller/DirectLight.h
+        controller/OBJParser.cpp
+        controller/OBJParser.h
 )
 
 target_link_libraries(polyhedron

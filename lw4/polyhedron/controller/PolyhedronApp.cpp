@@ -118,12 +118,14 @@ void PolyhedronApp::OnMouseMove(const double x, const double y)
 
 void PolyhedronApp::RotateCamera(const double xAngle, const double yAngle)
 {
+	// TODO почему берём строку, а не столбец.
 	const glm::dvec3 xAxis{ m_camera[0][0], m_camera[1][0], m_camera[2][0] };
 	const glm::dvec3 yAxis{ m_camera[0][1], m_camera[1][1], m_camera[2][1] };
 
 	m_camera = glm::rotate(m_camera, xAngle, xAxis);
 	m_camera = glm::rotate(m_camera, yAngle, yAxis);
 
+	// TODO выяснить, как происходит orthonormalize
 	glm::dmat3 subMatrix = glm::orthonormalize(glm::dmat3(m_camera));
 	m_camera[0] = glm::dvec4(subMatrix[0], 0.0);
 	m_camera[1] = glm::dvec4(subMatrix[1], 0.0);
