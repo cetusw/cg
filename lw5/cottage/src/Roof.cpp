@@ -24,15 +24,11 @@ void Roof::draw() const
     glBegin(GL_TRIANGLES);
 
     // Задний фронтон
-    glColor3f(0.5f, 0.15f, 0.1f);
-
     glVertex3f(-halfWidth, -halfDepth, bottom);
     glVertex3f( halfWidth, -halfDepth, bottom);
     glVertex3f(0.0f,       -halfDepth, top);
 
     // Передний фронтон
-    glColor3f(0.45f, 0.12f, 0.08f);
-
     glVertex3f( halfWidth, halfDepth, 0.0f);
     glVertex3f(-halfWidth, halfDepth, 0.0f);
     glVertex3f(0.0f,       halfDepth, top);
@@ -42,16 +38,12 @@ void Roof::draw() const
     glBegin(GL_QUADS);
 
     // Левая плоскость крыши
-    glColor3f(0.35f, 0.08f, 0.05f);
-
     glVertex3f(-halfWidth, -halfDepth, 0.0f);
     glVertex3f(0.0f,       -halfDepth, top);
     glVertex3f(0.0f,        halfDepth, top);
     glVertex3f(-halfWidth,  halfDepth, 0.0f);
 
     // Правая плоскость крыши
-    glColor3f(0.4f, 0.1f, 0.06f);
-
     glVertex3f(0.0f,       -halfDepth, top);
     glVertex3f( halfWidth, -halfDepth, 0.0f);
     glVertex3f( halfWidth,  halfDepth, 0.0f);

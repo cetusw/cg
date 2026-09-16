@@ -128,36 +128,43 @@ int main()
 
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 0.0f);
+        glColor3f(0.35f, 0.35f, 0.35f);
         foundation.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 0.4f);
+        glColor3f(0.75f, 0.25f, 0.15f);
         houseBody.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(5.0f, 0.0f, 0.0f);
+        glColor3f(0.75f, 0.25f, 0.15f);
         garage.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 3.4f);
+        glColor3f(0.75f, 0.25f, 0.15f);
         roof.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(-1.7f, -2.04f, 1.4f);
+        glColor3f(0.2f, 0.5f, 0.8f);
         houseWindow.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(1.7f, -2.04f, 1.4f);
+        glColor3f(0.2f, 0.5f, 0.8f);
         houseWindow.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(0.0f, -2.05f, 0.4f);
+        glColor3f(0.2f, 0.5f, 0.8f);
         door.draw();
         glPopMatrix();
 
