@@ -13,6 +13,8 @@ add_executable(cottage
         src/main.cpp
         src/Box.cpp
         src/Box.h
+        src/Roof.cpp
+        src/Roof.h
 )
 
 target_link_libraries(cottage PRIVATE

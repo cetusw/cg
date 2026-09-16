@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Box.h"
+#include "Roof.h"
 
 #include <iostream>
 
@@ -105,6 +106,7 @@ int main()
     Box foundation(7.0f, 5.0f, 0.4f);
     const Box houseBody(6.0f, 4.0f, 3.0f);
     Box garage(3.0f, 4.0f, 2.5f);
+    Roof roof(6.8f, 4.8f, 1.8f);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -135,6 +137,11 @@ int main()
         glPushMatrix();
         glTranslatef(5.0f, 0.0f, 0.0f);
         garage.draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(0.0f, 0.0f, 3.4f);
+        roof.draw();
         glPopMatrix();
 
         glfwSwapBuffers(window);
