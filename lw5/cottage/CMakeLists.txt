@@ -15,6 +15,7 @@ add_executable(cottage
 
 target_link_libraries(cottage PRIVATE
         OpenGL::GL
+        OpenGL::GLU
         glfw
         GLEW::GLEW
 )
