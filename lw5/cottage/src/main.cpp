@@ -103,10 +103,12 @@ int main()
         1.0f
     );
 
-    Box foundation(7.0f, 5.0f, 0.4f);
+    const Box foundation(7.0f, 5.0f, 0.4f);
     const Box houseBody(6.0f, 4.0f, 3.0f);
-    Box garage(3.0f, 4.0f, 2.5f);
-    Roof roof(6.8f, 4.8f, 1.8f);
+    const Box garage(3.0f, 4.0f, 2.5f);
+    const Roof roof(6.8f, 4.8f, 1.8f);
+    const Box houseWindow(1.0f, 0.08f, 1.2f);
+    const Box door(1.2f, 0.10f, 2.2f);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -119,7 +121,7 @@ int main()
         glLoadIdentity();
 
         gluLookAt(
-            5.0, 10.0, 7.0,
+            5.0, -10.0, 7.0,
             0.0, 0.0, 1.5,
             0.0, 0.0, 1.0
         );
@@ -142,6 +144,21 @@ int main()
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 3.4f);
         roof.draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(-1.7f, -2.04f, 1.4f);
+        houseWindow.draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(1.7f, -2.04f, 1.4f);
+        houseWindow.draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(0.0f, -2.05f, 0.4f);
+        door.draw();
         glPopMatrix();
 
         glfwSwapBuffers(window);
