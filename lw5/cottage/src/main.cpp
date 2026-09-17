@@ -7,6 +7,7 @@
 
 #include <iostream>
 
+#include "Ground.h"
 #include "Material.h"
 #include "Texture2D.h"
 
@@ -109,6 +110,7 @@ int main()
         1.0f
     );
 
+    const Ground ground(30.0f, 30.0f, 2.0f);
     const Box foundation(7.0f, 5.0f, 0.4f);
     const Box houseBody(6.0f, 4.0f, 3.0f);
     const Box garage(3.0f, 4.0f, 2.5f);
@@ -141,6 +143,52 @@ int main()
     glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
 
+    const Material groundMaterial(
+        0.10f, 0.20f, 0.10f,
+        0.35f, 0.65f, 0.30f,
+        0.05f, 0.05f, 0.05f,
+        4.0f
+    );
+
+    const Material wallMaterial(
+        0.30f, 0.10f, 0.08f,
+        0.75f, 0.25f, 0.15f,
+        0.10f, 0.10f, 0.10f,
+        8.0f
+    );
+
+    const Material roofMaterial(
+        0.15f, 0.15f, 0.15f,
+        0.60f, 0.60f, 0.60f,
+        0.15f, 0.15f, 0.15f,
+        12.0f
+    );
+
+    const Material foundationMaterial(
+        0.15f, 0.15f, 0.15f,
+        0.50f, 0.50f, 0.50f,
+        0.10f, 0.10f, 0.10f,
+        4.0f
+    );
+
+    const Material windowMaterial(
+        0.10f, 0.15f, 0.20f,
+        0.25f, 0.45f, 0.65f,
+        0.80f, 0.80f, 0.80f,
+        64.0f
+    );
+
+    const Material doorMaterial(
+        0.18f, 0.08f, 0.03f,
+        0.45f, 0.20f, 0.08f,
+        0.10f, 0.10f, 0.10f,
+        8.0f
+    );
+
+    const Texture2D grassTexture("../assets/grass.jpg");
+    const Texture2D brickTexture("../assets/brick.jpg");
+    const Texture2D roofTexture("../assets/cobblestone.jpg");
+
     while (!glfwWindowShouldClose(window))
     {
         glClear(
@@ -168,49 +216,6 @@ int main()
             GL_LIGHT0,
             GL_POSITION,
             lightPosition
-        );
-
-        const Material wallMaterial(
-            0.30f, 0.10f, 0.08f,
-            0.75f, 0.25f, 0.15f,
-            0.10f, 0.10f, 0.10f,
-            8.0f
-        );
-
-        const Material roofMaterial(
-            0.15f, 0.15f, 0.15f,
-            0.60f, 0.60f, 0.60f,
-            0.15f, 0.15f, 0.15f,
-            12.0f
-        );
-
-        const Material foundationMaterial(
-            0.15f, 0.15f, 0.15f,
-            0.50f, 0.50f, 0.50f,
-            0.10f, 0.10f, 0.10f,
-            4.0f
-        );
-
-        const Material windowMaterial(
-            0.10f, 0.15f, 0.20f,
-            0.25f, 0.45f, 0.65f,
-            0.80f, 0.80f, 0.80f,
-            64.0f
-        );
-
-        const Material doorMaterial(
-            0.18f, 0.08f, 0.03f,
-            0.45f, 0.20f, 0.08f,
-            0.10f, 0.10f, 0.10f,
-            8.0f
-        );
-
-        const Texture2D brickTexture(
-            "../assets/brick.jpg"
-        );
-
-        const Texture2D roofTexture(
-            "../assets/cobblestone.jpg"
         );
 
         glDisable(GL_TEXTURE_2D);
@@ -250,6 +255,13 @@ int main()
         glPopMatrix();
 
         glEnable(GL_TEXTURE_2D);
+
+        groundMaterial.Apply();
+        grassTexture.Bind();
+        glPushMatrix();
+        glTranslatef(0.0f,0.0f, -0.01f);
+        ground.Draw();
+        glPopMatrix();
 
         wallMaterial.Apply();
         brickTexture.Bind();

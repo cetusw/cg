@@ -20,6 +20,8 @@ add_executable(cottage
         src/Texture2D.h
         src/Material.cpp
         src/Material.h
+        src/Ground.cpp
+        src/Ground.h
 )
 
 target_link_libraries(cottage PRIVATE
