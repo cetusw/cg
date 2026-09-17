@@ -1,6 +1,4 @@
 #define GLFW_INCLUDE_NONE
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -9,83 +7,7 @@
 
 #include <iostream>
 
-GLuint loadTexture(const char *path)
-{
-    int width;
-    int height;
-    int channels;
-
-    unsigned char *data = stbi_load(
-        path,
-        &width,
-        &height,
-        &channels,
-        0
-    );
-
-    if (!data)
-    {
-        std::cerr << "Failed to load texture: "
-                << path << '\n';
-
-        return 0;
-    }
-
-    GLint format;
-
-    if (channels == 4)
-    {
-        format = GL_RGBA;
-    } else
-    {
-        format = GL_RGB;
-    }
-
-    GLuint texture;
-
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    glTexImage2D(
-        GL_TEXTURE_2D,
-        0,
-        format,
-        width,
-        height,
-        0,
-        format,
-        GL_UNSIGNED_BYTE,
-        data
-    );
-
-    glTexParameteri(
-        GL_TEXTURE_2D,
-        GL_TEXTURE_MIN_FILTER,
-        GL_LINEAR
-    );
-
-    glTexParameteri(
-        GL_TEXTURE_2D,
-        GL_TEXTURE_MAG_FILTER,
-        GL_LINEAR
-    );
-
-    glTexParameteri(
-        GL_TEXTURE_2D,
-        GL_TEXTURE_WRAP_S,
-        GL_REPEAT
-    );
-
-    glTexParameteri(
-        GL_TEXTURE_2D,
-        GL_TEXTURE_WRAP_T,
-        GL_REPEAT
-    );
-
-    stbi_image_free(data);
-
-    return texture;
-}
+#include "Texture2D.h"
 
 void setupProjection(const int width, int height)
 {
@@ -179,10 +101,13 @@ int main()
     glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
 
-    const GLuint brickTexture =
-            loadTexture("../assets/brick.jpg");
-    const GLuint roofTexture =
-            loadTexture("../assets/cobblestone.jpg");
+    Texture2D brickTexture(
+        "../assets/brick.jpg"
+    );
+
+    Texture2D roofTexture(
+        "../assets/cobblestone.jpg"
+    );
 
     glClearColor(
         0.2f,
@@ -306,7 +231,7 @@ int main()
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 0.4f);
         glColor3f(1, 1, 1);
-        glBindTexture(GL_TEXTURE_2D, brickTexture);
+        brickTexture.Bind();
         houseBody.draw();
         glPopMatrix();
 
@@ -319,7 +244,7 @@ int main()
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 3.4f);
         glColor3f(1, 1, 1);
-        glBindTexture(GL_TEXTURE_2D, roofTexture);
+        roofTexture.Bind();
         roof.draw();
         glPopMatrix();
 

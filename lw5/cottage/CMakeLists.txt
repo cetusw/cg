@@ -16,6 +16,8 @@ add_executable(cottage
         src/Roof.cpp
         src/Roof.h
         src/Vec3.h
+        src/Texture2D.cpp
+        src/Texture2D.h
 )
 
 target_link_libraries(cottage PRIVATE
