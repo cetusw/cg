@@ -8,8 +8,8 @@ Box::Box(
     const float height
 )
     : m_width(width)
-    , m_depth(depth)
-    , m_height(height)
+      , m_depth(depth)
+      , m_height(height)
 {
 }
 
@@ -24,45 +24,52 @@ void Box::draw() const
     glBegin(GL_QUADS);
 
     // Передняя грань
-    glNormal3f(0.0f, -1.0f, 0.0f);
-    glVertex3f( halfWidth, halfDepth, bottom);
+    glNormal3f(0.0f, 1.0f, 0.0f);
+    glVertex3f(halfWidth, halfDepth, bottom);
     glVertex3f(-halfWidth, halfDepth, bottom);
     glVertex3f(-halfWidth, halfDepth, top);
-    glVertex3f( halfWidth, halfDepth, top);
+    glVertex3f(halfWidth, halfDepth, top);
 
     // Задняя грань
-    glNormal3f(0.0f, 1.0f, 0.0f);
+    glNormal3f(0.0f, -1.0f, 0.0f);
+    glTexCoord2f(0.0f, 0.0f);
     glVertex3f(-halfWidth, -halfDepth, bottom);
-    glVertex3f( halfWidth, -halfDepth, bottom);
-    glVertex3f( halfWidth, -halfDepth, top);
+
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(halfWidth, -halfDepth, bottom);
+
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(halfWidth, -halfDepth, top);
+
+    glTexCoord2f(0.0f, 1.0f);
     glVertex3f(-halfWidth, -halfDepth, top);
 
     // Левая грань
     glNormal3f(-1.0f, 0.0f, 0.0f);
     glVertex3f(halfWidth, -halfDepth, bottom);
-    glVertex3f(halfWidth,  halfDepth, bottom);
-    glVertex3f(halfWidth,  halfDepth, top);
+    glVertex3f(halfWidth, halfDepth, bottom);
+    glVertex3f(halfWidth, halfDepth, top);
     glVertex3f(halfWidth, -halfDepth, top);
 
     // Правая грань
     glNormal3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(-halfWidth,  halfDepth, bottom);
+    glVertex3f(-halfWidth, halfDepth, bottom);
     glVertex3f(-halfWidth, -halfDepth, bottom);
     glVertex3f(-halfWidth, -halfDepth, top);
-    glVertex3f(-halfWidth,  halfDepth, top);
+    glVertex3f(-halfWidth, halfDepth, top);
 
     // Верх
     glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(-halfWidth, -halfDepth, top);
-    glVertex3f( halfWidth, -halfDepth, top);
-    glVertex3f( halfWidth,  halfDepth, top);
-    glVertex3f(-halfWidth,  halfDepth, top);
+    glVertex3f(halfWidth, -halfDepth, top);
+    glVertex3f(halfWidth, halfDepth, top);
+    glVertex3f(-halfWidth, halfDepth, top);
 
     // Низ
     glNormal3f(0.0f, 0.0f, -1.0f);
-    glVertex3f(-halfWidth,  halfDepth, bottom);
-    glVertex3f( halfWidth,  halfDepth, bottom);
-    glVertex3f( halfWidth, -halfDepth, bottom);
+    glVertex3f(-halfWidth, halfDepth, bottom);
+    glVertex3f(halfWidth, halfDepth, bottom);
+    glVertex3f(halfWidth, -halfDepth, bottom);
     glVertex3f(-halfWidth, -halfDepth, bottom);
 
     glEnd();

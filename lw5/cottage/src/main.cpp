@@ -1,4 +1,6 @@
 #define GLFW_INCLUDE_NONE
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -6,6 +8,84 @@
 #include "Roof.h"
 
 #include <iostream>
+
+GLuint loadTexture(const char *path)
+{
+    int width;
+    int height;
+    int channels;
+
+    unsigned char *data = stbi_load(
+        path,
+        &width,
+        &height,
+        &channels,
+        0
+    );
+
+    if (!data)
+    {
+        std::cerr << "Failed to load texture: "
+                << path << '\n';
+
+        return 0;
+    }
+
+    GLint format;
+
+    if (channels == 4)
+    {
+        format = GL_RGBA;
+    } else
+    {
+        format = GL_RGB;
+    }
+
+    GLuint texture;
+
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        format,
+        width,
+        height,
+        0,
+        format,
+        GL_UNSIGNED_BYTE,
+        data
+    );
+
+    glTexParameteri(
+        GL_TEXTURE_2D,
+        GL_TEXTURE_MIN_FILTER,
+        GL_LINEAR
+    );
+
+    glTexParameteri(
+        GL_TEXTURE_2D,
+        GL_TEXTURE_MAG_FILTER,
+        GL_LINEAR
+    );
+
+    glTexParameteri(
+        GL_TEXTURE_2D,
+        GL_TEXTURE_WRAP_S,
+        GL_REPEAT
+    );
+
+    glTexParameteri(
+        GL_TEXTURE_2D,
+        GL_TEXTURE_WRAP_T,
+        GL_REPEAT
+    );
+
+    stbi_image_free(data);
+
+    return texture;
+}
 
 void setupProjection(const int width, int height)
 {
@@ -95,6 +175,12 @@ int main()
     glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_TEXTURE_2D);
+
+    const GLuint brickTexture =
+            loadTexture("../assets/brick.jpg");
 
     glClearColor(
         0.2f,
@@ -109,6 +195,31 @@ int main()
     const Roof roof(6.8f, 4.8f, 1.8f);
     const Box houseWindow(1.0f, 0.08f, 1.2f);
     const Box door(1.2f, 0.10f, 2.2f);
+
+    constexpr GLfloat lightDiffuse[] = {
+        1.0f,
+        1.0f,
+        1.0f,
+        1.0f
+    };
+
+    constexpr GLfloat lightAmbient[] = {
+        0.2f,
+        0.2f,
+        0.2f,
+        1.0f
+    };
+
+    constexpr GLfloat lightSpecular[] = {
+        1.0f,
+        1.0f,
+        1.0f,
+        1.0f
+    };
+
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -126,15 +237,73 @@ int main()
             0.0, 0.0, 1.0
         );
 
+        constexpr GLfloat lightPosition[] = {
+            -5.0f,
+            -5.0f,
+            8.0f,
+            1.0f
+        };
+
+        glLightfv(
+            GL_LIGHT0,
+            GL_POSITION,
+            lightPosition
+        );
+
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 0.0f);
         glColor3f(0.35f, 0.35f, 0.35f);
         foundation.draw();
         glPopMatrix();
 
+        constexpr GLfloat wallDiffuse[] = {
+            0.75f,
+            0.25f,
+            0.15f,
+            1.0f
+        };
+
+        constexpr GLfloat wallAmbient[] = {
+            0.3f,
+            0.1f,
+            0.08f,
+            1.0f
+        };
+
+        constexpr GLfloat wallSpecular[] = {
+            0.1f,
+            0.1f,
+            0.1f,
+            1.0f
+        };
+
+        glMaterialfv(
+            GL_FRONT_AND_BACK,
+            GL_DIFFUSE,
+            wallDiffuse
+        );
+
+        glMaterialfv(
+            GL_FRONT_AND_BACK,
+            GL_AMBIENT,
+            wallAmbient
+        );
+
+        glMaterialfv(
+            GL_FRONT_AND_BACK,
+            GL_SPECULAR,
+            wallSpecular
+        );
+
+        glMaterialf(
+            GL_FRONT_AND_BACK,
+            GL_SHININESS,
+            8.0f
+        );
+
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 0.4f);
-        glColor3f(0.75f, 0.25f, 0.15f);
+        glColor3f(1, 1, 1);
         houseBody.draw();
         glPopMatrix();
 

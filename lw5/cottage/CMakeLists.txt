@@ -15,6 +15,7 @@ add_executable(cottage
         src/Box.h
         src/Roof.cpp
         src/Roof.h
+        src/Vec3.h
 )
 
 target_link_libraries(cottage PRIVATE

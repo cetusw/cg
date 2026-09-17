@@ -2,6 +2,8 @@
 
 #include <GL/glew.h>
 
+#include "Vec3.h"
+
 Roof::Roof(
     const float width,
     const float depth,
@@ -24,13 +26,13 @@ void Roof::draw() const
     glBegin(GL_TRIANGLES);
 
     // Передний фронтон
-    glNormal3f(0.0f, -1.0f, 0.0f);
+    glNormal3f(0.0f, 1.0f, 0.0f);
     glVertex3f(halfWidth, halfDepth, 0.0f);
     glVertex3f(-halfWidth, halfDepth, 0.0f);
     glVertex3f(0.0f, halfDepth, top);
 
     // Задний фронтон
-    glNormal3f(0.0f, 1.0f, 0.0f);
+    glNormal3f(0.0f, -1.0f, 0.0f);
     glVertex3f(-halfWidth, -halfDepth, bottom);
     glVertex3f(halfWidth, -halfDepth, bottom);
     glVertex3f(0.0f, -halfDepth, top);
@@ -40,12 +42,58 @@ void Roof::draw() const
     glBegin(GL_QUADS);
 
     // Левая плоскость крыши
+    const Vec3 a{
+        -halfWidth,
+        -halfDepth,
+        0.0f
+    };
+
+    const Vec3 b{
+        0.0f,
+        -halfDepth,
+        m_height
+    };
+
+    const Vec3 c{
+        0.0f,
+        halfDepth,
+        m_height
+    };
+
+    const Vec3 leftNormal = CalculateNormal(a, b, c);
+
+    glNormal3f(
+        leftNormal.x,
+        leftNormal.y,
+        leftNormal.z
+    );
+
     glVertex3f(-halfWidth, -halfDepth, 0.0f);
     glVertex3f(0.0f, -halfDepth, top);
     glVertex3f(0.0f, halfDepth, top);
     glVertex3f(-halfWidth, halfDepth, 0.0f);
 
     // Правая плоскость крыши
+    const Vec3 d{
+        0.0f, -halfDepth, top
+    };
+
+    const Vec3 e{
+        halfWidth, -halfDepth, 0.0f
+    };
+
+    const Vec3 f{
+        halfWidth, halfDepth, 0.0f
+    };
+
+    const Vec3 rightNormal = CalculateNormal(d, e, f);
+
+    glNormal3f(
+        rightNormal.x,
+        rightNormal.y,
+        rightNormal.z
+    );
+
     glVertex3f(0.0f, -halfDepth, top);
     glVertex3f(halfWidth, -halfDepth, 0.0f);
     glVertex3f(halfWidth, halfDepth, 0.0f);
