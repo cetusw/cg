@@ -7,6 +7,7 @@
 
 #include <iostream>
 
+#include "Material.h"
 #include "Texture2D.h"
 
 void setupProjection(const int width, int height)
@@ -101,14 +102,6 @@ int main()
     glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
 
-    Texture2D brickTexture(
-        "../assets/brick.jpg"
-    );
-
-    Texture2D roofTexture(
-        "../assets/cobblestone.jpg"
-    );
-
     glClearColor(
         0.2f,
         0.3f,
@@ -159,7 +152,7 @@ int main()
         glLoadIdentity();
 
         gluLookAt(
-            5.0, -10.0, 7.0,
+            -5.0, -10.0, 7.0,
             0.0, 0.0, 1.5,
             0.0, 0.0, 1.0
         );
@@ -177,77 +170,66 @@ int main()
             lightPosition
         );
 
+        const Material wallMaterial(
+            0.30f, 0.10f, 0.08f,
+            0.75f, 0.25f, 0.15f,
+            0.10f, 0.10f, 0.10f,
+            8.0f
+        );
+
+        const Material roofMaterial(
+            0.15f, 0.15f, 0.15f,
+            0.60f, 0.60f, 0.60f,
+            0.15f, 0.15f, 0.15f,
+            12.0f
+        );
+
+        const Material foundationMaterial(
+            0.15f, 0.15f, 0.15f,
+            0.50f, 0.50f, 0.50f,
+            0.10f, 0.10f, 0.10f,
+            4.0f
+        );
+
+        const Material windowMaterial(
+            0.10f, 0.15f, 0.20f,
+            0.25f, 0.45f, 0.65f,
+            0.80f, 0.80f, 0.80f,
+            64.0f
+        );
+
+        const Material doorMaterial(
+            0.18f, 0.08f, 0.03f,
+            0.45f, 0.20f, 0.08f,
+            0.10f, 0.10f, 0.10f,
+            8.0f
+        );
+
+        const Texture2D brickTexture(
+            "../assets/brick.jpg"
+        );
+
+        const Texture2D roofTexture(
+            "../assets/cobblestone.jpg"
+        );
+
+        glDisable(GL_TEXTURE_2D);
+
+        foundationMaterial.Apply();
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 0.0f);
         glColor3f(1, 1, 1);
         foundation.draw();
         glPopMatrix();
 
-        constexpr GLfloat wallDiffuse[] = {
-            1.0f,
-            1.0f,
-            1.0f,
-            1.0f
-        };
-
-        constexpr GLfloat wallAmbient[] = {
-            0.3f,
-            0.3f,
-            0.3f,
-            1.0f
-        };
-
-        constexpr GLfloat wallSpecular[] = {
-            0.1f,
-            0.1f,
-            0.1f,
-            1.0f
-        };
-
-        glMaterialfv(
-            GL_FRONT_AND_BACK,
-            GL_DIFFUSE,
-            wallDiffuse
-        );
-
-        glMaterialfv(
-            GL_FRONT_AND_BACK,
-            GL_AMBIENT,
-            wallAmbient
-        );
-
-        glMaterialfv(
-            GL_FRONT_AND_BACK,
-            GL_SPECULAR,
-            wallSpecular
-        );
-
-        glMaterialf(
-            GL_FRONT_AND_BACK,
-            GL_SHININESS,
-            8.0f
-        );
-
-        glPushMatrix();
-        glTranslatef(0.0f, 0.0f, 0.4f);
-        glColor3f(1, 1, 1);
-        brickTexture.Bind();
-        houseBody.draw();
-        glPopMatrix();
-
+        wallMaterial.Apply();
         glPushMatrix();
         glTranslatef(5.0f, 0.0f, 0.0f);
         glColor3f(1, 1, 1);
         garage.draw();
         glPopMatrix();
 
-        glPushMatrix();
-        glTranslatef(0.0f, 0.0f, 3.4f);
-        glColor3f(1, 1, 1);
-        roofTexture.Bind();
-        roof.draw();
-        glPopMatrix();
-
+        windowMaterial.Apply();
         glPushMatrix();
         glTranslatef(-1.7f, -2.04f, 1.4f);
         glColor3f(1, 1, 1);
@@ -260,10 +242,29 @@ int main()
         houseWindow.draw();
         glPopMatrix();
 
+        doorMaterial.Apply();
         glPushMatrix();
         glTranslatef(0.0f, -2.05f, 0.4f);
         glColor3f(1, 1, 1);
         door.draw();
+        glPopMatrix();
+
+        glEnable(GL_TEXTURE_2D);
+
+        wallMaterial.Apply();
+        brickTexture.Bind();
+        glPushMatrix();
+        glTranslatef(0.0f, 0.0f, 0.4f);
+        glColor3f(1, 1, 1);
+        houseBody.draw();
+        glPopMatrix();
+
+        roofMaterial.Apply();
+        roofTexture.Bind();
+        glPushMatrix();
+        glTranslatef(0.0f, 0.0f, 3.4f);
+        glColor3f(1, 1, 1);
+        roof.draw();
         glPopMatrix();
 
         glfwSwapBuffers(window);

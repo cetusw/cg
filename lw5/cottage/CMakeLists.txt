@@ -18,6 +18,8 @@ add_executable(cottage
         src/Vec3.h
         src/Texture2D.cpp
         src/Texture2D.h
+        src/Material.cpp
+        src/Material.h
 )
 
 target_link_libraries(cottage PRIVATE
