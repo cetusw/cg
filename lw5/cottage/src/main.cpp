@@ -181,6 +181,8 @@ int main()
 
     const GLuint brickTexture =
             loadTexture("../assets/brick.jpg");
+    const GLuint roofTexture =
+            loadTexture("../assets/cobblestone.jpg");
 
     glClearColor(
         0.2f,
@@ -252,21 +254,21 @@ int main()
 
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 0.0f);
-        glColor3f(0.35f, 0.35f, 0.35f);
+        glColor3f(1, 1, 1);
         foundation.draw();
         glPopMatrix();
 
         constexpr GLfloat wallDiffuse[] = {
-            0.75f,
-            0.25f,
-            0.15f,
+            1.0f,
+            1.0f,
+            1.0f,
             1.0f
         };
 
         constexpr GLfloat wallAmbient[] = {
             0.3f,
-            0.1f,
-            0.08f,
+            0.3f,
+            0.3f,
             1.0f
         };
 
@@ -304,36 +306,38 @@ int main()
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 0.4f);
         glColor3f(1, 1, 1);
+        glBindTexture(GL_TEXTURE_2D, brickTexture);
         houseBody.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(5.0f, 0.0f, 0.0f);
-        glColor3f(0.75f, 0.25f, 0.15f);
+        glColor3f(1, 1, 1);
         garage.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(0.0f, 0.0f, 3.4f);
-        glColor3f(0.75f, 0.25f, 0.15f);
+        glColor3f(1, 1, 1);
+        glBindTexture(GL_TEXTURE_2D, roofTexture);
         roof.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(-1.7f, -2.04f, 1.4f);
-        glColor3f(0.2f, 0.5f, 0.8f);
+        glColor3f(1, 1, 1);
         houseWindow.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(1.7f, -2.04f, 1.4f);
-        glColor3f(0.2f, 0.5f, 0.8f);
+        glColor3f(1, 1, 1);
         houseWindow.draw();
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(0.0f, -2.05f, 0.4f);
-        glColor3f(0.2f, 0.5f, 0.8f);
+        glColor3f(1, 1, 1);
         door.draw();
         glPopMatrix();
 

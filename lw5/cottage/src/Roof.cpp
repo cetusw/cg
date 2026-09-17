@@ -7,11 +7,13 @@
 Roof::Roof(
     const float width,
     const float depth,
-    const float height
+    const float height,
+    const float textureScale
 )
     : m_width(width)
       , m_depth(depth)
       , m_height(height)
+      , m_textureScale(textureScale)
 {
 }
 
@@ -23,18 +25,39 @@ void Roof::draw() const
     constexpr float bottom = 0.0f;
     const float top = m_height;
 
+    const float repeatX =
+            m_width / m_textureScale;
+
+    const float repeatY =
+            m_depth / m_textureScale;
+
+    const float repeatZ =
+            m_height / m_textureScale;
+
     glBegin(GL_TRIANGLES);
 
     // Передний фронтон
     glNormal3f(0.0f, 1.0f, 0.0f);
+
+    glTexCoord2f(0.0f, 0.0f);
     glVertex3f(halfWidth, halfDepth, 0.0f);
+
+    glTexCoord2f(1.0f, 0.0f);
     glVertex3f(-halfWidth, halfDepth, 0.0f);
+
+    glTexCoord2f(0.5f, 1.0f);
     glVertex3f(0.0f, halfDepth, top);
 
     // Задний фронтон
     glNormal3f(0.0f, -1.0f, 0.0f);
+
+    glTexCoord2f(0.0f, 0.0f);
     glVertex3f(-halfWidth, -halfDepth, bottom);
+
+    glTexCoord2f(1.0f, 0.0f);
     glVertex3f(halfWidth, -halfDepth, bottom);
+
+    glTexCoord2f(0.5f, 1.0f);
     glVertex3f(0.0f, -halfDepth, top);
 
     glEnd();
@@ -68,9 +91,16 @@ void Roof::draw() const
         leftNormal.z
     );
 
+    glTexCoord2f(0.0f, 0.0f);
     glVertex3f(-halfWidth, -halfDepth, 0.0f);
+
+    glTexCoord2f(0.0f, repeatZ);
     glVertex3f(0.0f, -halfDepth, top);
+
+    glTexCoord2f(repeatY, repeatZ);
     glVertex3f(0.0f, halfDepth, top);
+
+    glTexCoord2f(repeatY, 0.0f);
     glVertex3f(-halfWidth, halfDepth, 0.0f);
 
     // Правая плоскость крыши
@@ -94,9 +124,16 @@ void Roof::draw() const
         rightNormal.z
     );
 
+    glTexCoord2f(0.0f, 0.0f);
     glVertex3f(0.0f, -halfDepth, top);
+
+    glTexCoord2f(0.0f, repeatZ);
     glVertex3f(halfWidth, -halfDepth, 0.0f);
+
+    glTexCoord2f(repeatY, repeatZ);
     glVertex3f(halfWidth, halfDepth, 0.0f);
+
+    glTexCoord2f(repeatY, 0.0f);
     glVertex3f(0.0f, halfDepth, top);
 
     glEnd();
