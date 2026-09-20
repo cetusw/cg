@@ -20,5 +20,5 @@ private:
 	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 	static void SetProjection(int width, int height);
 
-	GLFWwindow* m_window {};
+	GLFWwindow* m_window{};
 };

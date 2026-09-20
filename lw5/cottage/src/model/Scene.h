@@ -5,16 +5,16 @@
 
 struct Vector3
 {
-	float x {};
-	float y {};
-	float z {};
+	float x{};
+	float y{};
+	float z{};
 };
 
 struct RgbColor
 {
-	float red {};
-	float green {};
-	float blue {};
+	float red{};
+	float green{};
+	float blue{};
 };
 
 struct MaterialDescription
@@ -22,7 +22,7 @@ struct MaterialDescription
 	RgbColor ambient;
 	RgbColor diffuse;
 	RgbColor specular;
-	float shininess {};
+	float shininess{};
 };
 
 enum class GeometryType
@@ -34,10 +34,10 @@ enum class GeometryType
 
 struct GeometryDescription
 {
-	GeometryType type {};
-	float width {};
-	float depth {};
-	float height {};
+	GeometryType type{};
+	float width{};
+	float depth{};
+	float height{};
 	float textureScale = 1.0f;
 };
 

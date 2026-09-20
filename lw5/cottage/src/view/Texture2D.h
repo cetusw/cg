@@ -20,5 +20,5 @@ public:
 private:
 	void Release() noexcept;
 
-	GLuint id {};
+	GLuint id{};
 };

@@ -34,8 +34,8 @@ GlfwWindow::GlfwWindow(const int width, const int height, const char* title)
 	}
 
 	glfwSetFramebufferSizeCallback(m_window, FramebufferSizeCallback);
-	int framebufferWidth {};
-	int framebufferHeight {};
+	int framebufferWidth{};
+	int framebufferHeight{};
 	glfwGetFramebufferSize(m_window, &framebufferWidth, &framebufferHeight);
 	FramebufferSizeCallback(m_window, framebufferWidth, framebufferHeight);
 }

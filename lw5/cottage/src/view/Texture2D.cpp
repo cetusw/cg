@@ -8,27 +8,27 @@
 
 namespace
 {
-	GLenum GetFormat(const int channels)
+GLenum GetFormat(const int channels)
+{
+	switch (channels)
 	{
-		switch (channels)
-		{
-		case 1:
-			return GL_RED; // TODO разобраться с этим форматом
-		case 3:
-			return GL_RGB;
-		case 4:
-			return GL_RGBA;
-		default:
-			throw std::runtime_error("Unsupported texture channel count");
-		}
+	case 1:
+		return GL_RED; // TODO разобраться с этим форматом
+	case 3:
+		return GL_RGB;
+	case 4:
+		return GL_RGBA;
+	default:
+		throw std::runtime_error("Unsupported texture channel count");
 	}
 }
+} // namespace
 
 Texture2D::Texture2D(const std::filesystem::path& path)
 {
-	int width {};
-	int height {};
-	int channels {};
+	int width{};
+	int height{};
+	int channels{};
 	stbi_uc* data = stbi_load(path.string().c_str(), &width, &height, &channels, 0);
 	if (data == nullptr)
 	{
