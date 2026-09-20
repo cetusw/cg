@@ -50,7 +50,7 @@ namespace Object
 const SceneObject Ground = {
 	"Ground",
 	{ GeometryType::Ground, 30.0f, 30.0f, 0.0f, 2.0f },
-	{ { 0.0f, 0.0f, 0.4f } },
+	{ { 0.0f, 0.0f, 0.0f } },
 	Material::Ground,
 	"assets/grass.jpg"
 };
@@ -75,6 +75,22 @@ const SceneObject Garage = {
 	{ GeometryType::Box, 3.0f, 4.0f, 2.5f },
 	{ { 5.0f, 0.0f, 0.0f } },
 	Material::Wall,
+	"assets/brick.jpg"
+};
+
+const SceneObject GarageDoor = {
+	"Garage door",
+	{ GeometryType::Box, 2.2f, 0.10f, 2.0f },
+	{ { 5.0f, -2.05f, 0.0f } },
+	Material::Door,
+	{}
+};
+
+const SceneObject GarageWindow = {
+	"Garage window",
+	{ GeometryType::Box, 0.8f, 0.08f, 0.8f },
+	{ { 6.54f, 0.0f, 1.1f }, { 0.0f, 0.0f, 90.0f } },
+	Material::Window,
 	{}
 };
 
@@ -114,7 +130,7 @@ const SceneObject HouseDoor = {
 
 Scene::Scene()
 	: m_camera{
-		{ -5.0f, -10.0f, 7.0f },
+		{ 10.0f, -10.0f, 7.0f },
 		{ 0.0f, 0.0f, 1.5f },
 		{ 0.0f, 0.0f, 1.0f }
 	}
@@ -124,7 +140,7 @@ Scene::Scene()
 		{ 1.0f, 1.0f, 1.0f },
 		{ 1.0f, 1.0f, 1.0f }
 	}
-	, m_objects{ Object::Ground, Object::Foundation, Object::HouseBody, Object::Garage, Object::Roof, Object::LeftHouseWindow, Object::RightHouseWindow, Object::HouseDoor }
+	, m_objects{ Object::Ground, Object::Foundation, Object::HouseBody, Object::Garage, Object::Roof, Object::LeftHouseWindow, Object::RightHouseWindow, Object::HouseDoor, Object::GarageDoor, Object::GarageWindow }
 {
 }
 
