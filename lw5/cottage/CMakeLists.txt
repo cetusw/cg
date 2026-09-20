@@ -14,6 +14,8 @@ add_executable(cottage
     src/controller/Application.cpp
     src/model/Cottage.cpp
     src/model/Garage.cpp
+    src/model/House.cpp
+    src/model/Porch.cpp
     src/model/Scene.cpp
     src/view/GlfwWindow.cpp
     src/view/SceneRenderer.cpp

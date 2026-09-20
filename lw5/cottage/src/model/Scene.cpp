@@ -1,17 +1,16 @@
 #include "model/Scene.h"
 
 #include "model/Cottage.h"
-#include "model/Garage.h"
 #include "model/Materials.h"
 
 Scene::Scene()
 	: m_camera{
-		{ 10.0f, -10.0f, 7.0f },
+		{ 10.0f, 10.0f, 7.0f },
 		{ 0.0f, 0.0f, 1.5f },
 		{ 0.0f, 0.0f, 1.0f }
 	}
 	, m_mainLight{
-		{ -5.0f, -5.0f, 8.0f },
+		{ -5.0f, 5.0f, 8.0f },
 		{ 0.2f, 0.2f, 0.2f },
 		{ 1.0f, 1.0f, 1.0f },
 		{ 1.0f, 1.0f, 1.0f }
@@ -25,18 +24,12 @@ Scene::Scene()
 	}
 {
 	const Cottage cottage({ 0.0f, 0.0f, 0.0f });
-	const Garage garage({ 5.0f, 0.0f, 0.0f });
 	const std::vector<SceneObject> cottageObjects = cottage.CreateObjects();
-	const std::vector<SceneObject> garageObjects = garage.CreateObjects();
 
 	m_objects.insert(
 		m_objects.end(),
 		cottageObjects.begin(),
 		cottageObjects.end());
-	m_objects.insert(
-		m_objects.end(),
-		garageObjects.begin(),
-		garageObjects.end());
 }
 
 const Camera& Scene::GetCamera() const { return m_camera; }
