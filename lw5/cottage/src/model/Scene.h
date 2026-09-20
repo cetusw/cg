@@ -41,11 +41,26 @@ struct GeometryDescription
 	float textureScale = 1.0f;
 };
 
+struct Transform
+{
+	Vector3 position;
+	Vector3 rotation{
+		0.0f,
+		0.0f,
+		0.0f
+	};
+	Vector3 scale{
+		1.0f,
+		1.0f,
+		1.0f
+	};
+};
+
 struct SceneObject
 {
 	std::string name;
 	GeometryDescription geometry;
-	Vector3 position;
+	Transform transform;
 	MaterialDescription material;
 	std::string texturePath;
 };

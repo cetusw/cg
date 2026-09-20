@@ -49,71 +49,63 @@ namespace Object
 {
 const SceneObject Ground = {
 	"Ground",
-	{ GeometryType::Ground,
-		30.0f, 30.0f, 0.0f, 2.0f },
-	{ 0.0f, 0.0f, -0.01f },
+	{ GeometryType::Ground, 30.0f, 30.0f, 0.0f, 2.0f },
+	{ { 0.0f, 0.0f, 0.4f } },
 	Material::Ground,
 	"assets/grass.jpg"
 };
 const SceneObject Foundation = {
 	"Foundation",
-	{ GeometryType::Box,
-		7.0f, 5.0f, 0.4f },
-	{},
+	{ GeometryType::Box, 7.0f, 5.0f, 0.4f },
+	{ { 0.0f, 0.0f, 0.0f } },
 	Material::Foundation,
 	{}
 };
 
 const SceneObject HouseBody = {
 	"House body",
-	{ GeometryType::Box,
-		6.0f, 4.0f, 3.0f },
-	{ 0.0f, 0.0f, 0.4f },
+	{ GeometryType::Box, 6.0f, 4.0f, 3.0f },
+	{ { 0.0f, 0.0f, 0.4f } },
 	Material::Wall,
 	"assets/brick.jpg"
 };
 
 const SceneObject Garage = {
 	"Garage",
-	{ GeometryType::Box,
-		3.0f, 4.0f, 2.5f },
-	{ 5.0f, 0.0f, 0.0f },
+	{ GeometryType::Box, 3.0f, 4.0f, 2.5f },
+	{ { 5.0f, 0.0f, 0.0f } },
 	Material::Wall,
 	{}
 };
 
 const SceneObject Roof = {
 	"Roof",
-	{ GeometryType::Roof,
-		6.8f, 4.8f, 1.8f },
-	{ 0.0f, 0.0f, 3.4f },
+	{ GeometryType::Roof, 6.8f, 4.8f, 1.8f },
+	{ { 0.0f, 0.0f, 3.4f } },
 	Material::Roof,
 	"assets/cobblestone.jpg"
 };
 
 const SceneObject LeftHouseWindow = {
 	"Left house window",
-	{ GeometryType::Box,
-		1.0f, 0.08f, 1.2f },
-	{ -1.7f, -2.04f, 1.4f },
+	{ GeometryType::Box, 1.0f, 0.08f, 1.2f },
+	{ { -1.7f, -2.04f, 1.4f } },
 	Material::Window,
 	{}
 };
 
 const SceneObject RightHouseWindow = {
 	"Right house window",
-	{ GeometryType::Box,
-		1.0f, 0.08f, 1.2f },
-	{ 1.7f, -2.04f, 1.4f },
+	{ GeometryType::Box, 1.0f, 0.08f, 1.2f },
+	{ { 1.7f, -2.04f, 1.4f } },
 	Material::Window,
 	{}
 };
 
 const SceneObject HouseDoor = {
 	"House door",
-	{ GeometryType::Box,
-		1.2f, 0.10f, 2.2f },
-	{ 0.0f, -2.05f, 0.4f },
+	{ GeometryType::Box, 1.2f, 0.10f, 2.2f },
+	{ { 0.0f, -2.05f, 0.4f } },
 	Material::Door,
 	{}
 };

@@ -111,7 +111,15 @@ void SceneRenderer::DrawObject(const SceneObject& object)
 	}
 
 	glPushMatrix();
-	glTranslatef(object.position.x, object.position.y, object.position.z);
+
+	const Transform& transform = object.transform;
+
+	// TODO возможно имеет смысл разбить на функции
+	glTranslatef(transform.position.x, transform.position.y, transform.position.z);
+	glRotatef(transform.rotation.x, 1.0f, 0.0f, 0.0f);
+	glRotatef(transform.rotation.y, 0.0f, 1.0f, 0.0f);
+	glRotatef(transform.rotation.z, 0.0f, 0.0f, 1.0f);
+	glScalef(transform.scale.x, transform.scale.y, transform.scale.z);
 	glColor3f(1.0f, 1.0f, 1.0f);
 	DrawGeometry(object.geometry);
 	glPopMatrix();
