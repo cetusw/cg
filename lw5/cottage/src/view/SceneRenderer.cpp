@@ -74,6 +74,24 @@ void SceneRenderer::Render(const Scene& scene)
 	}
 }
 
+void SceneRenderer::SetProjection(const int width, const int height)
+{
+	const int safeHeight = height == 0 ? 1 : height;
+
+	const double aspect = static_cast<double>(width) / static_cast<double>(safeHeight);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	gluPerspective(
+		60.0,
+		aspect,
+		0.1,
+		100.0);
+
+	glMatrixMode(GL_MODELVIEW);
+}
+
 void SceneRenderer::ConfigureLight(const PointLight& light) const
 {
 	const std::array<GLfloat, 4> ambient = ToGlColor(light.ambient);

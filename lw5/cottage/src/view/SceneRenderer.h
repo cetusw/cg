@@ -16,6 +16,7 @@ public:
 
 	void Initialize();
 	void Render(const Scene& scene);
+	static void SetProjection(int width, int height);
 
 private:
 	void ConfigureLight(const PointLight& light) const;

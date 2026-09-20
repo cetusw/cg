@@ -16,9 +16,13 @@ public:
 
 	void PollEvents();
 
+	[[nodiscard]] int GetFramebufferWidth() const;
+	[[nodiscard]] int GetFramebufferHeight() const;
+
 private:
 	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
-	static void SetProjection(int width, int height);
 
 	GLFWwindow* m_window{};
+	int m_framebufferWidth {};
+	int m_framebufferHeight {};
 };

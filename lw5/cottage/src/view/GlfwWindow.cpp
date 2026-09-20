@@ -23,6 +23,7 @@ GlfwWindow::GlfwWindow(const int width, const int height, const char* title)
 		throw std::runtime_error("Failed to create GLFW window");
 	}
 
+	glfwSetWindowUserPointer(m_window, this);
 	glfwMakeContextCurrent(m_window);
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
@@ -37,6 +38,8 @@ GlfwWindow::GlfwWindow(const int width, const int height, const char* title)
 	int framebufferWidth{};
 	int framebufferHeight{};
 	glfwGetFramebufferSize(m_window, &framebufferWidth, &framebufferHeight);
+	m_framebufferWidth = framebufferWidth;
+	m_framebufferHeight = framebufferHeight;
 	FramebufferSizeCallback(m_window, framebufferWidth, framebufferHeight);
 }
 
@@ -53,18 +56,26 @@ bool GlfwWindow::ShouldClose() const { return glfwWindowShouldClose(m_window) !=
 void GlfwWindow::SwapBuffers() const { glfwSwapBuffers(m_window); }
 void GlfwWindow::PollEvents() { glfwPollEvents(); }
 
-void GlfwWindow::FramebufferSizeCallback(GLFWwindow*, const int width, const int height)
+int GlfwWindow::GetFramebufferWidth() const
 {
-	glViewport(0, 0, width, height);
-	SetProjection(width, height);
+	return m_framebufferWidth;
 }
 
-void GlfwWindow::SetProjection(const int width, const int height)
+int GlfwWindow::GetFramebufferHeight() const
 {
-	const int safeHeight = height == 0 ? 1 : height;
-	const double aspect = static_cast<double>(width) / static_cast<double>(safeHeight);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0, aspect, 0.1, 100.0);
-	glMatrixMode(GL_MODELVIEW);
+	return m_framebufferHeight;
+}
+
+void GlfwWindow::FramebufferSizeCallback(GLFWwindow* window, const int width, const int height)
+{
+	glViewport(0, 0, width, height);
+
+	auto* self = static_cast<GlfwWindow*>(
+		glfwGetWindowUserPointer(window));
+
+	if (self != nullptr)
+	{
+		self->m_framebufferWidth = width;
+		self->m_framebufferHeight = height;
+	}
 }
