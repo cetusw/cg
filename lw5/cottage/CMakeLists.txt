@@ -10,23 +10,24 @@ find_package(glfw3 REQUIRED)
 find_package(GLEW REQUIRED)
 
 add_executable(cottage
-        src/main.cpp
-        src/Box.cpp
-        src/Box.h
-        src/Roof.cpp
-        src/Roof.h
-        src/Vec3.h
-        src/Texture2D.cpp
-        src/Texture2D.h
-        src/Material.cpp
-        src/Material.h
-        src/Ground.cpp
-        src/Ground.h
+    main.cpp
+    src/controller/Application.cpp
+    src/model/Scene.cpp
+    src/view/GlfwWindow.cpp
+    src/view/SceneRenderer.cpp
+    src/view/Texture2D.cpp
 )
 
+target_include_directories(cottage PRIVATE src lib)
+target_compile_definitions(cottage PRIVATE COTTAGE_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(cottage PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
 target_link_libraries(cottage PRIVATE
-        OpenGL::GL
-        OpenGL::GLU
-        glfw
-        GLEW::GLEW
+    OpenGL::GL
+    OpenGL::GLU
+    glfw
+    GLEW::GLEW
 )
