@@ -12,12 +12,12 @@ find_package(GLEW REQUIRED)
 add_executable(cottage
     main.cpp
     src/controller/Application.cpp
+    src/model/Cottage.cpp
+    src/model/Garage.cpp
     src/model/Scene.cpp
     src/view/GlfwWindow.cpp
     src/view/SceneRenderer.cpp
     src/view/Texture2D.cpp
-        src/model/Garage.cpp
-        src/model/Garage.h
 )
 
 target_include_directories(cottage PRIVATE src lib)
