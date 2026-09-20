@@ -1,5 +1,7 @@
 #include "model/Scene.h"
 
+#include "Garage.h"
+
 namespace Material
 {
 constexpr MaterialDescription Ground{
@@ -70,30 +72,6 @@ const SceneObject HouseBody = {
 	"assets/brick.jpg"
 };
 
-const SceneObject Garage = {
-	"Garage",
-	{ GeometryType::Box, 3.0f, 4.0f, 2.5f },
-	{ { 5.0f, 0.0f, 0.0f } },
-	Material::Wall,
-	"assets/brick.jpg"
-};
-
-const SceneObject GarageDoor = {
-	"Garage door",
-	{ GeometryType::Box, 2.2f, 0.10f, 2.0f },
-	{ { 5.0f, -2.05f, 0.0f } },
-	Material::Door,
-	{}
-};
-
-const SceneObject GarageWindow = {
-	"Garage window",
-	{ GeometryType::Box, 0.8f, 0.08f, 0.8f },
-	{ { 6.54f, 0.0f, 1.1f }, { 0.0f, 0.0f, 90.0f } },
-	Material::Window,
-	{}
-};
-
 const SceneObject Roof = {
 	"Roof",
 	{ GeometryType::Roof, 6.8f, 4.8f, 1.8f },
@@ -140,8 +118,14 @@ Scene::Scene()
 		{ 1.0f, 1.0f, 1.0f },
 		{ 1.0f, 1.0f, 1.0f }
 	}
-	, m_objects{ Object::Ground, Object::Foundation, Object::HouseBody, Object::Garage, Object::Roof, Object::LeftHouseWindow, Object::RightHouseWindow, Object::HouseDoor, Object::GarageDoor, Object::GarageWindow }
+	, m_objects{ Object::Ground, Object::Foundation, Object::HouseBody, Object::Roof, Object::LeftHouseWindow, Object::RightHouseWindow, Object::HouseDoor }
 {
+	const Garage garage({ 5.0f, 0.0f, 0.0f });
+	const std::vector<SceneObject> garageObjects = garage.CreateObjects();
+	m_objects.insert(
+		m_objects.end(),
+		garageObjects.begin(),
+		garageObjects.end());
 }
 
 const Camera& Scene::GetCamera() const { return m_camera; }
