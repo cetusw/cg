@@ -22,7 +22,9 @@ struct MaterialDescription
 	RgbColor ambient;
 	RgbColor diffuse;
 	RgbColor specular;
+
 	float shininess{};
+	float opacity = 1.0f;
 };
 
 enum class GeometryType
@@ -85,6 +87,7 @@ class Scene
 public:
 	Scene();
 
+	[[nodiscard]] Camera& GetCamera();
 	[[nodiscard]] const Camera& GetCamera() const;
 	[[nodiscard]] const PointLight& GetMainLight() const;
 	[[nodiscard]] const std::vector<SceneObject>& GetObjects() const;

@@ -2,20 +2,38 @@
 
 Application::Application()
 	: m_window(800, 600, "Cottage")
+	, m_cameraController(m_scene.GetCamera())
 {
-	m_renderer.Initialize();
+	SceneRenderer::Initialize();
+	SetupInputHandlers();
+	SceneRenderer::SetProjection(
+		m_window.GetFramebufferWidth(),
+		m_window.GetFramebufferHeight());
 }
 
 int Application::Run()
 {
 	while (!m_window.ShouldClose())
 	{
-		m_renderer.SetProjection(
-			m_window.GetFramebufferWidth(),
-			m_window.GetFramebufferHeight());
 		m_renderer.Render(m_scene);
 		m_window.SwapBuffers();
-		m_window.PollEvents();
+		GlfwWindow::PollEvents();
 	}
 	return 0;
+}
+
+void Application::SetupInputHandlers()
+{
+	m_window.SetMouseButtonHandler(
+		[this](const int button, const int action) {
+			m_cameraController.OnMouseButton(button, action);
+		});
+	m_window.SetCursorPositionHandler(
+		[this](const double x, const double y) {
+			m_cameraController.OnCursorPosition(x, y);
+		});
+	m_window.SetFramebufferSizeHandler(
+		[](const int width, const int height) {
+			SceneRenderer::SetProjection(width, height);
+		});
 }

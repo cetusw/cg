@@ -11,6 +11,7 @@ Cottage::Cottage(const Vector3 position)
 	, m_porch({ position.x + CottageDimensions::PorchOffset.x,
 		  position.y + CottageDimensions::PorchOffset.y,
 		  position.z + CottageDimensions::PorchOffset.z })
+	, m_fence(position)
 {
 }
 
@@ -35,6 +36,12 @@ std::vector<SceneObject> Cottage::CreateObjects() const
 		objects.end(),
 		porchObjects.begin(),
 		porchObjects.end());
+
+	const std::vector<SceneObject> fenceObjects = m_fence.CreateObjects();
+	objects.insert(
+		objects.end(),
+		fenceObjects.begin(),
+		fenceObjects.end());
 
 	return objects;
 }

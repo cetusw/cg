@@ -45,4 +45,11 @@ inline constexpr MaterialDescription Door{
 	{ 0.10f, 0.10f, 0.10f },
 	8.0f
 };
+
+inline constexpr MaterialDescription Fence{
+	{ 0.18f, 0.10f, 0.04f },
+	{ 0.45f, 0.25f, 0.10f },
+	{ 0.03f, 0.03f, 0.03f },
+	4.0f
+};
 } // namespace Materials

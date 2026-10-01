@@ -1,10 +1,16 @@
 #pragma once
 
+#include <functional>
+
 struct GLFWwindow;
 
 class GlfwWindow
 {
 public:
+	using MouseButtonHandler = std::function<void(int button, int action)>;
+	using CursorPositionHandler = std::function<void(double x, double y)>;
+	using FramebufferSizeHandler = std::function<void(int width, int height)>;
+
 	GlfwWindow(int width, int height, const char* title);
 	~GlfwWindow();
 
@@ -14,15 +20,30 @@ public:
 	[[nodiscard]] bool ShouldClose() const;
 	void SwapBuffers() const;
 
-	void PollEvents();
+	static void PollEvents();
+	void SetMouseButtonHandler(MouseButtonHandler handler);
+	void SetCursorPositionHandler(CursorPositionHandler handler);
+	void SetFramebufferSizeHandler(FramebufferSizeHandler handler);
 
 	[[nodiscard]] int GetFramebufferWidth() const;
 	[[nodiscard]] int GetFramebufferHeight() const;
 
 private:
+	static void InitializeGlfw();
+	void CreateWindow(int width, int height, const char* title);
+	void InitializeOpenGL();
+	void SetupCallbacks();
+
+	static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+	static void CursorPositionCallback(GLFWwindow* window, double x, double y);
 	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 
-	GLFWwindow* m_window{};
-	int m_framebufferWidth {};
-	int m_framebufferHeight {};
+	GLFWwindow* m_window = nullptr;
+	
+	int m_framebufferWidth = 0;
+	int m_framebufferHeight = 0;
+
+	MouseButtonHandler m_mouseButtonHandler;
+	CursorPositionHandler m_cursorPositionHandler;
+	FramebufferSizeHandler m_framebufferSizeHandler;
 };

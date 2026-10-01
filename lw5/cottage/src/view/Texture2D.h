@@ -4,10 +4,12 @@
 
 #include <filesystem>
 
+struct ImageData;
+
 class Texture2D
 {
 public:
-	explicit Texture2D(const std::filesystem::path& path);
+	explicit Texture2D(const std::string& path);
 	~Texture2D();
 
 	Texture2D(const Texture2D&) = delete;
@@ -18,7 +20,12 @@ public:
 	void Bind() const;
 
 private:
+	static void LoadImage(const std::string& path, ImageData& data);
+	void CreateTexture(const ImageData& data);
+	static void ConfigureParameters();
+	static void UploadImage(const ImageData& data, GLenum format);
+
 	void Release() noexcept;
 
-	GLuint id{};
+	GLuint m_id;
 };

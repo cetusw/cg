@@ -32,6 +32,7 @@ Scene::Scene()
 		cottageObjects.end());
 }
 
+Camera& Scene::GetCamera() { return m_camera; }
 const Camera& Scene::GetCamera() const { return m_camera; }
 const PointLight& Scene::GetMainLight() const { return m_mainLight; }
 const std::vector<SceneObject>& Scene::GetObjects() const { return m_objects; }

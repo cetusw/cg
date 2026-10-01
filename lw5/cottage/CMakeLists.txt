@@ -12,7 +12,9 @@ find_package(GLEW REQUIRED)
 add_executable(cottage
     main.cpp
     src/controller/Application.cpp
+    src/controller/CameraController.cpp
     src/model/Cottage.cpp
+    src/model/Fence.cpp
     src/model/Garage.cpp
     src/model/House.cpp
     src/model/Porch.cpp
@@ -23,7 +25,7 @@ add_executable(cottage
 )
 
 target_include_directories(cottage PRIVATE src lib)
-target_compile_definitions(cottage PRIVATE COTTAGE_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_definitions(cottage PRIVATE SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(cottage PRIVATE -Wall -Wextra -Wpedantic)

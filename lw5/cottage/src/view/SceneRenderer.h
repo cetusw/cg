@@ -14,18 +14,27 @@ public:
 	SceneRenderer();
 	~SceneRenderer();
 
-	void Initialize();
+	static void Initialize();
 	void Render(const Scene& scene);
 	static void SetProjection(int width, int height);
 
 private:
-	void ConfigureLight(const PointLight& light) const;
-	void ApplyMaterial(const MaterialDescription& material) const;
+	static void PrepareFrame();
+	static void ConfigureCamera(const Camera& camera);
+	static void ConfigureLight(const PointLight& light);
+	void ConfigureTexture(const std::string& path);
+
+	void DrawObjects(const std::vector<SceneObject>& objects);
+
+	static void ApplyMaterial(const MaterialDescription& material);
+	static void ApplyTransform(const Transform& transform);
+
 	void DrawObject(const SceneObject& object);
 	void DrawGeometry(const GeometryDescription& geometry) const;
 	void DrawBox(const GeometryDescription& geometry) const;
 	void DrawGround(const GeometryDescription& geometry) const;
 	void DrawRoof(const GeometryDescription& geometry) const;
+
 	Texture2D& GetTexture(const std::string& path);
 
 	std::unordered_map<std::string, std::unique_ptr<Texture2D>> m_textures;

@@ -14,6 +14,8 @@ public:
 private:
 	void AddBodies(std::vector<SceneObject>& objects) const;
 	void AddRoofs(std::vector<SceneObject>& objects) const;
+	void AddWindows(std::vector<SceneObject>& objects) const;
+	void AddDoors(std::vector<SceneObject>& objects) const;
 
 	Vector3 m_position;
 };

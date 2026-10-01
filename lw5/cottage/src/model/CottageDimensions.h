@@ -39,6 +39,16 @@ inline constexpr float SecondRoofDepth = 4.0f;
 inline constexpr float SecondRoofHeight = 1.0f;
 inline constexpr float SecondRoofOffsetY = 2.0f;
 inline constexpr float RoofBaseHeight = WallHeight;
+
+inline constexpr float WindowWidth = 1.0f;
+inline constexpr float WindowHeight = 1.0f;
+inline constexpr float WindowThickness = 0.10f;
+inline constexpr float WindowBaseHeight = 0.75f;
+
+inline constexpr float DoorWidth = 1.0f;
+inline constexpr float DoorHeight = 1.5f;
+inline constexpr float DoorThickness = 0.10f;
+inline constexpr float DoorBaseHeight = 0.5f;
 } // namespace HouseDimensions
 
 namespace PorchDimensions
@@ -55,3 +65,23 @@ inline constexpr Vector3 ColumnOffset{
 	0.0f
 };
 } // namespace PorchDimensions
+
+namespace FenceDimensions
+{
+inline constexpr float HalfWidth = 8.0f;
+inline constexpr float HalfDepth = 6.0f;
+inline constexpr float Height = 1.2f;
+inline constexpr float PostSize = 0.2f;
+inline constexpr float RailThickness = 0.12f;
+inline constexpr float LowerRailHeight = 0.35f;
+inline constexpr float UpperRailHeight = 0.85f;
+
+inline constexpr float GateWidth = 2.4f;
+inline constexpr float GateCenterX = CottageDimensions::PorchOffset.x;
+inline constexpr float GateLeftX = GateCenterX - GateWidth / 2.0f;
+inline constexpr float GateRightX = GateCenterX + GateWidth / 2.0f;
+inline constexpr float FrontLeftRailWidth = GateLeftX + HalfWidth;
+inline constexpr float FrontRightRailWidth = HalfWidth - GateRightX;
+inline constexpr float FrontLeftRailCenterX = (GateLeftX - HalfWidth) / 2.0f;
+inline constexpr float FrontRightRailCenterX = (GateRightX + HalfWidth) / 2.0f;
+} // namespace FenceDimensions
