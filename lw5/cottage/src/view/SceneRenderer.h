@@ -30,10 +30,6 @@ private:
 	static void ApplyTransform(const Transform& transform);
 
 	void DrawObject(const SceneObject& object);
-	void DrawGeometry(const GeometryDescription& geometry) const;
-	void DrawBox(const GeometryDescription& geometry) const;
-	void DrawGround(const GeometryDescription& geometry) const;
-	void DrawRoof(const GeometryDescription& geometry) const;
 
 	Texture2D& GetTexture(const std::string& path);
 

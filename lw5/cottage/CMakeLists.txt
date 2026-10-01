@@ -19,6 +19,7 @@ add_executable(cottage
     src/model/House.cpp
     src/model/Porch.cpp
     src/model/Scene.cpp
+    src/view/GeometryRenderer.cpp
     src/view/GlfwWindow.cpp
     src/view/SceneRenderer.cpp
     src/view/Texture2D.cpp
