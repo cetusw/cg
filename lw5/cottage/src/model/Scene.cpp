@@ -17,7 +17,7 @@ Scene::Scene()
 	}
 	, m_objects{
 		{ "Ground",
-			{ GeometryType::Ground, 30.0f, 30.0f, 0.0f, 2.0f },
+			{ GeometryType::Plane, 30.0f, 30.0f, 0.0f, 2.0f },
 			{ { 0.0f, 0.0f, -0.01f } },
 			Materials::Ground,
 			"assets/grass.jpg" }

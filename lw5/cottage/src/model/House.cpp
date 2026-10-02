@@ -47,14 +47,14 @@ void House::AddRoofs(std::vector<SceneObject>& objects) const
 
 	objects.push_back({
 		"First roof",
-		{ GeometryType::Roof, FirstRoofWidth, FirstRoofDepth, FirstRoofHeight },
+		{ GeometryType::TriangularPrism, FirstRoofWidth, FirstRoofDepth, FirstRoofHeight },
 		{ { m_position.x + FirstRoofOffsetX, m_position.y, m_position.z + RoofBaseHeight }, { 0.0f, 0.0f, FirstRoofRotationZ } },
 		Materials::Wall,
 		"assets/brick.jpg"
 	});
 	objects.push_back({
 		"Second roof",
-		{ GeometryType::Roof, SecondRoofWidth, SecondRoofDepth, SecondRoofHeight },
+		{ GeometryType::TriangularPrism, SecondRoofWidth, SecondRoofDepth, SecondRoofHeight },
 		{ { m_position.x, m_position.y + SecondRoofOffsetY, m_position.z + RoofBaseHeight } },
 		Materials::Wall,
 		"assets/brick.jpg"

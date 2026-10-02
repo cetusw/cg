@@ -9,6 +9,6 @@ public:
 
 private:
 	static void DrawBox(const GeometryDescription& geometry);
-	static void DrawGround(const GeometryDescription& geometry);
-	static void DrawRoof(const GeometryDescription& geometry);
+	static void DrawPlane(const GeometryDescription& geometry);
+	static void DrawTriangularPrism(const GeometryDescription& geometry);
 };

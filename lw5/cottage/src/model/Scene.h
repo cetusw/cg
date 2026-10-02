@@ -30,8 +30,8 @@ struct MaterialDescription
 enum class GeometryType
 {
 	Box,
-	Roof,
-	Ground
+	TriangularPrism,
+	Plane
 };
 
 struct GeometryDescription
