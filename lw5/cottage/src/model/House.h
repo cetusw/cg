@@ -1,13 +1,14 @@
 #pragma once
 
-#include "model/Scene.h"
+#include "types/SceneObject.h"
 
+#include <glm/vec3.hpp>
 #include <vector>
 
 class House
 {
 public:
-	explicit House(Vector3 position);
+	explicit House(glm::vec3 position);
 
 	[[nodiscard]] std::vector<SceneObject> CreateObjects() const;
 
@@ -17,5 +18,5 @@ private:
 	void AddWindows(std::vector<SceneObject>& objects) const;
 	void AddDoors(std::vector<SceneObject>& objects) const;
 
-	Vector3 m_position;
+	glm::vec3 m_position;
 };

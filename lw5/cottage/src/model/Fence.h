@@ -1,16 +1,17 @@
 #pragma once
 
-#include "model/Scene.h"
+#include "types/SceneObject.h"
 
+#include <glm/vec3.hpp>
 #include <vector>
 
 class Fence
 {
 public:
-	explicit Fence(Vector3 position);
+	explicit Fence(glm::vec3 position);
 
 	[[nodiscard]] std::vector<SceneObject> CreateObjects() const;
 
 private:
-	Vector3 m_position;
+	glm::vec3 m_position;
 };

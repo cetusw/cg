@@ -1,11 +1,11 @@
 #include "model/Fence.h"
 
-#include "model/CottageDimensions.h"
-#include "model/Materials.h"
+#include "consts/CottageDimensions.h"
+#include "data/Materials.h"
 
 #include <array>
 
-Fence::Fence(const Vector3 position)
+Fence::Fence(const glm::vec3 position)
 	: m_position(position)
 {
 }

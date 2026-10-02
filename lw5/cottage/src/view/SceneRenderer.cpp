@@ -15,7 +15,7 @@ std::array<GLfloat, 4> ToGlColor(const RgbColor& color, const float alpha = 1.0f
 	return { color.red, color.green, color.blue, alpha };
 }
 
-std::array<GLfloat, 4> ToGlPoint(const Vector3 point)
+std::array<GLfloat, 4> ToGlPoint(const glm::vec3 point)
 {
 	return { point.x, point.y, point.z, 1.0f };
 }

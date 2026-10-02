@@ -3,14 +3,18 @@
 #include <GL/glew.h>
 
 #include <array>
-#include <cmath>
+
+#include <glm/geometric.hpp>
+#include <glm/vec3.hpp>
+
+// TODO выучить математику
 
 namespace
 {
 struct TexturedVertex
 {
 	TexturedVertex(
-		const Vector3& position,
+		const glm::vec3& position,
 		const float u,
 		const float v)
 		: position(position)
@@ -19,7 +23,7 @@ struct TexturedVertex
 	{
 	}
 
-	Vector3 position;
+	glm::vec3 position;
 	float u{};
 	float v{};
 };
@@ -42,14 +46,14 @@ struct BoxVertices
 	{
 	}
 
-	Vector3 leftBackBottom;
-	Vector3 rightBackBottom;
-	Vector3 leftFrontBottom;
-	Vector3 rightFrontBottom;
-	Vector3 leftBackTop;
-	Vector3 rightBackTop;
-	Vector3 leftFrontTop;
-	Vector3 rightFrontTop;
+	glm::vec3 leftBackBottom;
+	glm::vec3 rightBackBottom;
+	glm::vec3 leftFrontBottom;
+	glm::vec3 rightFrontBottom;
+	glm::vec3 leftBackTop;
+	glm::vec3 rightBackTop;
+	glm::vec3 leftFrontTop;
+	glm::vec3 rightFrontTop;
 };
 
 struct PlaneVertices
@@ -65,10 +69,10 @@ struct PlaneVertices
 	{
 	}
 
-	Vector3 leftBack;
-	Vector3 rightBack;
-	Vector3 leftFront;
-	Vector3 rightFront;
+	glm::vec3 leftBack;
+	glm::vec3 rightBack;
+	glm::vec3 leftFront;
+	glm::vec3 rightFront;
 };
 
 struct TriangularPrismVertices
@@ -87,12 +91,12 @@ struct TriangularPrismVertices
 	{
 	}
 
-	Vector3 leftBack;
-	Vector3 rightBack;
-	Vector3 topBack;
-	Vector3 leftFront;
-	Vector3 rightFront;
-	Vector3 topFront;
+	glm::vec3 leftBack;
+	glm::vec3 rightBack;
+	glm::vec3 topBack;
+	glm::vec3 leftFront;
+	glm::vec3 rightFront;
+	glm::vec3 topFront;
 };
 
 struct TextureRepeat
@@ -119,7 +123,7 @@ void DrawVertex(const TexturedVertex& vertex)
 }
 
 void DrawQuad(
-	const Vector3& normal,
+	const glm::vec3& normal,
 	const std::array<TexturedVertex, 4>& vertices)
 {
 	glBegin(GL_QUADS);
@@ -134,7 +138,7 @@ void DrawQuad(
 }
 
 void DrawTriangle(
-	const Vector3& normal,
+	const glm::vec3& normal,
 	const std::array<TexturedVertex, 3>& vertices)
 {
 	glBegin(GL_TRIANGLES);
@@ -148,39 +152,13 @@ void DrawTriangle(
 	glEnd();
 }
 
-Vector3 CalculateNormal(
-	const Vector3& first,
-	const Vector3& second,
-	const Vector3& third)
+glm::vec3 CalculateNormal(
+	const glm::vec3& first,
+	const glm::vec3& second,
+	const glm::vec3& third)
 {
-	const Vector3 firstEdge{
-		second.x - first.x,
-		second.y - first.y,
-		second.z - first.z
-	};
-
-	const Vector3 secondEdge{
-		third.x - first.x,
-		third.y - first.y,
-		third.z - first.z
-	};
-
-	const Vector3 normal{
-		firstEdge.y * secondEdge.z - firstEdge.z * secondEdge.y,
-		firstEdge.z * secondEdge.x - firstEdge.x * secondEdge.z,
-		firstEdge.x * secondEdge.y - firstEdge.y * secondEdge.x
-	};
-
-	const float length = std::sqrt(
-		normal.x * normal.x
-		+ normal.y * normal.y
-		+ normal.z * normal.z);
-
-	return {
-		normal.x / length,
-		normal.y / length,
-		normal.z / length
-	};
+	return glm::normalize(
+		glm::cross(second - first, third - first));
 }
 } // namespace
 

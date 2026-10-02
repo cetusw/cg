@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/Scene.h"
+#include "../model/types/Geometry.h"
 
 class GeometryRenderer
 {

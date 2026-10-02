@@ -1,8 +1,8 @@
 #include "model/Garage.h"
 
-#include "model/Materials.h"
+#include "data/Materials.h"
 
-Garage::Garage(const Vector3 position)
+Garage::Garage(const glm::vec3 position)
 	: m_position(position)
 {
 }

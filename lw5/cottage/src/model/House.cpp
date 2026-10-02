@@ -1,9 +1,9 @@
 #include "model/House.h"
 
-#include "model/CottageDimensions.h"
-#include "model/Materials.h"
+#include "consts/CottageDimensions.h"
+#include "data/Materials.h"
 
-House::House(const Vector3 position)
+House::House(const glm::vec3 position)
 	: m_position(position)
 {
 }
@@ -11,7 +11,7 @@ House::House(const Vector3 position)
 std::vector<SceneObject> House::CreateObjects() const
 {
 	std::vector<SceneObject> objects;
-	objects.reserve(7);
+	objects.reserve(7); // TODO понять, зачем так делать и сделать число явным
 
 	AddBodies(objects);
 	AddRoofs(objects);

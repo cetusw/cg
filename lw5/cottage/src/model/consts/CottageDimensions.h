@@ -1,19 +1,25 @@
 #pragma once
 
-#include "model/Scene.h"
+#include <glm/vec3.hpp>
 
 namespace CottageDimensions
 {
-inline constexpr Vector3 GarageOffset{
-	5.0f,
-	0.0f,
-	0.0f
+inline constexpr float GarageOffsetX = 5.0f;
+inline constexpr float GarageOffsetY = 0.0f;
+inline constexpr float GarageOffsetZ = 0.0f;
+inline constexpr glm::vec3 GarageOffset{
+	GarageOffsetX,
+	GarageOffsetY,
+	GarageOffsetZ
 };
 
-inline constexpr Vector3 PorchOffset{
-	1.5f,
-	3.0f,
-	0.0f
+inline constexpr float PorchOffsetX = 1.5f;
+inline constexpr float PorchOffsetY = 3.0f;
+inline constexpr float PorchOffsetZ = 0.0f;
+inline constexpr glm::vec3 PorchOffset{
+	PorchOffsetX,
+	PorchOffsetY,
+	PorchOffsetZ
 };
 } // namespace CottageDimensions
 
@@ -59,7 +65,7 @@ inline constexpr float PlatformHeight = 0.5f;
 
 inline constexpr float ColumnWidth = 0.2f;
 inline constexpr float ColumnHeight = 2.0f;
-inline constexpr Vector3 ColumnOffset{
+inline constexpr glm::vec3 ColumnOffset{
 	1.0f,
 	0.5f,
 	0.0f
@@ -77,7 +83,7 @@ inline constexpr float LowerRailHeight = 0.35f;
 inline constexpr float UpperRailHeight = 0.85f;
 
 inline constexpr float GateWidth = 2.4f;
-inline constexpr float GateCenterX = CottageDimensions::PorchOffset.x;
+inline constexpr float GateCenterX = CottageDimensions::PorchOffsetX;
 inline constexpr float GateLeftX = GateCenterX - GateWidth / 2.0f;
 inline constexpr float GateRightX = GateCenterX + GateWidth / 2.0f;
 inline constexpr float FrontLeftRailWidth = GateLeftX + HalfWidth;

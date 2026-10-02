@@ -1,16 +1,13 @@
 #include "model/Cottage.h"
 
-#include "model/CottageDimensions.h"
+#include "consts/CottageDimensions.h"
 
-Cottage::Cottage(const Vector3 position)
+// TODO уточнить используемый паттерн
+Cottage::Cottage(const glm::vec3 position)
 	: m_position(position)
 	, m_house(position)
-	, m_garage({ position.x + CottageDimensions::GarageOffset.x,
-		  position.y + CottageDimensions::GarageOffset.y,
-		  position.z + CottageDimensions::GarageOffset.z })
-	, m_porch({ position.x + CottageDimensions::PorchOffset.x,
-		  position.y + CottageDimensions::PorchOffset.y,
-		  position.z + CottageDimensions::PorchOffset.z })
+	, m_garage(position + CottageDimensions::GarageOffset)
+	, m_porch(position + CottageDimensions::PorchOffset)
 	, m_fence(position)
 {
 }

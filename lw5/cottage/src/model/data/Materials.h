@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/Scene.h"
+#include "../types/Material.h"
 
 namespace Materials
 {

@@ -5,11 +5,11 @@
 #include <algorithm>
 #include <cmath>
 
+// TODO разобрать математику и отрефакторить
 namespace CameraControl
 {
 inline constexpr float MouseSensitivityRadiansPerPixel = 0.005f;
-inline constexpr float Pi = 3.14159265358979323846f;
-inline constexpr float MaxPitchRadians = 89.0f * Pi / 180.0f;
+inline constexpr float MaxPitchRadians = 89.0f * std::numbers::pi / 180.0f;
 } // namespace CameraControl
 
 CameraController::CameraController(Camera& camera)
@@ -35,7 +35,7 @@ void CameraController::OnMouseButton(const int button, const int action)
 	}
 
 	m_rotating = action == GLFW_PRESS;
-	m_hasMousePosition = false;
+	m_hasMousePosition = false; // TODO переименовать поле
 }
 
 void CameraController::OnCursorPosition(const double x, const double y)
@@ -58,8 +58,8 @@ void CameraController::OnCursorPosition(const double x, const double y)
 	m_lastMouseX = x;
 	m_lastMouseY = y;
 
-	m_yawRadians += static_cast<float>(deltaX) * CameraControl::MouseSensitivityRadiansPerPixel;
-	m_pitchRadians -= static_cast<float>(deltaY) * CameraControl::MouseSensitivityRadiansPerPixel;
+	m_yawRadians -= static_cast<float>(deltaX) * CameraControl::MouseSensitivityRadiansPerPixel;
+	m_pitchRadians += static_cast<float>(deltaY) * CameraControl::MouseSensitivityRadiansPerPixel;
 	m_pitchRadians = std::clamp(
 		m_pitchRadians,
 		-CameraControl::MaxPitchRadians,
