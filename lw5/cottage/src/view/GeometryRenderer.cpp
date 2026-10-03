@@ -102,15 +102,19 @@ struct TriangularPrismVertices
 struct TextureRepeat
 {
 	explicit TextureRepeat(const GeometryDescription& geometry)
-		: x(geometry.width / geometry.textureScale)
-		, y(geometry.depth / geometry.textureScale)
-		, z(geometry.height / geometry.textureScale)
+		: m_textureScale(geometry.textureScale)
 	{
 	}
 
-	float x;
-	float y;
-	float z;
+	[[nodiscard]] float Between(
+		const glm::vec3& first,
+		const glm::vec3& second) const
+	{
+		return glm::length(second - first) / m_textureScale;
+	}
+
+private:
+	float m_textureScale;
 };
 
 void DrawVertex(const TexturedVertex& vertex)
@@ -193,48 +197,57 @@ void GeometryRenderer::DrawBox(const GeometryDescription& geometry)
 		halfDepth,
 		bottom,
 		top);
+	const float repeatX = repeat.Between(
+		vertices.leftBackBottom,
+		vertices.rightBackBottom);
+	const float repeatY = repeat.Between(
+		vertices.leftBackBottom,
+		vertices.leftFrontBottom);
+	const float repeatZ = repeat.Between(
+		vertices.leftBackBottom,
+		vertices.leftBackTop);
 
 	DrawQuad(
 		{ 0.0f, 1.0f, 0.0f },
 		{ TexturedVertex(vertices.rightFrontBottom, 0.0f, 0.0f),
-			TexturedVertex(vertices.leftFrontBottom, repeat.x, 0.0f),
-			TexturedVertex(vertices.leftFrontTop, repeat.x, repeat.z),
-			TexturedVertex(vertices.rightFrontTop, 0.0f, repeat.z) });
+			TexturedVertex(vertices.leftFrontBottom, repeatX, 0.0f),
+			TexturedVertex(vertices.leftFrontTop, repeatX, repeatZ),
+			TexturedVertex(vertices.rightFrontTop, 0.0f, repeatZ) });
 
 	DrawQuad(
 		{ 0.0f, -1.0f, 0.0f },
 		{ TexturedVertex(vertices.leftBackBottom, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightBackBottom, repeat.x, 0.0f),
-			TexturedVertex(vertices.rightBackTop, repeat.x, repeat.z),
-			TexturedVertex(vertices.leftBackTop, 0.0f, repeat.z) });
+			TexturedVertex(vertices.rightBackBottom, repeatX, 0.0f),
+			TexturedVertex(vertices.rightBackTop, repeatX, repeatZ),
+			TexturedVertex(vertices.leftBackTop, 0.0f, repeatZ) });
 
 	DrawQuad(
 		{ 1.0f, 0.0f, 0.0f },
 		{ TexturedVertex(vertices.rightBackBottom, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightFrontBottom, repeat.y, 0.0f),
-			TexturedVertex(vertices.rightFrontTop, repeat.y, repeat.z),
-			TexturedVertex(vertices.rightBackTop, 0.0f, repeat.z) });
+			TexturedVertex(vertices.rightFrontBottom, repeatY, 0.0f),
+			TexturedVertex(vertices.rightFrontTop, repeatY, repeatZ),
+			TexturedVertex(vertices.rightBackTop, 0.0f, repeatZ) });
 
 	DrawQuad(
 		{ -1.0f, 0.0f, 0.0f },
 		{ TexturedVertex(vertices.leftFrontBottom, 0.0f, 0.0f),
-			TexturedVertex(vertices.leftBackBottom, repeat.y, 0.0f),
-			TexturedVertex(vertices.leftBackTop, repeat.y, repeat.z),
-			TexturedVertex(vertices.leftFrontTop, 0.0f, repeat.z) });
+			TexturedVertex(vertices.leftBackBottom, repeatY, 0.0f),
+			TexturedVertex(vertices.leftBackTop, repeatY, repeatZ),
+			TexturedVertex(vertices.leftFrontTop, 0.0f, repeatZ) });
 
 	DrawQuad(
 		{ 0.0f, 0.0f, 1.0f },
 		{ TexturedVertex(vertices.leftBackTop, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightBackTop, repeat.x, 0.0f),
-			TexturedVertex(vertices.rightFrontTop, repeat.x, repeat.y),
-			TexturedVertex(vertices.leftFrontTop, 0.0f, repeat.y) });
+			TexturedVertex(vertices.rightBackTop, repeatX, 0.0f),
+			TexturedVertex(vertices.rightFrontTop, repeatX, repeatY),
+			TexturedVertex(vertices.leftFrontTop, 0.0f, repeatY) });
 
 	DrawQuad(
 		{ 0.0f, 0.0f, -1.0f },
 		{ TexturedVertex(vertices.leftFrontBottom, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightFrontBottom, repeat.x, 0.0f),
-			TexturedVertex(vertices.rightBackBottom, repeat.x, repeat.y),
-			TexturedVertex(vertices.leftBackBottom, 0.0f, repeat.y) });
+			TexturedVertex(vertices.rightFrontBottom, repeatX, 0.0f),
+			TexturedVertex(vertices.rightBackBottom, repeatX, repeatY),
+			TexturedVertex(vertices.leftBackBottom, 0.0f, repeatY) });
 }
 
 void GeometryRenderer::DrawPlane(const GeometryDescription& geometry)
@@ -248,13 +261,19 @@ void GeometryRenderer::DrawPlane(const GeometryDescription& geometry)
 		halfWidth,
 		halfDepth,
 		height);
+	const float repeatX = repeat.Between(
+		vertices.leftBack,
+		vertices.rightBack);
+	const float repeatY = repeat.Between(
+		vertices.leftBack,
+		vertices.leftFront);
 
 	DrawQuad(
 		{ 0.0f, 0.0f, 1.0f },
 		{ TexturedVertex(vertices.leftBack, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightBack, repeat.x, 0.0f),
-			TexturedVertex(vertices.rightFront, repeat.x, repeat.y),
-			TexturedVertex(vertices.leftFront, 0.0f, repeat.y) });
+			TexturedVertex(vertices.rightBack, repeatX, 0.0f),
+			TexturedVertex(vertices.rightFront, repeatX, repeatY),
+			TexturedVertex(vertices.leftFront, 0.0f, repeatY) });
 }
 
 void GeometryRenderer::DrawTriangularPrism(
@@ -265,23 +284,28 @@ void GeometryRenderer::DrawTriangularPrism(
 	constexpr float bottom = 0.0f;
 	const float top = geometry.height;
 
-	const float slopeLength = std::sqrt(
-		halfWidth * halfWidth
-		+ geometry.height * geometry.height);
-	const float slopeRepeat = slopeLength / geometry.textureScale;
-
 	const TextureRepeat repeat(geometry);
 	const TriangularPrismVertices vertices(
 		halfWidth,
 		halfDepth,
 		bottom,
 		top);
+	const float repeatX = repeat.Between(
+		vertices.leftBack,
+		vertices.rightBack);
+	const float repeatY = repeat.Between(
+		vertices.leftBack,
+		vertices.leftFront);
+	const float repeatZ = geometry.height / geometry.textureScale;
+	const float slopeRepeat = repeat.Between(
+		vertices.leftBack,
+		vertices.topBack);
 
 	DrawTriangle(
 		{ 0.0f, 1.0f, 0.0f },
-		{ TexturedVertex(vertices.rightFront, 0.0f, 0.0f),
-			TexturedVertex(vertices.leftFront, 1.0f, 0.0f),
-			TexturedVertex(vertices.topFront, 0.5f, 1.0f) });
+		{ TexturedVertex(vertices.leftFront, 0.0f, 0.0f),
+			TexturedVertex(vertices.topFront, repeatX / 2.0f, repeatZ),
+			TexturedVertex(vertices.rightFront, repeatX, 0.0f) });
 
 	DrawTriangle(
 		{ 0.0f, -1.0f, 0.0f },
@@ -296,8 +320,8 @@ void GeometryRenderer::DrawTriangularPrism(
 			vertices.topFront),
 		{ TexturedVertex(vertices.leftBack, 0.0f, 0.0f),
 			TexturedVertex(vertices.topBack, 0.0f, slopeRepeat),
-			TexturedVertex(vertices.topFront, repeat.y, slopeRepeat),
-			TexturedVertex(vertices.leftFront, repeat.y, 0.0f) });
+			TexturedVertex(vertices.topFront, repeatY, slopeRepeat),
+			TexturedVertex(vertices.leftFront, repeatY, 0.0f) });
 
 	DrawQuad(
 		CalculateNormal(
@@ -305,14 +329,14 @@ void GeometryRenderer::DrawTriangularPrism(
 			vertices.rightBack,
 			vertices.rightFront),
 		{ TexturedVertex(vertices.topBack, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightBack, 0.0f, slopeLength),
-			TexturedVertex(vertices.rightFront, repeat.y, slopeLength),
-			TexturedVertex(vertices.topFront, repeat.y, 0.0f) });
+			TexturedVertex(vertices.rightBack, 0.0f, slopeRepeat),
+			TexturedVertex(vertices.rightFront, repeatY, slopeRepeat),
+			TexturedVertex(vertices.topFront, repeatY, 0.0f) });
 
 	DrawQuad(
 		{ 0.0f, 0.0f, -1.0f },
 		{ TexturedVertex(vertices.leftFront, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightFront, repeat.x, 0.0f),
-			TexturedVertex(vertices.rightBack, repeat.x, repeat.y),
-			TexturedVertex(vertices.leftBack, 0.0f, repeat.y) });
+			TexturedVertex(vertices.rightFront, repeatX, 0.0f),
+			TexturedVertex(vertices.rightBack, repeatX, repeatY),
+			TexturedVertex(vertices.leftBack, 0.0f, repeatY) });
 }
