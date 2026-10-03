@@ -34,7 +34,7 @@ private:
 	static constexpr float FirstRoofRotationZ = 90.0f;
 
 	static constexpr float FirstRoofShinglesWidth = FirstRoofDepth + 0.5f;
-	static constexpr float FirstRoofShinglesDepth = 2.9f;
+	static constexpr float FirstRoofShinglesDepth = 2.95f;
 	static constexpr float FirstRoofShinglesHeight = 0.3f;
 	static constexpr float FirstRoofShinglesOffsetX = 2.0f;
 
@@ -45,7 +45,7 @@ private:
 	static constexpr float FirstRoofLeftShinglesRotationX = 36.87f;
 
 	static constexpr float SecondRoofWidth = 6.0f;
-	static constexpr float SecondRoofDepth = 4.0f;
+	static constexpr float SecondRoofDepth = 5.0f;
 	static constexpr float SecondRoofHeight = 1.0f;
 	static constexpr float SecondRoofOffsetY = 2.0f;
 	static constexpr float RoofBaseHeight = WallHeight;

@@ -1,7 +1,7 @@
 #include "controller/Application.h"
 
 Application::Application()
-	: m_window(800, 600, "Cottage")
+	: m_window(2300, 1500, "Cottage")
 	, m_cameraController(m_scene.GetCamera())
 {
 	SceneRenderer::Initialize();

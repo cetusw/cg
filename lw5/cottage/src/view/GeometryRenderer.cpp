@@ -265,6 +265,11 @@ void GeometryRenderer::DrawTriangularPrism(
 	constexpr float bottom = 0.0f;
 	const float top = geometry.height;
 
+	const float slopeLength = std::sqrt(
+		halfWidth * halfWidth
+		+ geometry.height * geometry.height);
+	const float slopeRepeat = slopeLength / geometry.textureScale;
+
 	const TextureRepeat repeat(geometry);
 	const TriangularPrismVertices vertices(
 		halfWidth,
@@ -290,8 +295,8 @@ void GeometryRenderer::DrawTriangularPrism(
 			vertices.topBack,
 			vertices.topFront),
 		{ TexturedVertex(vertices.leftBack, 0.0f, 0.0f),
-			TexturedVertex(vertices.topBack, 0.0f, repeat.z),
-			TexturedVertex(vertices.topFront, repeat.y, repeat.z),
+			TexturedVertex(vertices.topBack, 0.0f, slopeRepeat),
+			TexturedVertex(vertices.topFront, repeat.y, slopeRepeat),
 			TexturedVertex(vertices.leftFront, repeat.y, 0.0f) });
 
 	DrawQuad(
@@ -300,8 +305,8 @@ void GeometryRenderer::DrawTriangularPrism(
 			vertices.rightBack,
 			vertices.rightFront),
 		{ TexturedVertex(vertices.topBack, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightBack, 0.0f, repeat.z),
-			TexturedVertex(vertices.rightFront, repeat.y, repeat.z),
+			TexturedVertex(vertices.rightBack, 0.0f, slopeLength),
+			TexturedVertex(vertices.rightFront, repeat.y, slopeLength),
 			TexturedVertex(vertices.topFront, repeat.y, 0.0f) });
 
 	DrawQuad(

@@ -8,7 +8,8 @@
 namespace CameraSettings
 {
 inline constexpr float RadiansPerPixel = 0.01f;
-inline constexpr float MaxPitchRadians = 89.0f * std::numbers::pi / 180.0f;
+inline constexpr float MaxPitchRadians = 89.9f * std::numbers::pi / 180.0f;
+inline constexpr float MinPitchRadians = 0.1f * std::numbers::pi / 180.0f;
 } // namespace CameraControl
 
 CameraController::CameraController(Camera& camera)
@@ -57,7 +58,7 @@ void CameraController::OnCursorPosition(const glm::dvec2 mousePosition)
 
 	m_pitchRadians = std::clamp(
 		m_pitchRadians,
-		-CameraSettings::MaxPitchRadians,
+		CameraSettings::MinPitchRadians,
 		CameraSettings::MaxPitchRadians);
 
 	UpdateCamera();

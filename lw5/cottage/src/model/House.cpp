@@ -25,14 +25,14 @@ void House::AddBodies(std::vector<SceneObject>& objects) const
 		"First Body",
 		{ GeometryType::Box, FirstBodyWidth, FirstBodyDepth, WallHeight },
 		{ { m_position.x + BodyOffsetX, m_position.y, m_position.z } },
-		Materials::Wall,
+		Materials::Concrete,
 		"assets/concrete.jpg"
 	});
 	objects.push_back({
 		"Second Body",
 		{ GeometryType::Box, SecondBodyWidth, SecondBodyDepth, WallHeight },
 		{ { m_position.x - BodyOffsetX, m_position.y + SecondBodyOffsetY, m_position.z } },
-		Materials::Wall,
+		Materials::Concrete,
 		"assets/concrete.jpg"
 	});
 }
@@ -43,29 +43,29 @@ void House::AddRoofs(std::vector<SceneObject>& objects) const
 		"First roof",
 		{ GeometryType::TriangularPrism, FirstRoofWidth, FirstRoofDepth, FirstRoofHeight },
 		{ { m_position.x + FirstRoofOffsetX, m_position.y, m_position.z + RoofBaseHeight }, { 0.0f, 0.0f, FirstRoofRotationZ } },
-		Materials::Wall,
-		"assets/brick.jpg"
+		Materials::Concrete,
+		"assets/concrete.jpg"
 	});
 	objects.push_back({
 		"First roof right shingles",
 		{ GeometryType::Box, FirstRoofShinglesWidth, FirstRoofShinglesDepth, FirstRoofShinglesHeight },
 		{ { m_position.x + FirstRoofShinglesOffsetX, m_position.y + FirstRoofRightShinglesOffsetY , m_position.z + RoofShinglesHeight }, { FirstRoofRightShinglesRotationX, 0.0f, 0.0f } },
-		Materials::Wall,
-		"assets/brick.jpg"
+		Materials::Concrete,
+		"assets/shingles.jpg"
 	});
 	objects.push_back({
 		"First roof left shingles",
 		{ GeometryType::Box, FirstRoofShinglesWidth, FirstRoofShinglesDepth, FirstRoofShinglesHeight },
 		{ { m_position.x + FirstRoofShinglesOffsetX, m_position.y + FirstRoofLeftShinglesOffsetY , m_position.z + RoofShinglesHeight }, { FirstRoofLeftShinglesRotationX, 0.0f, 0.0f } },
-		Materials::Wall,
-		"assets/brick.jpg"
+		Materials::Concrete,
+		"assets/shingles.jpg"
 	});
 	objects.push_back({
 		"Second roof",
 		{ GeometryType::TriangularPrism, SecondRoofWidth, SecondRoofDepth, SecondRoofHeight },
 		{ { m_position.x, m_position.y + SecondRoofOffsetY, m_position.z + RoofBaseHeight } },
-		Materials::Wall,
-		"assets/brick.jpg"
+		Materials::Concrete,
+		"assets/shingles.jpg"
 	});
 }
 

@@ -13,12 +13,12 @@ std::vector<SceneObject> Porch::CreateObjects() const
 		{ "Porch",
 			{ GeometryType::Box, PlatformWidth, PlatformDepth, PlatformHeight },
 			{ m_position },
-			Materials::Wall, // TODO заменить
+			Materials::Concrete, // TODO заменить
 			"assets/concrete.jpg" }, // TODO заменить
 		{ "Column",
 			{ GeometryType::Box, ColumnWidth, ColumnWidth, ColumnHeight },
 			{ { m_position.x + ColumnOffset.x, m_position.y + ColumnOffset.y, m_position.z + ColumnOffset.z } },
-			Materials::Wall, // TODO заменить
+			Materials::Concrete, // TODO заменить
 			"assets/concrete.jpg" } // TODO заменить
 	};
 }

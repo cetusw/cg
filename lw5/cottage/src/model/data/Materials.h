@@ -5,15 +5,15 @@
 namespace Materials
 {
 inline constexpr MaterialDescription Ground{
-	{ 0.10f, 0.20f, 0.10f },
-	{ 0.35f, 0.65f, 0.30f },
-	{ 0.05f, 0.05f, 0.05f },
+	{ 0.0f, 0.5f, 0.0f },
+	{ 0.0f, 1.0f, 0.0f },
+	{ 0.0f, 0.0f, 0.0f },
 	4.0f
 };
 
-inline constexpr MaterialDescription Wall{
-	{ 0.30f, 0.10f, 0.08f },
-	{ 0.75f, 0.25f, 0.15f },
+inline constexpr MaterialDescription Concrete{
+	{ 0.6f, 0.6f, 0.7f },
+	{ 0.65f, 0.65f, 0.8f },
 	{ 0.10f, 0.10f, 0.10f },
 	8.0f
 };
