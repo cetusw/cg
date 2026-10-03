@@ -43,6 +43,7 @@ void SceneRenderer::Render(const Scene& scene)
 
 void SceneRenderer::SetProjection(const int width, const int height)
 {
+	// TODO разобрать пример, как работают соотношения сторон
 	const int safeHeight = height <= 0
 		? 1
 		: height;

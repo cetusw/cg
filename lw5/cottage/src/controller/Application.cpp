@@ -25,12 +25,12 @@ int Application::Run()
 void Application::SetupInputHandlers()
 {
 	m_window.SetMouseButtonHandler(
-		[this](const int button, const int action) {
-			m_cameraController.OnMouseButton(button, action);
+		[this](const int button, const int action, const glm::dvec2 mousePosition) {
+			m_cameraController.OnMouseButton(button, action, mousePosition);
 		});
 	m_window.SetCursorPositionHandler(
-		[this](const double x, const double y) {
-			m_cameraController.OnCursorPosition(x, y);
+		[this](const glm::dvec2 mousePosition) {
+			m_cameraController.OnCursorPosition(mousePosition);
 		});
 	m_window.SetFramebufferSizeHandler(
 		[](const int width, const int height) {

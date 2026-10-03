@@ -1,14 +1,15 @@
 #pragma once
 
 #include <functional>
+#include <glm/glm.hpp>
 
 struct GLFWwindow;
 
 class GlfwWindow
 {
 public:
-	using MouseButtonHandler = std::function<void(int button, int action)>;
-	using CursorPositionHandler = std::function<void(double x, double y)>;
+	using MouseButtonHandler = std::function<void(int button, int action, glm::dvec2 mousePosition)>;
+	using CursorPositionHandler = std::function<void(glm::dvec2 mousePosition)>;
 	using FramebufferSizeHandler = std::function<void(int width, int height)>;
 
 	GlfwWindow(int width, int height, const char* title);

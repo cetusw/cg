@@ -18,7 +18,6 @@ namespace
 {
 GLenum GetFormat(const int channels)
 {
-	// TODO убрать Unreachable code из настроек анализатора
 	switch (channels)
 	{
 	case 3:
@@ -128,16 +127,16 @@ void Texture2D::ConfigureParameters()
 void Texture2D::UploadImage(const ImageData& data, const GLenum format)
 {
 	constexpr int mipmapLevel = 0;
-	constexpr int borderSize = 0; // устаревший
+	constexpr int borderSize = 0;
 	glTexImage2D(
 		GL_TEXTURE_2D,
 		mipmapLevel,
-		format,
+		static_cast<GLint>(format),
 		data.width,
 		data.height,
 		borderSize,
 		format,
-		GL_UNSIGNED_BYTE, // тип одного компонента входных данных
+		GL_UNSIGNED_BYTE,
 		data.pixels);
 }
 

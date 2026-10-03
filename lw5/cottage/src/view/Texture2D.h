@@ -27,5 +27,5 @@ private:
 
 	void Release() noexcept;
 
-	GLuint m_id;
+	GLuint m_id{};
 };

@@ -126,9 +126,11 @@ void GlfwWindow::SetupCallbacks()
 void GlfwWindow::MouseButtonCallback(GLFWwindow* window, const int button, const int action, int)
 {
 	const auto* self = static_cast<GlfwWindow*>(glfwGetWindowUserPointer(window));
+	glm::dvec2 mousePosition;
+	glfwGetCursorPos(window, &mousePosition.x, &mousePosition.y);
 	if (self != nullptr && self->m_mouseButtonHandler)
 	{
-		self->m_mouseButtonHandler(button, action);
+		self->m_mouseButtonHandler(button, action, mousePosition);
 	}
 }
 
@@ -137,7 +139,7 @@ void GlfwWindow::CursorPositionCallback(GLFWwindow* window, const double x, cons
 	const auto* self = static_cast<GlfwWindow*>(glfwGetWindowUserPointer(window));
 	if (self != nullptr && self->m_cursorPositionHandler)
 	{
-		self->m_cursorPositionHandler(x, y);
+		self->m_cursorPositionHandler(glm::dvec2{ x, y });
 	}
 }
 

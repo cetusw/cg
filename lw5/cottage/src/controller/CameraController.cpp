@@ -1,69 +1,65 @@
 #include "controller/CameraController.h"
 
 #include <GLFW/glfw3.h>
-
 #include <algorithm>
 #include <cmath>
+#include <glm/geometric.hpp>
 
-// TODO разобрать математику и отрефакторить
-namespace CameraControl
+namespace CameraSettings
 {
-inline constexpr float MouseSensitivityRadiansPerPixel = 0.005f;
+inline constexpr float RadiansPerPixel = 0.01f;
 inline constexpr float MaxPitchRadians = 89.0f * std::numbers::pi / 180.0f;
 } // namespace CameraControl
 
 CameraController::CameraController(Camera& camera)
 	: m_camera(camera)
 {
-	const float offsetX = m_camera.position.x - m_camera.target.x;
-	const float offsetY = m_camera.position.y - m_camera.target.y;
-	const float offsetZ = m_camera.position.z - m_camera.target.z;
-	m_distance = std::sqrt(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ);
+	const glm::vec3 targetToCamera = m_camera.position - m_camera.target;
+	m_distance = glm::length(targetToCamera);
 
 	if (m_distance > 0.0f)
 	{
-		m_pitchRadians = std::asin(offsetZ / m_distance);
-		m_yawRadians = std::atan2(offsetY, offsetX);
+		m_pitchRadians = std::asin(targetToCamera.z / m_distance);
+		m_yawRadians = std::atan2(targetToCamera.y, targetToCamera.x);
 	}
 }
 
-void CameraController::OnMouseButton(const int button, const int action)
+void CameraController::OnMouseButton(
+	const int button,
+	const int action,
+	const glm::dvec2 mousePosition)
 {
 	if (button != GLFW_MOUSE_BUTTON_LEFT)
 	{
 		return;
 	}
 
-	m_rotating = action == GLFW_PRESS;
-	m_hasMousePosition = false; // TODO переименовать поле
+	m_isRotating = action == GLFW_PRESS;
+
+	if (m_isRotating)
+	{
+		m_lastMousePosition = mousePosition;
+	}
 }
 
-void CameraController::OnCursorPosition(const double x, const double y)
+void CameraController::OnCursorPosition(const glm::dvec2 mousePosition)
 {
-	if (!m_rotating)
+	if (!m_isRotating)
 	{
 		return;
 	}
 
-	if (!m_hasMousePosition)
-	{
-		m_lastMouseX = x;
-		m_lastMouseY = y;
-		m_hasMousePosition = true;
-		return;
-	}
+	const glm::dvec2 delta = mousePosition - m_lastMousePosition;
+	m_lastMousePosition = mousePosition;
 
-	const double deltaX = x - m_lastMouseX;
-	const double deltaY = y - m_lastMouseY;
-	m_lastMouseX = x;
-	m_lastMouseY = y;
+	m_yawRadians -= static_cast<float>(delta.x) * CameraSettings::RadiansPerPixel;
+	m_pitchRadians += static_cast<float>(delta.y) * CameraSettings::RadiansPerPixel;
 
-	m_yawRadians -= static_cast<float>(deltaX) * CameraControl::MouseSensitivityRadiansPerPixel;
-	m_pitchRadians += static_cast<float>(deltaY) * CameraControl::MouseSensitivityRadiansPerPixel;
 	m_pitchRadians = std::clamp(
 		m_pitchRadians,
-		-CameraControl::MaxPitchRadians,
-		CameraControl::MaxPitchRadians);
+		-CameraSettings::MaxPitchRadians,
+		CameraSettings::MaxPitchRadians);
+
 	UpdateCamera();
 }
 
