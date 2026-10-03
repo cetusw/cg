@@ -5,8 +5,8 @@
 namespace Materials
 {
 inline constexpr MaterialDescription Ground{
-	{ 0.0f, 0.5f, 0.0f },
-	{ 0.0f, 1.0f, 0.0f },
+	{ 0.0f, 0.0f, 0.0f },
+	{ 1.0f, 1.0f, 1.0f },
 	{ 0.0f, 0.0f, 0.0f },
 	4.0f
 };
@@ -52,4 +52,10 @@ inline constexpr MaterialDescription Fence{
 	{ 0.03f, 0.03f, 0.03f },
 	4.0f
 };
+inline constexpr MaterialDescription Metal{
+		{ 0.1f, 0.1f, 0.1f },
+		{ 0.2f, 0.2f, 0.2f },
+		{ 0.10f, 0.10f, 0.10f },
+		8.0f
+	};
 } // namespace Materials

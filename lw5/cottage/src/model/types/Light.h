@@ -11,3 +11,16 @@ struct PointLight
 	RgbColor diffuse;
 	RgbColor specular;
 };
+
+struct SpotLight
+{
+	glm::vec3 position;
+	glm::vec3 direction;
+
+	RgbColor ambient;
+	RgbColor diffuse;
+	RgbColor specular;
+
+	float cutoff;
+	float exponent;
+};

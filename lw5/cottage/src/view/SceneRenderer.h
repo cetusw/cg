@@ -2,6 +2,7 @@
 
 #include "model/Scene.h"
 
+#include <GL/glew.h>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -22,6 +23,8 @@ private:
 	static void PrepareFrame();
 	static void ConfigureCamera(const Camera& camera);
 	static void ConfigureLight(const PointLight& light);
+	static void ConfigureSpotLights(const std::vector<SpotLight>& lights);
+	static void ConfigureSpotLight(GLenum lightId, const SpotLight& light);
 	void ConfigureTexture(const std::string& path);
 
 	void DrawObjects(const std::vector<SceneObject>& objects);

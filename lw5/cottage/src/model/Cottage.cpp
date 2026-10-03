@@ -6,6 +6,7 @@ Cottage::Cottage(const glm::vec3 position)
 	, m_garage(position + GarageOffset)
 	, m_porch(position + PorchOffset)
 	, m_fence(position)
+	, m_lamp(position + LampOffset)
 {
 }
 
@@ -36,6 +37,12 @@ std::vector<SceneObject> Cottage::CreateObjects() const
 		objects.end(),
 		fenceObjects.begin(),
 		fenceObjects.end());
+
+	const std::vector<SceneObject> lampObjects = m_lamp.CreateObjects();
+	objects.insert(
+		objects.end(),
+		lampObjects.begin(),
+		lampObjects.end());
 
 	return objects;
 }

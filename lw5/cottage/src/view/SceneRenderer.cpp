@@ -38,6 +38,7 @@ void SceneRenderer::Render(const Scene& scene)
 	PrepareFrame();
 	ConfigureCamera(scene.GetCamera());
 	ConfigureLight(scene.GetMainLight());
+	ConfigureSpotLights(scene.GetSpotLights());
 	DrawObjects(scene.GetObjects());
 }
 
@@ -89,6 +90,39 @@ void SceneRenderer::ConfigureLight(const PointLight& light)
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse.data());
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specular.data());
 	glLightfv(GL_LIGHT0, GL_POSITION, position.data());
+}
+
+void SceneRenderer::ConfigureSpotLights(const std::vector<SpotLight>& lights)
+{
+	for (std::size_t i = 0; i < lights.size(); ++i)
+	{
+		const GLenum lightId = static_cast<GLenum>(GL_LIGHT1 + i);
+
+		ConfigureSpotLight(lightId, lights[i]);
+	}
+}
+
+void SceneRenderer::ConfigureSpotLight(const GLenum lightId, const SpotLight& light)
+{
+	glEnable(lightId);
+
+	const auto ambient = ToGlColor(light.ambient);
+	const auto diffuse = ToGlColor(light.diffuse);
+	const auto specular = ToGlColor(light.specular);
+	const auto position = ToGlPoint(light.position);
+	const std::array direction{
+		light.direction.x,
+		light.direction.y,
+		light.direction.z
+	};
+
+	glLightfv(lightId, GL_AMBIENT, ambient.data());
+	glLightfv(lightId, GL_DIFFUSE, diffuse.data());
+	glLightfv(lightId, GL_SPECULAR, specular.data());
+	glLightfv(lightId, GL_POSITION, position.data());
+	glLightfv(lightId, GL_SPOT_DIRECTION, direction.data());
+	glLightf(lightId, GL_SPOT_CUTOFF, light.cutoff);
+	glLightf(lightId, GL_SPOT_EXPONENT, light.exponent);
 }
 
 void SceneRenderer::ConfigureTexture(const std::string& path)

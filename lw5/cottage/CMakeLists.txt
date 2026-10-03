@@ -26,6 +26,8 @@ add_executable(cottage
     src/view/GlfwWindow.cpp
     src/view/SceneRenderer.cpp
     src/view/Texture2D.cpp
+        src/model/Lamp.cpp
+        src/model/Lamp.h
 )
 
 target_include_directories(cottage PRIVATE src lib)
