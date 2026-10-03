@@ -1,6 +1,5 @@
 #include "model/House.h"
 
-#include "consts/CottageDimensions.h"
 #include "data/Materials.h"
 
 House::House(const glm::vec3 position)
@@ -22,8 +21,6 @@ std::vector<SceneObject> House::CreateObjects() const
 
 void House::AddBodies(std::vector<SceneObject>& objects) const
 {
-	using namespace HouseDimensions;
-
 	objects.push_back({
 		"First Body",
 		{ GeometryType::Box, FirstBodyWidth, FirstBodyDepth, WallHeight },
@@ -42,8 +39,6 @@ void House::AddBodies(std::vector<SceneObject>& objects) const
 
 void House::AddRoofs(std::vector<SceneObject>& objects) const
 {
-	using namespace HouseDimensions;
-
 	objects.push_back({
 		"First roof",
 		{ GeometryType::TriangularPrism, FirstRoofWidth, FirstRoofDepth, FirstRoofHeight },
@@ -62,19 +57,30 @@ void House::AddRoofs(std::vector<SceneObject>& objects) const
 
 void House::AddWindows(std::vector<SceneObject>& objects) const
 {
-	using namespace HouseDimensions;
+	const float secondBodyCenterX = m_position.x - BodyOffsetX;
+	const float secondBodyCenterY = m_position.y + SecondBodyOffsetY;
+	const float sideWindowX = secondBodyCenterX
+		- SecondBodyHalfWidth
+		- WindowHalfThickness;
 
 	objects.push_back({
-		"House side window",
-		{ GeometryType::Box, WindowThickness, WindowWidth, WindowHeight },
-		{ { m_position.x + BodyOffsetX + FirstBodyWidth / 2.0f + WindowThickness / 2.0f, m_position.y, m_position.z + WindowBaseHeight } },
+		"House back window",
+		{ GeometryType::Box, WindowWidth, WindowThickness, WindowHeight },
+		{ { secondBodyCenterX, secondBodyCenterY - SecondBodyHalfDepth - WindowHalfThickness, m_position.z + WindowBaseHeight } },
 		Materials::Window,
 		{}
 	});
 	objects.push_back({
-		"House back window",
-		{ GeometryType::Box, WindowWidth, WindowThickness, WindowHeight },
-		{ { m_position.x - BodyOffsetX, m_position.y + SecondBodyOffsetY - SecondBodyDepth / 2.0f - WindowThickness / 2.0f, m_position.z + WindowBaseHeight } },
+		"House side window 1",
+		{ GeometryType::Box, WindowThickness, WindowWidth, WindowHeight },
+		{ { sideWindowX, secondBodyCenterY - SideWindowOffsetY, m_position.z + WindowBaseHeight } },
+		Materials::Window,
+		{}
+	});
+	objects.push_back({
+		"House side window 2",
+		{ GeometryType::Box, WindowThickness, WindowWidth, WindowHeight },
+		{ { sideWindowX, secondBodyCenterY + SideWindowOffsetY, m_position.z + WindowBaseHeight } },
 		Materials::Window,
 		{}
 	});
@@ -82,12 +88,10 @@ void House::AddWindows(std::vector<SceneObject>& objects) const
 
 void House::AddDoors(std::vector<SceneObject>& objects) const
 {
-	using namespace HouseDimensions;
-
 	objects.push_back({
 		"House entrance door",
 		{ GeometryType::Box, DoorWidth, DoorThickness, DoorHeight },
-		{ { m_position.x + BodyOffsetX, m_position.y + FirstBodyDepth / 2.0f + DoorThickness / 2.0f, m_position.z + DoorBaseHeight } },
+		{ { m_position.x + BodyOffsetX, m_position.y + FirstBodyHalfDepth + DoorHalfThickness, m_position.z + DoorBaseHeight } },
 		Materials::Door,
 		{}
 	});

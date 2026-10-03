@@ -1,9 +1,8 @@
 #include "model/FenceSection.h"
 
-#include "consts/CottageDimensions.h"
 #include "data/Materials.h"
+#include "model/Fence.h"
 
-using namespace FenceDimensions;
 
 FenceSection::FenceSection(
 	const glm::vec3 position,
@@ -20,12 +19,12 @@ std::vector<SceneObject> FenceSection::CreateObjects() const
 
 	return {
 		{ "Fence panel",
-			{ GeometryType::Box, SectionLength, PanelThickness, PanelHeight },
+			{ GeometryType::Box, Fence::SectionLength, Fence::PanelThickness, Fence::PanelHeight },
 			{ panelPosition, { 0.0f, 0.0f, rotationZ } },
 			Materials::Fence,
 			{} },
 		{ "Fence section post",
-			{ GeometryType::Box, PostSize, PostSize, PostHeight },
+			{ GeometryType::Box, Fence::PostSize, Fence::PostSize, Fence::PostHeight },
 			{ m_position },
 			Materials::Fence,
 			{} }
@@ -39,19 +38,19 @@ glm::vec3 FenceSection::GetPanelPosition() const
 	switch (m_direction)
 	{
 	case FenceDirection::PositiveX:
-		position.x += SectionLength / 2.0f;
+		position.x += Fence::HalfSectionLength;
 		break;
 
 	case FenceDirection::PositiveY:
-		position.y += SectionLength / 2.0f;
+		position.y += Fence::HalfSectionLength;
 		break;
 
 	case FenceDirection::NegativeX:
-		position.x -= SectionLength / 2.0f;
+		position.x -= Fence::HalfSectionLength;
 		break;
 
 	case FenceDirection::NegativeY:
-		position.y -= SectionLength / 2.0f;
+		position.y -= Fence::HalfSectionLength;
 		break;
 	}
 

@@ -1,6 +1,5 @@
 #include "model/Porch.h"
 
-#include "consts/CottageDimensions.h"
 #include "data/Materials.h"
 
 Porch::Porch(const glm::vec3 position)
@@ -10,8 +9,6 @@ Porch::Porch(const glm::vec3 position)
 
 std::vector<SceneObject> Porch::CreateObjects() const
 {
-	using namespace PorchDimensions;
-
 	return {
 		{ "Porch",
 			{ GeometryType::Box, PlatformWidth, PlatformDepth, PlatformHeight },

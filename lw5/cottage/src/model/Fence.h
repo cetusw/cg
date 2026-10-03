@@ -8,6 +8,23 @@
 class Fence
 {
 public:
+	static constexpr float SectionLength = 2.0f;
+	static constexpr float HalfSectionLength = SectionLength / 2.0f;
+	static constexpr int WidthSectionCount = 8;
+	static constexpr int DepthSectionCount = 6;
+	static constexpr float HalfWidth = WidthSectionCount * HalfSectionLength;
+	static constexpr float HalfDepth = DepthSectionCount * HalfSectionLength;
+
+	static constexpr float PanelHeight = 1.0f;
+	static constexpr float PanelThickness = 0.15f;
+	static constexpr float PostSize = 0.2f;
+	static constexpr float PostHeight = 1.3f;
+
+	static constexpr int DrivewayGapStartSection = 0;
+	static constexpr int DrivewayGapSectionCount = 2;
+	static constexpr int EntranceGapStartSection = 3;
+	static constexpr int EntranceGapSectionCount = 1;
+
 	explicit Fence(glm::vec3 position);
 
 	[[nodiscard]] std::vector<SceneObject> CreateObjects() const;

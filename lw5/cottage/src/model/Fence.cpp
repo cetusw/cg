@@ -1,10 +1,7 @@
 #include "model/Fence.h"
 
-#include "consts/CottageDimensions.h"
 #include "model/FencePost.h"
 #include "model/FenceSection.h"
-
-using namespace FenceDimensions;
 
 Fence::Fence(const glm::vec3 position)
 	: m_position(position)
