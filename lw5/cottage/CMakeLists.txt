@@ -16,6 +16,8 @@ add_executable(cottage
     src/controller/CameraController.cpp
     src/model/Cottage.cpp
     src/model/Fence.cpp
+    src/model/FencePost.cpp
+    src/model/FenceSection.cpp
     src/model/Garage.cpp
     src/model/House.cpp
     src/model/Porch.cpp

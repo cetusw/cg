@@ -74,20 +74,36 @@ inline constexpr glm::vec3 ColumnOffset{
 
 namespace FenceDimensions
 {
-inline constexpr float HalfWidth = 8.0f;
-inline constexpr float HalfDepth = 6.0f;
-inline constexpr float Height = 1.2f;
-inline constexpr float PostSize = 0.2f;
-inline constexpr float RailThickness = 0.12f;
-inline constexpr float LowerRailHeight = 0.35f;
-inline constexpr float UpperRailHeight = 0.85f;
+inline constexpr float SectionLength = 2.0f;
+inline constexpr int WidthSectionCount = 8;
+inline constexpr int DepthSectionCount = 6;
+inline constexpr float HalfWidth = WidthSectionCount * SectionLength / 2.0f;
+inline constexpr float HalfDepth = DepthSectionCount * SectionLength / 2.0f;
 
-inline constexpr float GateWidth = 2.4f;
-inline constexpr float GateCenterX = CottageDimensions::PorchOffsetX;
-inline constexpr float GateLeftX = GateCenterX - GateWidth / 2.0f;
-inline constexpr float GateRightX = GateCenterX + GateWidth / 2.0f;
-inline constexpr float FrontLeftRailWidth = GateLeftX + HalfWidth;
-inline constexpr float FrontRightRailWidth = HalfWidth - GateRightX;
-inline constexpr float FrontLeftRailCenterX = (GateLeftX - HalfWidth) / 2.0f;
-inline constexpr float FrontRightRailCenterX = (GateRightX + HalfWidth) / 2.0f;
+inline constexpr float PanelHeight = 1.1f;
+inline constexpr float PanelThickness = 0.15f;
+inline constexpr float PostSize = 0.2f;
+inline constexpr float PostHeight = 1.3f;
+
+// Front sections are counted from the right corner towards the left corner.
+inline constexpr int DrivewayGapStartSection = 0;
+inline constexpr int DrivewayGapSectionCount = 2;
+inline constexpr int EntranceGapStartSection = 3;
+inline constexpr int EntranceGapSectionCount = 1;
 } // namespace FenceDimensions
+
+namespace GarageDimensions
+{
+inline constexpr float BodyWidth = 4.0f;
+inline constexpr float BodyDepth = 4.0f;
+inline constexpr float BodyHeight = 2.0f;
+
+inline constexpr float DoorWidth = 2.0f;
+inline constexpr float DoorHeight = 2.0f;
+inline constexpr float DoorThickness = 0.10f;
+
+inline constexpr float WindowThickness = 0.10f;
+inline constexpr float WindowWidth = 2.0f;
+inline constexpr float WindowHeight = 1.0f;
+inline constexpr float WindowBaseHeight = 0.5f;
+} // namespace GarageDimensions
