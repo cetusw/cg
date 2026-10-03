@@ -128,6 +128,9 @@ void Texture2D::UploadImage(const ImageData& data, const GLenum format)
 {
 	constexpr int mipmapLevel = 0;
 	constexpr int borderSize = 0;
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
 	glTexImage2D(
 		GL_TEXTURE_2D,
 		mipmapLevel,

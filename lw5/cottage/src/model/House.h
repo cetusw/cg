@@ -52,22 +52,22 @@ private:
 
 	static constexpr float RoofShinglesHeight = RoofBaseHeight + 0.75f;
 
-	static constexpr float WindowWidth = 1.0f;
+	static constexpr float WindowWidth = 2.0f;
 	static constexpr float WindowHeight = 1.0f;
-	static constexpr float WindowThickness = 0.10f;
+	static constexpr float WindowThickness = 0.05f;
 	static constexpr float WindowHalfThickness = WindowThickness / 2.0f;
 	static constexpr float WindowBaseHeight = 0.75f;
 
 	static constexpr float DoorWidth = 1.0f;
-	static constexpr float DoorHeight = 1.5f;
-	static constexpr float DoorThickness = 0.10f;
+	static constexpr float DoorHeight = 1.0f;
+	static constexpr float DoorThickness = 0.05f;
 	static constexpr float DoorHalfThickness = DoorThickness / 2.0f;
 	static constexpr float DoorBaseHeight = 0.5f;
 
 	void AddBodies(std::vector<SceneObject>& objects) const;
 	void AddRoofs(std::vector<SceneObject>& objects) const;
 	void AddWindows(std::vector<SceneObject>& objects) const;
-	void AddDoors(std::vector<SceneObject>& objects) const;
+	void AddDoor(std::vector<SceneObject>& objects) const;
 
 	glm::vec3 m_position;
 };

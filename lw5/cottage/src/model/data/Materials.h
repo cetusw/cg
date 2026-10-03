@@ -40,8 +40,8 @@ inline constexpr MaterialDescription Window{
 };
 
 inline constexpr MaterialDescription Door{
-	{ 0.18f, 0.08f, 0.03f },
-	{ 0.45f, 0.20f, 0.08f },
+	{ 0.3f, 0.3f, 0.3f },
+	{ 0.5f, 0.5f, 0.5f },
 	{ 0.10f, 0.10f, 0.10f },
 	8.0f
 };

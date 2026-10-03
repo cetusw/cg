@@ -21,14 +21,14 @@ private:
 
 	static constexpr float DoorWidth = 2.0f;
 	static constexpr float DoorHeight = 2.0f;
-	static constexpr float DoorThickness = 0.10f;
+	static constexpr float DoorThickness = 0.05f;
 	static constexpr float HalfDoorThickness = DoorThickness / 2.0f;
 
-	static constexpr float WindowThickness = 0.10f;
+	static constexpr float WindowThickness = 0.05f;
 	static constexpr float HalfWindowThickness = WindowThickness / 2.0f;
 	static constexpr float WindowWidth = 2.0f;
 	static constexpr float WindowHeight = 1.0f;
-	static constexpr float WindowBaseHeight = 0.5f;
+	static constexpr float WindowBaseHeight = 0.75f;
 
 	glm::vec3 m_position;
 };

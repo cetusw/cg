@@ -209,10 +209,10 @@ void GeometryRenderer::DrawBox(const GeometryDescription& geometry)
 
 	DrawQuad(
 		{ 0.0f, 1.0f, 0.0f },
-		{ TexturedVertex(vertices.rightFrontBottom, 0.0f, 0.0f),
-			TexturedVertex(vertices.leftFrontBottom, repeatX, 0.0f),
-			TexturedVertex(vertices.leftFrontTop, repeatX, repeatZ),
-			TexturedVertex(vertices.rightFrontTop, 0.0f, repeatZ) });
+		{ TexturedVertex(vertices.leftFrontTop, 0.0f, 0.0f),
+			TexturedVertex(vertices.rightFrontTop, repeatX, 0.0f),
+			TexturedVertex(vertices.rightFrontBottom, repeatX, repeatZ),
+			TexturedVertex(vertices.leftFrontBottom, 0.0f, repeatZ) });
 
 	DrawQuad(
 		{ 0.0f, -1.0f, 0.0f },

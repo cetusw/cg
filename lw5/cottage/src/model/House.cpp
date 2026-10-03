@@ -14,59 +14,47 @@ std::vector<SceneObject> House::CreateObjects() const
 	AddBodies(objects);
 	AddRoofs(objects);
 	AddWindows(objects);
-	AddDoors(objects);
+	AddDoor(objects);
 
 	return objects;
 }
 
 void House::AddBodies(std::vector<SceneObject>& objects) const
 {
-	objects.push_back({
-		"First Body",
+	objects.push_back({ "First Body",
 		{ GeometryType::Box, FirstBodyWidth, FirstBodyDepth, WallHeight },
 		{ { m_position.x + BodyOffsetX, m_position.y, m_position.z } },
 		Materials::Concrete,
-		"assets/concrete.jpg"
-	});
-	objects.push_back({
-		"Second Body",
+		"assets/concrete.jpg" });
+	objects.push_back({ "Second Body",
 		{ GeometryType::Box, SecondBodyWidth, SecondBodyDepth, WallHeight },
 		{ { m_position.x - BodyOffsetX, m_position.y + SecondBodyOffsetY, m_position.z } },
 		Materials::Concrete,
-		"assets/concrete.jpg"
-	});
+		"assets/concrete.jpg" });
 }
 
 void House::AddRoofs(std::vector<SceneObject>& objects) const
 {
-	objects.push_back({
-		"First roof",
+	objects.push_back({ "First roof",
 		{ GeometryType::TriangularPrism, FirstRoofWidth, FirstRoofDepth, FirstRoofHeight },
 		{ { m_position.x + FirstRoofOffsetX, m_position.y, m_position.z + RoofBaseHeight }, { 0.0f, 0.0f, FirstRoofRotationZ } },
 		Materials::Concrete,
-		"assets/concrete.jpg"
-	});
-	objects.push_back({
-		"First roof right shingles",
+		"assets/concrete.jpg" });
+	objects.push_back({ "First roof right shingles",
 		{ GeometryType::Box, FirstRoofShinglesWidth, FirstRoofShinglesDepth, FirstRoofShinglesHeight },
-		{ { m_position.x + FirstRoofShinglesOffsetX, m_position.y + FirstRoofRightShinglesOffsetY , m_position.z + RoofShinglesHeight }, { FirstRoofRightShinglesRotationX, 0.0f, 0.0f } },
+		{ { m_position.x + FirstRoofShinglesOffsetX, m_position.y + FirstRoofRightShinglesOffsetY, m_position.z + RoofShinglesHeight }, { FirstRoofRightShinglesRotationX, 0.0f, 0.0f } },
 		Materials::Concrete,
-		"assets/shingles.jpg"
-	});
-	objects.push_back({
-		"First roof left shingles",
+		"assets/shingles.jpg" });
+	objects.push_back({ "First roof left shingles",
 		{ GeometryType::Box, FirstRoofShinglesWidth, FirstRoofShinglesDepth, FirstRoofShinglesHeight },
-		{ { m_position.x + FirstRoofShinglesOffsetX, m_position.y + FirstRoofLeftShinglesOffsetY , m_position.z + RoofShinglesHeight }, { FirstRoofLeftShinglesRotationX, 0.0f, 0.0f } },
+		{ { m_position.x + FirstRoofShinglesOffsetX, m_position.y + FirstRoofLeftShinglesOffsetY, m_position.z + RoofShinglesHeight }, { FirstRoofLeftShinglesRotationX, 0.0f, 0.0f } },
 		Materials::Concrete,
-		"assets/shingles.jpg"
-	});
-	objects.push_back({
-		"Second roof",
+		"assets/shingles.jpg" });
+	objects.push_back({ "Second roof",
 		{ GeometryType::TriangularPrism, SecondRoofWidth, SecondRoofDepth, SecondRoofHeight },
 		{ { m_position.x, m_position.y + SecondRoofOffsetY, m_position.z + RoofBaseHeight } },
 		Materials::Concrete,
-		"assets/shingles.jpg"
-	});
+		"assets/shingles.jpg" });
 }
 
 void House::AddWindows(std::vector<SceneObject>& objects) const
@@ -77,36 +65,34 @@ void House::AddWindows(std::vector<SceneObject>& objects) const
 		- SecondBodyHalfWidth
 		- WindowHalfThickness;
 
-	objects.push_back({
-		"House back window",
+	objects.push_back({ "House back window",
 		{ GeometryType::Box, WindowWidth, WindowThickness, WindowHeight },
 		{ { secondBodyCenterX, secondBodyCenterY - SecondBodyHalfDepth - WindowHalfThickness, m_position.z + WindowBaseHeight } },
 		Materials::Window,
-		{}
-	});
-	objects.push_back({
-		"House side window 1",
+		{} });
+	objects.push_back({ "House side window 1",
 		{ GeometryType::Box, WindowThickness, WindowWidth, WindowHeight },
 		{ { sideWindowX, secondBodyCenterY - SideWindowOffsetY, m_position.z + WindowBaseHeight } },
 		Materials::Window,
-		{}
-	});
-	objects.push_back({
-		"House side window 2",
+		{} });
+	objects.push_back({ "House side window 2",
 		{ GeometryType::Box, WindowThickness, WindowWidth, WindowHeight },
 		{ { sideWindowX, secondBodyCenterY + SideWindowOffsetY, m_position.z + WindowBaseHeight } },
 		Materials::Window,
-		{}
-	});
+		{} });
+	objects.push_back({ "House front window",
+		{ GeometryType::Box, WindowThickness, WindowWidth, WindowHeight },
+		{ { secondBodyCenterX, secondBodyCenterY + SecondBodyHalfDepth, m_position.z + WindowBaseHeight },
+			{ 0.0f, 0.0f, 90.0f } },
+		Materials::Window,
+		{} });
 }
 
-void House::AddDoors(std::vector<SceneObject>& objects) const
+void House::AddDoor(std::vector<SceneObject>& objects) const
 {
-	objects.push_back({
-		"House entrance door",
+	objects.push_back({ "House entrance door",
 		{ GeometryType::Box, DoorWidth, DoorThickness, DoorHeight },
 		{ { m_position.x + BodyOffsetX, m_position.y + FirstBodyHalfDepth + DoorHalfThickness, m_position.z + DoorBaseHeight } },
 		Materials::Door,
-		{}
-	});
+		"assets/door.jpg" });
 }
