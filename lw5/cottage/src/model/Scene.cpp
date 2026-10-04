@@ -1,9 +1,6 @@
 #include "model/Scene.h"
 
 #include "data/Materials.h"
-#include "model/Cottage.h"
-
-#include <glm/detail/func_geometric.inl>
 
 namespace
 {
@@ -85,33 +82,6 @@ PointLight CreateDefaultMainLight()
 	};
 }
 
-SpotLight CreateSpotLight(
-	const glm::vec3 position,
-	const glm::vec3 target)
-{
-	return {
-		position,
-		glm::normalize(target - position),
-		{ 0.0f, 0.0f, 0.0f },
-		{ 1.0f, 0.9f, 0.7f },
-		{ 1.0f, 0.9f, 0.7f },
-		45.0f,
-		0.0f
-	};
-}
-
-std::vector<SpotLight> CreateSpotLights()
-{
-	return {
-		CreateSpotLight(
-			{ 6.5f, 3.5f, 2.5f },
-			{ 4.0f, 3.5f, 0.0f }),
-		CreateSpotLight(
-			{ 0.5f, 5.0f, 2.5f },
-			{ 1.5f, 5.0f, 0.0f })
-	};
-}
-
 SceneObject CreateGround()
 {
 	return {
@@ -131,16 +101,16 @@ SceneObject CreateGround()
 Scene::Scene()
 	: m_camera(CreateDefaultCamera())
 	, m_mainLight(CreateDefaultMainLight())
-	, m_spotLights(CreateSpotLights())
+	, m_cottage(DefaultCottagePosition)
 	, m_objects{ CreateGround() }
 {
-	const Cottage cottage(DefaultCottagePosition);
-	const std::vector<SceneObject> cottageObjects = cottage.CreateObjects();
+	const std::vector<SceneObject> cottageObjects = m_cottage.CreateObjects();
 
 	m_objects.insert(
 		m_objects.end(),
 		cottageObjects.begin(),
 		cottageObjects.end());
+
 }
 
 Camera& Scene::GetCamera()
@@ -158,9 +128,14 @@ const PointLight& Scene::GetMainLight() const
 	return m_mainLight;
 }
 
-const std::vector<SpotLight>& Scene::GetSpotLights() const
+std::size_t Scene::GetSpotLightCount() const
 {
-	return m_spotLights;
+	return m_cottage.GetSpotLightCount();
+}
+
+const SpotLight& Scene::GetSpotLight(const std::size_t index) const
+{
+	return m_cottage.GetSpotLight(index);
 }
 
 const std::vector<SceneObject>& Scene::GetObjects() const

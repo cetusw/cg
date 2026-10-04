@@ -6,7 +6,14 @@ Cottage::Cottage(const glm::vec3 position)
 	, m_garage(position + GarageOffset)
 	, m_porch(position + PorchOffset)
 	, m_fence(position)
-	, m_lamp(position + LampOffset)
+	, m_lamps{
+		Lamp(
+			position + Lamp1PositionOffset,
+			position + Lamp1TargetOffset),
+		Lamp(
+			position + Lamp2PositionOffset,
+			position + Lamp2TargetOffset)
+	}
 {
 }
 
@@ -38,11 +45,24 @@ std::vector<SceneObject> Cottage::CreateObjects() const
 		fenceObjects.begin(),
 		fenceObjects.end());
 
-	const std::vector<SceneObject> lampObjects = m_lamp.CreateObjects();
-	objects.insert(
-		objects.end(),
-		lampObjects.begin(),
-		lampObjects.end());
+	for (const Lamp& lamp : m_lamps)
+	{
+		const std::vector<SceneObject> lampObjects = lamp.CreateObjects();
+		objects.insert(
+			objects.end(),
+			lampObjects.begin(),
+			lampObjects.end());
+	}
 
 	return objects;
+}
+
+std::size_t Cottage::GetSpotLightCount() const
+{
+	return m_lamps.size();
+}
+
+const SpotLight& Cottage::GetSpotLight(const std::size_t index) const
+{
+	return m_lamps[index].GetLight();
 }

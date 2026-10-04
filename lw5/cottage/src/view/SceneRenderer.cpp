@@ -38,7 +38,7 @@ void SceneRenderer::Render(const Scene& scene)
 	PrepareFrame();
 	ConfigureCamera(scene.GetCamera());
 	ConfigureLight(scene.GetMainLight());
-	ConfigureSpotLights(scene.GetSpotLights());
+	ConfigureSpotLights(scene);
 	DrawObjects(scene.GetObjects());
 }
 
@@ -92,13 +92,13 @@ void SceneRenderer::ConfigureLight(const PointLight& light)
 	glLightfv(GL_LIGHT0, GL_POSITION, position.data());
 }
 
-void SceneRenderer::ConfigureSpotLights(const std::vector<SpotLight>& lights)
+void SceneRenderer::ConfigureSpotLights(const Scene& scene)
 {
-	for (std::size_t i = 0; i < lights.size(); ++i)
+	for (std::size_t i = 0; i < scene.GetSpotLightCount(); ++i)
 	{
 		const GLenum lightId = static_cast<GLenum>(GL_LIGHT1 + i);
 
-		ConfigureSpotLight(lightId, lights[i]);
+		ConfigureSpotLight(lightId, scene.GetSpotLight(i));
 	}
 }
 

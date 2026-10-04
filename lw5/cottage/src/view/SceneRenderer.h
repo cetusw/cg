@@ -23,7 +23,7 @@ private:
 	static void PrepareFrame();
 	static void ConfigureCamera(const Camera& camera);
 	static void ConfigureLight(const PointLight& light);
-	static void ConfigureSpotLights(const std::vector<SpotLight>& lights);
+	static void ConfigureSpotLights(const Scene& scene);
 	static void ConfigureSpotLight(GLenum lightId, const SpotLight& light);
 	void ConfigureTexture(const std::string& path);
 
