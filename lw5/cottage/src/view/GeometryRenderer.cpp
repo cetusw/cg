@@ -254,26 +254,40 @@ void GeometryRenderer::DrawPlane(const GeometryDescription& geometry)
 {
 	const float halfWidth = geometry.width / 2.0f;
 	const float halfDepth = geometry.depth / 2.0f;
-	constexpr float height = 0.0f;
+	constexpr float cellSize = 0.1f;
 
-	const TextureRepeat repeat(geometry);
-	const PlaneVertices vertices(
-		halfWidth,
-		halfDepth,
-		height);
-	const float repeatX = repeat.Between(
-		vertices.leftBack,
-		vertices.rightBack);
-	const float repeatY = repeat.Between(
-		vertices.leftBack,
-		vertices.leftFront);
+	const float planeMinX = -halfWidth;
+	const float planeMaxX = halfWidth;
+	const float planeMinY = -halfDepth;
+	const float planeMaxY = halfDepth;
 
-	DrawQuad(
-		{ 0.0f, 0.0f, 1.0f },
-		{ TexturedVertex(vertices.leftBack, 0.0f, 0.0f),
-			TexturedVertex(vertices.rightBack, repeatX, 0.0f),
-			TexturedVertex(vertices.rightFront, repeatX, repeatY),
-			TexturedVertex(vertices.leftFront, 0.0f, repeatY) });
+	for (float cellMinX = planeMinX; cellMinX < planeMaxX; cellMinX += cellSize)
+	{
+		const float cellMaxX = cellMinX + cellSize < planeMaxX
+			? cellMinX + cellSize
+			: planeMaxX;
+
+		for (float cellMinY = planeMinY; cellMinY < planeMaxY; cellMinY += cellSize)
+		{
+			const float cellMaxY = cellMinY + cellSize < planeMaxY
+				? cellMinY + cellSize
+				: planeMaxY;
+
+			constexpr float height = 0.0f;
+
+			const float minU = (cellMinX - planeMinX) / geometry.textureScale;
+			const float maxU = (cellMaxX - planeMinX) / geometry.textureScale;
+			const float minV = (cellMinY - planeMinY) / geometry.textureScale;
+			const float maxV = (cellMaxY - planeMinY) / geometry.textureScale;
+
+			DrawQuad(
+				{ 0.0f, 0.0f, 1.0f },
+				{ TexturedVertex({ cellMinX, cellMinY, height }, minU, minV),
+					TexturedVertex({ cellMaxX, cellMinY, height }, maxU, minV),
+					TexturedVertex({ cellMaxX, cellMaxY, height }, maxU, maxV),
+					TexturedVertex({ cellMinX, cellMaxY, height }, minU, maxV) });
+		}
+	}
 }
 
 void GeometryRenderer::DrawTriangularPrism(
