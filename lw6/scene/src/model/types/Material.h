@@ -9,7 +9,7 @@ struct RgbColor
 
 struct MaterialDescription
 {
-	RgbColor ambient; // TODO подумать над тем, чтобы вынести параметры в отдельных объект
+	RgbColor ambient;
 	RgbColor diffuse;
 	RgbColor specular;
 	float shininess{};

@@ -19,11 +19,13 @@ Application::Application()
 
 int Application::Run()
 {
-	auto previousTime = std::chrono::steady_clock::now(); // TODO подумать над уместностью названия
+	auto previousTime = std::chrono::steady_clock::now();
 	while (!m_window.ShouldClose())
 	{
 		const auto currentTime = std::chrono::steady_clock::now();
-		const float deltaTime = std::min(std::chrono::duration<float>(currentTime - previousTime).count(), MaxDeltaTime); // TODO что возвращает count?
+		const float deltaTime = std::min(
+			std::chrono::duration<float>(currentTime - previousTime).count(),
+			MaxDeltaTime);
 		previousTime = currentTime;
 
 		m_scene.Update(deltaTime);

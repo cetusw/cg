@@ -25,7 +25,7 @@ constexpr char carModelPath[] = "assets/car/BMW_M3_GTR.3ds";
 constexpr char playgroundModelPath[] = "assets/playground/playground.3DS";
 constexpr char roadModelPath[] = "assets/road/road.3ds";
 
-std::shared_ptr<Model3ds> LoadModel(const char* path) // TODO в чём смысл этой функции и почему она находится в Scene?
+std::shared_ptr<Model3ds> LoadModel(const char* path)
 {
 	return std::make_shared<Model3ds>(
 		std::filesystem::path(SOURCE_DIR) / path);

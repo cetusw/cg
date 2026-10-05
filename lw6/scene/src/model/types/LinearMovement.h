@@ -7,5 +7,5 @@ struct LinearMovement
 	glm::vec3 start;
 	glm::vec3 end;
 	float speed{};
-	bool isMovingToEnd = true; // TODO для чего?
+	bool isMovingToEnd = true;
 };
