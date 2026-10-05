@@ -100,8 +100,6 @@ void GlfwWindow::InitializeOpenGL()
 {
 	glfwMakeContextCurrent(m_window);
 
-	glewExperimental = GL_TRUE;
-
 	if (glewInit() != GLEW_OK)
 	{
 		glfwDestroyWindow(m_window);
