@@ -11,21 +11,21 @@ find_package(GLEW REQUIRED)
 find_package(glm REQUIRED)
 
 add_executable(cottage
-    main.cpp
-    src/controller/Application.cpp
-    src/controller/CameraController.cpp
-    src/model/Cottage.cpp
-    src/model/Fence.cpp
-    src/model/FencePost.cpp
-    src/model/FenceSection.cpp
-    src/model/Garage.cpp
-    src/model/House.cpp
-    src/model/Porch.cpp
-    src/model/Scene.cpp
-    src/view/GeometryRenderer.cpp
-    src/view/GlfwWindow.cpp
-    src/view/SceneRenderer.cpp
-    src/view/Texture2D.cpp
+        main.cpp
+        src/controller/Application.cpp
+        src/controller/CameraController.cpp
+        src/model/Cottage.cpp
+        src/model/Fence.cpp
+        src/model/FencePost.cpp
+        src/model/FenceSection.cpp
+        src/model/Garage.cpp
+        src/model/House.cpp
+        src/model/Porch.cpp
+        src/model/Scene.cpp
+        src/view/GeometryRenderer.cpp
+        src/view/GlfwWindow.cpp
+        src/view/SceneRenderer.cpp
+        src/view/Texture2D.cpp
         src/model/Lamp.cpp
         src/model/Lamp.h
 )
@@ -35,12 +35,12 @@ target_compile_definitions(cottage PRIVATE SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DI
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(cottage PRIVATE -Wall -Wextra -Wpedantic)
-endif()
+endif ()
 
 target_link_libraries(cottage PRIVATE
-    OpenGL::GL
-    OpenGL::GLU
-    glfw
-    GLEW::GLEW
-    glm::glm
+        OpenGL::GL
+        OpenGL::GLU
+        glfw
+        GLEW::GLEW
+        glm::glm
 )

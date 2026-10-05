@@ -7,8 +7,6 @@
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
-// TODO выучить математику
-
 namespace
 {
 struct TexturedVertex

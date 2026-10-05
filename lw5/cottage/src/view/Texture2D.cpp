@@ -102,7 +102,6 @@ void Texture2D::CreateTexture(const ImageData& data)
 
 void Texture2D::ConfigureParameters()
 {
-	// TODO запомнить значения параметров
 	glTexParameteri(
 		GL_TEXTURE_2D,
 		GL_TEXTURE_MIN_FILTER,

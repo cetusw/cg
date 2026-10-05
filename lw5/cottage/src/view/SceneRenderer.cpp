@@ -44,7 +44,6 @@ void SceneRenderer::Render(const Scene& scene)
 
 void SceneRenderer::SetProjection(const int width, const int height)
 {
-	// TODO разобрать пример, как работают соотношения сторон
 	const int safeHeight = height <= 0
 		? 1
 		: height;
@@ -83,7 +82,6 @@ void SceneRenderer::ConfigureLight(const PointLight& light)
 	const auto ambient = ToGlColor(light.ambient);
 	const auto diffuse = ToGlColor(light.diffuse);
 	const auto specular = ToGlColor(light.specular);
-	// TODO подумать о том, как перенести параметр направленный или точечный в объект самого света, а не определять его здесь
 	const auto position = ToGlPoint(light.position);
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient.data());

@@ -20,9 +20,12 @@ constexpr PointLight DefaultMainLight{
 	{ 1.0f, 1.0f, 1.0f }
 };
 
-constexpr char CarModelPath[] = "assets/car/BMW_M3_GTR.3ds";
+constexpr char houseModelPath[] = "assets/house/small_building_2_3ds.3DS";
+constexpr char carModelPath[] = "assets/car/BMW_M3_GTR.3ds";
+constexpr char playgroundModelPath[] = "assets/playground/playground.3DS";
+constexpr char roadModelPath[] = "assets/road/road.3ds";
 
-std::shared_ptr<Model3ds> LoadModel(const char* path)  // TODO в чём смысл этой функции и почему она находится в Scene?
+std::shared_ptr<Model3ds> LoadModel(const char* path) // TODO в чём смысл этой функции и почему она находится в Scene?
 {
 	return std::make_shared<Model3ds>(
 		std::filesystem::path(SOURCE_DIR) / path);
@@ -33,10 +36,18 @@ Scene::Scene()
 	: m_camera(DefaultCamera)
 	, m_mainLight(DefaultMainLight)
 {
-	const auto car = LoadModel(CarModelPath);
+	const auto house = LoadModel(houseModelPath);
+	const auto car = LoadModel(carModelPath);
+	const auto playground = LoadModel(playgroundModelPath);
+	const auto road = LoadModel(roadModelPath);
 
+	m_models.emplace_back(house, Transform{ { 0.0f, -9.0f, 0.0f }, { 0.0f, 0.0f, 90.0f }, { 0.045f, 0.045f, 0.045f } });
 	m_models.emplace_back(car, Transform{ { 0.0f, -9.0f, 0.0f }, { 0.0f, 0.0f, 90.0f }, { 0.015f, 0.015f, 0.015f } });
 	m_models.back().SetLinearMovement({ { 0.0f, -9.0f, 0.0f }, { 0.0f, 9.0f, 0.0f }, 3.0f });
+
+	// m_models.emplace_back(playground, Transform{ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 180.0f }, { 0.015f, 0.015f, 0.015f } });
+	// m_models.emplace_back(road, Transform{ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 180.0f }, { 1.0f, 1.0f, 1.0f } });
+
 }
 
 void Scene::Update(const float deltaTime)

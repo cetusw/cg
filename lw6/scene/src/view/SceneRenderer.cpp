@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <array>
 #include <cstring>
+#include <iostream>
 #include <stdexcept>
 
 namespace
@@ -120,7 +121,7 @@ void SceneRenderer::DrawModel(const ModelInstance& instance)
 
 void SceneRenderer::DrawMesh(const Model3ds& model, const Lib3dsMesh& mesh)
 {
-	for (std::size_t faceIndex = 0; faceIndex < mesh.faces; ++faceIndex) // TODO вспомнить, почему здесь можно префиксный ++ и в чём вообще разница
+	for (std::size_t faceIndex = 0; faceIndex < mesh.faces; ++faceIndex)
 	{
 		DrawFace(model, mesh, mesh.faceL[faceIndex], faceIndex);
 	}
@@ -141,6 +142,12 @@ void SceneRenderer::DrawFace(
 			: model.ResolveTexturePath(material->texture1_map.name));
 
 	const std::vector<glm::vec3>& normals = model.GetNormals(mesh);
+
+	// if (material != nullptr)
+	// {
+	// 	std::cout << material->texture1_map.name << std::endl;
+	// 	std::cout << material->texture1_mask.name << std::endl;
+	// }
 
 	glBegin(GL_TRIANGLES);
 	for (std::size_t vertexInFace = 0; vertexInFace < Model3ds::VERTICES_PER_FACE; ++vertexInFace)
