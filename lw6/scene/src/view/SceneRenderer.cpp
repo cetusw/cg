@@ -143,11 +143,6 @@ void SceneRenderer::DrawFace(
 
 	const std::vector<glm::vec3>& normals = model.GetNormals(mesh);
 
-	// if (material != nullptr)
-	// {
-	// 	std::cout << material->texture1_map.name << std::endl;
-	// 	std::cout << material->texture1_mask.name << std::endl;
-	// }
 
 	glBegin(GL_TRIANGLES);
 	for (std::size_t vertexInFace = 0; vertexInFace < Model3ds::VERTICES_PER_FACE; ++vertexInFace)
