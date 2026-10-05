@@ -41,12 +41,12 @@ Scene::Scene()
 	const auto playground = LoadModel(playgroundModelPath);
 	const auto road = LoadModel(roadModelPath);
 
-	m_models.emplace_back(house, Transform{ { 0.0f, -9.0f, 0.0f }, { 0.0f, 0.0f, 90.0f }, { 0.045f, 0.045f, 0.045f } });
 	m_models.emplace_back(car, Transform{ { 0.0f, -9.0f, 0.0f }, { 0.0f, 0.0f, 90.0f }, { 0.015f, 0.015f, 0.015f } });
 	m_models.back().SetLinearMovement({ { 0.0f, -9.0f, 0.0f }, { 0.0f, 9.0f, 0.0f }, 3.0f });
 
-	// m_models.emplace_back(playground, Transform{ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 180.0f }, { 0.015f, 0.015f, 0.015f } });
-	// m_models.emplace_back(road, Transform{ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 180.0f }, { 1.0f, 1.0f, 1.0f } });
+	m_models.emplace_back(car, Transform{ { 5.0f, -9.0f, 0.0f }, { 0.0f, 0.0f, 90.0f }, { 0.015f, 0.015f, 0.015f } });
+	m_models.emplace_back(car, Transform{ { 10.0f, -9.0f, 0.0f }, { 0.0f, 0.0f, 90.0f }, { 0.015f, 0.015f, 0.015f } });
+
 
 }
 
