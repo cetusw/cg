@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Texture2D.h"
 #include "view/ShaderProgram.h"
 
 class SceneRenderer
@@ -14,4 +15,5 @@ private:
 	static void DrawRectangle();
 
 	ShaderProgram m_shaderProgram;
+	Texture2D m_texture;
 };

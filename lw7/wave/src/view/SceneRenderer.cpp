@@ -8,6 +8,7 @@ SceneRenderer::SceneRenderer()
 	: m_shaderProgram(
 		  std::filesystem::path(SOURCE_DIR) / "shaders/wave.vert",
 		  std::filesystem::path(SOURCE_DIR) / "shaders/wave.frag")
+	, m_texture((std::filesystem::path(SOURCE_DIR) / "textures/water.jpeg").string())
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
@@ -15,8 +16,14 @@ SceneRenderer::SceneRenderer()
 void SceneRenderer::Render(const float time)
 {
 	PrepareFrame();
+
 	m_shaderProgram.Use();
+
+	m_texture.BindToUnit(0);
+
+	m_shaderProgram.SetIntUniform("u_texture", 0);
 	m_shaderProgram.SetFloatUniform("u_time", time);
+
 	DrawRectangle();
 }
 
