@@ -6,7 +6,7 @@
 
 namespace
 {
-	constexpr float OutlineThickness = 3.0f;
+	constexpr float OutlineThickness = 1.0f;
 
 	void SetOutline(sf::Shape& shape)
 	{
