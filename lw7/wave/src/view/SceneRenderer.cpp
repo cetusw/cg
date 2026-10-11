@@ -8,21 +8,31 @@ SceneRenderer::SceneRenderer()
 	: m_shaderProgram(
 		  std::filesystem::path(SOURCE_DIR) / "shaders/wave.vert",
 		  std::filesystem::path(SOURCE_DIR) / "shaders/wave.frag")
-	, m_texture((std::filesystem::path(SOURCE_DIR) / "textures/water.jpeg").string())
+	, m_textureFrom(std::filesystem::path(SOURCE_DIR) / "textures/water.jpeg")
+	, m_textureTo(std::filesystem::path(SOURCE_DIR) / "textures/gorin.jpg")
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void SceneRenderer::Render(const float time)
+void SceneRenderer::Render(
+	const glm::vec2 center,
+	const float elapsedTime,
+	const bool isWaveActive,
+	const float aspectRatio)
 {
 	PrepareFrame();
 
 	m_shaderProgram.Use();
 
-	m_texture.BindToUnit(0);
+	m_textureFrom.BindToUnit(0);
+	m_textureTo.BindToUnit(1);
 
-	m_shaderProgram.SetIntUniform("u_texture", 0);
-	m_shaderProgram.SetFloatUniform("u_time", time);
+	m_shaderProgram.SetIntUniform("u_textureFrom", 0);
+	m_shaderProgram.SetIntUniform("u_textureTo", 1);
+	m_shaderProgram.SetVec2Uniform("u_center", center);
+	m_shaderProgram.SetFloatUniform("u_elapsedTime", elapsedTime);
+	m_shaderProgram.SetIntUniform("u_isWaveActive", isWaveActive ? 1 : 0);
+	m_shaderProgram.SetFloatUniform("u_aspectRatio", aspectRatio);
 
 	DrawRectangle();
 }

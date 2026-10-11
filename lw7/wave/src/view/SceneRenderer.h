@@ -8,12 +8,13 @@ class SceneRenderer
 public:
 	SceneRenderer();
 
-	void Render(float time);
+	void Render(glm::vec2 center, float elapsedTime, bool isWaveActive, float aspectRatio);
 
 private:
 	static void PrepareFrame();
 	static void DrawRectangle();
 
 	ShaderProgram m_shaderProgram;
-	Texture2D m_texture;
+	Texture2D m_textureFrom;
+	Texture2D m_textureTo;
 };

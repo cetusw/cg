@@ -65,6 +65,15 @@ int GlfwWindow::GetFramebufferHeight() const
 	return m_framebufferHeight;
 }
 
+glm::vec2 GlfwWindow::GetWindowSize() const
+{
+	int width = 0;
+	int height = 0;
+	glfwGetWindowSize(m_window, &width, &height);
+
+	return {width, height};
+}
+
 void GlfwWindow::InitializeGlfw()
 {
 	if (glfwInit() == GLFW_FALSE)
