@@ -11,7 +11,12 @@ uniform float u_aspectRatio;
 uniform int u_isWaveActive;
 
 const float WAVE_SPEED = 0.5;
-const float WAVE_WIDTH = 0.04;
+const float WAVE_INITIAL_WIDTH = 0.05;
+const float WAVE_WIDTH_GROWTH = 0.3;
+const float WAVE_FREQUENCY = 50.0;
+const float WAVE_ATTENUATION = 6.0;
+
+const float FADE_IN_WIDTH_PERCENTAGE = 0.2;
 
 float GetDistanceToCenter(vec2 uv)
 {
@@ -26,26 +31,63 @@ float GetWaveRadius()
     return WAVE_SPEED * u_elapsedTime;
 }
 
-vec2 DistortUv(vec2 uv, float distanceToCenter, float radius)
+float GetWaveWidth()
 {
-    float distanceToRing = abs(distanceToCenter - radius);
+    return WAVE_INITIAL_WIDTH + WAVE_WIDTH_GROWTH * u_elapsedTime;
+}
 
-    float intensity = 1.0 - smoothstep(
+float GetWaveEnvelope(float distanceBehindFront, float width)
+{
+    float fadeInWidth = width * FADE_IN_WIDTH_PERCENTAGE;
+    float fadeOutStart = width * (1.0 - FADE_IN_WIDTH_PERCENTAGE);
+
+    float fadeIn = smoothstep(
         0.0,
-        WAVE_WIDTH,
-        distanceToRing
+        fadeInWidth,
+        distanceBehindFront
     );
+
+    float fadeOut = 1.0 - smoothstep(
+        fadeOutStart,
+        width,
+        distanceBehindFront
+    );
+
+    return fadeIn * fadeOut;
+}
+
+float GetWaveOscillation(float distanceBehindFront)
+{
+    float phase = distanceBehindFront * WAVE_FREQUENCY;
+
+    return sin(phase);
+}
+
+float GetWaveAttenuation(float distanceBehindFront)
+{
+    return exp(-WAVE_ATTENUATION * max(distanceBehindFront, 0.0));
+}
+
+vec2 DistortUv(vec2 uv, float distanceToCenter, float radius, float width)
+{
+    float distanceBehindFront = radius - distanceToCenter;
+
+    float envelope = GetWaveEnvelope(distanceBehindFront, width);
+    float oscillation = GetWaveOscillation(distanceBehindFront);
+    float attenuation = GetWaveAttenuation(distanceBehindFront);
+
+    float displacement = envelope * attenuation * oscillation;
 
     vec2 direction = uv - u_center;
 
-    return uv + direction * intensity;
+    return uv + direction * displacement;
 }
 
-float GetTransition(float distanceToCenter, float radius)
+float GetTransition(float distanceToCenter, float radius, float width)
 {
     return 1.0 - smoothstep(
-        radius - WAVE_WIDTH,
-        radius + WAVE_WIDTH,
+        radius - width,
+        radius + width,
         distanceToCenter
     );
 }
@@ -59,9 +101,10 @@ void main()
     {
         float distanceToCenter = GetDistanceToCenter(uv);
         float radius = GetWaveRadius();
+        float width = GetWaveWidth();
 
-        uv = DistortUv(uv, distanceToCenter, radius);
-        transition = GetTransition(distanceToCenter, radius);
+        uv = DistortUv(uv, distanceToCenter, radius, width);
+        transition = GetTransition(distanceToCenter, radius, width);
     }
 
     vec4 colorFrom = texture2D(u_textureFrom, uv);
