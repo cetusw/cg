@@ -46,9 +46,9 @@ float GetWaveEnvelope(float distanceBehindFront, float width)
         distanceBehindFront
     );
 
-    float fadeOut = 1.0 - smoothstep(
-        fadeInWidth,
+    float fadeOut = smoothstep(
         width,
+        fadeInWidth,
         distanceBehindFront
     );
 
@@ -84,9 +84,9 @@ vec2 DistortUv(vec2 uv, float distanceToCenter, float radius, float width)
 
 float GetTransition(float distanceToCenter, float radius, float width)
 {
-    return 1.0 - smoothstep(
+    return smoothstep(
+        radius,
         radius - width,
-        radius + width,
         distanceToCenter
     );
 }
