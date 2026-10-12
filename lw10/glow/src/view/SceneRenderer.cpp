@@ -44,14 +44,14 @@ void SceneRenderer::Render(const Scene& scene)
 	DrawObjects(scene.GetObjects());
 }
 
-void SceneRenderer::RenderGlowMap(const Scene& scene)
+void SceneRenderer::RenderGlowObjects(const Scene& scene)
 {
 	glClearColor(ClearColor.x, ClearColor.y, ClearColor.z, 1.0f);
 	PrepareFrame();
 	ConfigureCamera(scene.GetCamera());
 	glDisable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
-	DrawGlowMapObjects(scene.GetObjects());
+	DrawGlowObjects(scene.GetObjects());
 	glClearColor(ClearColor.x, ClearColor.y, ClearColor.z, 1.0f);
 }
 
@@ -160,11 +160,11 @@ void SceneRenderer::DrawObjects(const std::vector<SceneObject>& objects)
 	}
 }
 
-void SceneRenderer::DrawGlowMapObjects(const std::vector<SceneObject>& objects)
+void SceneRenderer::DrawGlowObjects(const std::vector<SceneObject>& objects)
 {
 	for (const SceneObject& object : objects)
 	{
-		DrawGlowMapObject(object);
+		DrawGlowObject(object);
 	}
 }
 
@@ -202,7 +202,7 @@ void SceneRenderer::DrawObject(const SceneObject& object)
 	glPopMatrix();
 }
 
-void SceneRenderer::DrawGlowMapObject(const SceneObject& object)
+void SceneRenderer::DrawGlowObject(const SceneObject& object)
 {
 	const RgbColor color = object.glowColor.value_or(RgbColor{});
 	glColor3f(color.red, color.green, color.blue);

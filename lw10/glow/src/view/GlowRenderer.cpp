@@ -48,7 +48,7 @@ void GlowRenderer::SetLightMotionBlurEnabled(const bool isEnabled)
 void GlowRenderer::Render(const Scene& scene, SceneRenderer& sceneRenderer, const float deltaTime)
 {
 	m_glowFramebuffer.Bind();
-	sceneRenderer.RenderGlowMap(scene);
+	sceneRenderer.RenderGlowObjects(scene);
 
 	const Texture2D& blurredTexture =
 		m_gaussianBlur.Apply(m_glowFramebuffer.GetColorTexture());

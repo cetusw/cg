@@ -17,7 +17,7 @@ public:
 
 	static void Initialize();
 	void Render(const Scene& scene);
-	static void RenderGlowMap(const Scene& scene);
+	static void RenderGlowObjects(const Scene& scene);
 	static void SetProjection(int width, int height);
 
 private:
@@ -29,13 +29,13 @@ private:
 	void ConfigureTexture(const std::string& path);
 
 	void DrawObjects(const std::vector<SceneObject>& objects);
-	static void DrawGlowMapObjects(const std::vector<SceneObject>& objects);
+	static void DrawGlowObjects(const std::vector<SceneObject>& objects);
 
 	static void ApplyMaterial(const MaterialDescription& material);
 	static void ApplyTransform(const Transform& transform);
 
 	void DrawObject(const SceneObject& object);
-	static void DrawGlowMapObject(const SceneObject& object);
+	static void DrawGlowObject(const SceneObject& object);
 
 	Texture2D& GetTexture(const std::string& path);
 
