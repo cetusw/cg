@@ -37,6 +37,11 @@ void SceneRenderer::Render(
 	DrawRectangle();
 }
 
+void SceneRenderer::SwapTextures()
+{
+	std::swap(m_textureFrom, m_textureTo);
+}
+
 void SceneRenderer::PrepareFrame()
 {
 	glClear(GL_COLOR_BUFFER_BIT);

@@ -51,4 +51,5 @@ void Application::HandleMouseButton(const int button, const int action, const gl
 	m_waveCenter = { u, v };
 	m_waveStartTime = static_cast<float>(glfwGetTime());
 	m_isWaveActive = true;
+	m_renderer.SwapTextures();
 }

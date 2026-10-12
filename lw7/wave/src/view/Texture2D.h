@@ -2,6 +2,7 @@
 
 #include <GL/glew.h>
 
+#include <glm/vec2.hpp>
 #include <string>
 
 struct ImageData;
@@ -21,7 +22,7 @@ public:
 	void BindToUnit(GLuint unit) const;
 
 private:
-	static void LoadImage(const std::string& path, ImageData& data);
+	void LoadImage(const std::string& path, ImageData& data);
 	void CreateTexture(const ImageData& data);
 	static void ConfigureParameters();
 	static void UploadImage(const ImageData& data, GLenum format);

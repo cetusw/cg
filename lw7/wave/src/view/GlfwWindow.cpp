@@ -71,7 +71,7 @@ glm::vec2 GlfwWindow::GetWindowSize() const
 	int height = 0;
 	glfwGetWindowSize(m_window, &width, &height);
 
-	return {width, height};
+	return { width, height };
 }
 
 void GlfwWindow::InitializeGlfw()

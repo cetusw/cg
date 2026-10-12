@@ -9,6 +9,7 @@ public:
 	SceneRenderer();
 
 	void Render(glm::vec2 center, float elapsedTime, bool isWaveActive, float aspectRatio);
+	void SwapTextures();
 
 private:
 	static void PrepareFrame();
