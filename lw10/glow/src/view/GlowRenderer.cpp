@@ -60,9 +60,6 @@ void GlowRenderer::Render(const Scene& scene, SceneRenderer& sceneRenderer, cons
 		resultTexture = &m_lightMotionBlur.Apply(blurredTexture, deltaTime);
 	}
 
-	Framebuffer::BindDefault();
-	glViewport(0, 0, m_width, m_height);
-
 	Composite(*resultTexture);
 }
 

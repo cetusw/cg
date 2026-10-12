@@ -83,6 +83,8 @@ const Texture2D& LightMotionBlur::Apply(
 
 	m_isFirstFramebufferPrevious = !m_isFirstFramebufferPrevious;
 	glActiveTexture(GL_TEXTURE0);
+	Framebuffer::BindDefault();
+	glViewport(0, 0, m_width * 2, m_height * 2);
 	return GetPreviousFramebuffer().GetColorTexture();
 }
 
