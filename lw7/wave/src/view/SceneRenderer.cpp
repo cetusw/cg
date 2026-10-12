@@ -9,7 +9,7 @@ SceneRenderer::SceneRenderer()
 		  std::filesystem::path(SOURCE_DIR) / "shaders/wave.vert",
 		  std::filesystem::path(SOURCE_DIR) / "shaders/wave.frag")
 	, m_textureFrom(std::filesystem::path(SOURCE_DIR) / "textures/water.jpeg")
-	, m_textureTo(std::filesystem::path(SOURCE_DIR) / "textures/gorin.jpg")
+	, m_textureTo(std::filesystem::path(SOURCE_DIR) / "textures/turtle.jpg")
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
