@@ -39,7 +39,6 @@ float GetWaveWidth()
 float GetWaveEnvelope(float distanceBehindFront, float width)
 {
     float fadeInWidth = width * FADE_IN_WIDTH_PERCENTAGE;
-    float fadeOutStart = width * (1.0 - FADE_IN_WIDTH_PERCENTAGE);
 
     float fadeIn = smoothstep(
         0.0,
@@ -48,7 +47,7 @@ float GetWaveEnvelope(float distanceBehindFront, float width)
     );
 
     float fadeOut = 1.0 - smoothstep(
-        fadeOutStart,
+        fadeInWidth,
         width,
         distanceBehindFront
     );

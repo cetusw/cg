@@ -25,10 +25,10 @@ void SceneRenderer::Render(
 	m_shaderProgram.Use();
 
 	m_textureFrom.BindToUnit(0);
-	m_textureTo.BindToUnit(1);
-
 	m_shaderProgram.SetIntUniform("u_textureFrom", 0);
+	m_textureTo.BindToUnit(1);
 	m_shaderProgram.SetIntUniform("u_textureTo", 1);
+
 	m_shaderProgram.SetVec2Uniform("u_center", center);
 	m_shaderProgram.SetFloatUniform("u_elapsedTime", elapsedTime);
 	m_shaderProgram.SetIntUniform("u_isWaveActive", isWaveActive ? 1 : 0);
