@@ -1,0 +1,37 @@
+#pragma once
+
+#include <functional>
+
+struct GLFWwindow;
+
+class GlfwWindow
+{
+public:
+	using FramebufferSizeHandler = std::function<void(int width, int height)>;
+
+	GlfwWindow(int width, int height, const char* title);
+	~GlfwWindow();
+
+	GlfwWindow(const GlfwWindow&) = delete;
+	GlfwWindow& operator=(const GlfwWindow&) = delete;
+
+	[[nodiscard]] bool ShouldClose() const;
+	void SwapBuffers() const;
+
+	static void PollEvents();
+	void SetFramebufferSizeHandler(FramebufferSizeHandler handler);
+	[[nodiscard]] int GetFramebufferWidth() const;
+	[[nodiscard]] int GetFramebufferHeight() const;
+
+private:
+	static void InitializeGlfw();
+	void CreateWindow(int width, int height, const char* title);
+	void InitializeOpenGL() const;
+	void SetupCallbacks() const;
+	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+
+	GLFWwindow* m_window = nullptr;
+	int m_framebufferWidth = 0;
+	int m_framebufferHeight = 0;
+	FramebufferSizeHandler m_framebufferSizeHandler;
+};
