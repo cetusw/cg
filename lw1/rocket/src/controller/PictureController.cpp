@@ -31,7 +31,7 @@ void PictureController::HandleMouseButtonPressed(const sf::Event &event, const s
             return;
         }
 
-        m_dragController.BeginDrag(mousePosition, m_picture.GetPosition());
+        m_dragController.BeginDrag(mousePosition, m_picture.GetPosition(), window.getSize());
     }
 }
 

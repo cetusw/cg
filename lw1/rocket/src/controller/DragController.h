@@ -7,7 +7,8 @@ class DragController
 public:
     bool BeginDrag(
         sf::Vector2f mousePosition,
-        sf::Vector2f objectPosition);
+        sf::Vector2f objectPosition,
+        sf::Vector2u windowSize);
 
     [[nodiscard]] sf::Vector2f DragTo(sf::Vector2f mousePosition) const;
 
@@ -19,4 +20,5 @@ private:
     bool m_isDragging = false;
     sf::Vector2f m_startMousePosition;
     sf::Vector2f m_startObjectPosition;
+    sf::Vector2u m_windowSize;
 };
