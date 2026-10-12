@@ -1,4 +1,5 @@
 #include "DragController.h"
+#include <algorithm>
 
 bool DragController::BeginDrag(
     const sf::Vector2f mousePosition,
@@ -12,7 +13,10 @@ bool DragController::BeginDrag(
 
 sf::Vector2f DragController::DragTo(const sf::Vector2f mousePosition) const
 {
-    return m_startObjectPosition + mousePosition - m_startMousePosition;
+    const sf::Vector2f newPosition = m_startObjectPosition + mousePosition - m_startMousePosition;
+    float x = std::clamp(newPosition.x, 0.0f, 900.0f);
+    float y = std::clamp(newPosition.y, 0.0f, 700.0f);
+    return {x, y};
 }
 
 void DragController::EndDrag()
