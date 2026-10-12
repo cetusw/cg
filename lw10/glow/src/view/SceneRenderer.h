@@ -1,0 +1,43 @@
+#pragma once
+
+#include "model/Scene.h"
+
+#include <GL/glew.h>
+#include <memory>
+#include <string>
+#include <unordered_map>
+
+class Texture2D;
+
+class SceneRenderer
+{
+public:
+	SceneRenderer();
+	~SceneRenderer();
+
+	static void Initialize();
+	void Render(const Scene& scene);
+	static void RenderGlowMap(const Scene& scene);
+	static void SetProjection(int width, int height);
+
+private:
+	static void PrepareFrame();
+	static void ConfigureCamera(const Camera& camera);
+	static void ConfigureLight(const PointLight& light);
+	static void ConfigureSpotLights(const Scene& scene);
+	static void ConfigureSpotLight(GLenum lightId, const SpotLight& light);
+	void ConfigureTexture(const std::string& path);
+
+	void DrawObjects(const std::vector<SceneObject>& objects);
+	static void DrawGlowMapObjects(const std::vector<SceneObject>& objects);
+
+	static void ApplyMaterial(const MaterialDescription& material);
+	static void ApplyTransform(const Transform& transform);
+
+	void DrawObject(const SceneObject& object);
+	static void DrawGlowMapObject(const SceneObject& object);
+
+	Texture2D& GetTexture(const std::string& path);
+
+	std::unordered_map<std::string, std::unique_ptr<Texture2D>> m_textures;
+};

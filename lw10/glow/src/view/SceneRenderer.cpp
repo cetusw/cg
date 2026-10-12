@@ -1,0 +1,228 @@
+#include "view/SceneRenderer.h"
+
+#include "view/GeometryRenderer.h"
+#include "view/Texture2D.h"
+
+#include <GL/glew.h>
+
+#include <array>
+#include <filesystem>
+
+namespace
+{
+std::array<GLfloat, 4> ToGlColor(const RgbColor& color, const float alpha = 1.0f)
+{
+	return { color.red, color.green, color.blue, alpha };
+}
+
+std::array<GLfloat, 4> ToGlPoint(const glm::vec3 point)
+{
+	return { point.x, point.y, point.z, 1.0f };
+}
+
+constexpr glm::vec3 ClearColor{0.0f, 0.0f, 0.0f};
+} // namespace
+
+SceneRenderer::SceneRenderer() = default;
+SceneRenderer::~SceneRenderer() = default;
+
+void SceneRenderer::Initialize()
+{
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	glClearColor(ClearColor.x, ClearColor.y, ClearColor.z, 1.0f);
+}
+
+void SceneRenderer::Render(const Scene& scene)
+{
+	PrepareFrame();
+	ConfigureCamera(scene.GetCamera());
+	ConfigureLight(scene.GetMainLight());
+	ConfigureSpotLights(scene);
+	DrawObjects(scene.GetObjects());
+}
+
+void SceneRenderer::RenderGlowMap(const Scene& scene)
+{
+	glClearColor(ClearColor.x, ClearColor.y, ClearColor.z, 1.0f);
+	PrepareFrame();
+	ConfigureCamera(scene.GetCamera());
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	DrawGlowMapObjects(scene.GetObjects());
+	glClearColor(ClearColor.x, ClearColor.y, ClearColor.z, 1.0f);
+}
+
+void SceneRenderer::SetProjection(const int width, const int height)
+{
+	const int safeWidth = width <= 0
+		? 1
+		: width;
+	const int safeHeight = height <= 0
+		? 1
+		: height;
+
+	const double aspect = static_cast<double>(safeWidth) / safeHeight;
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	gluPerspective(
+		60.0f,
+		aspect,
+		0.1f,
+		100.0f);
+
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void SceneRenderer::PrepareFrame()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+void SceneRenderer::ConfigureCamera(const Camera& camera)
+{
+	gluLookAt(
+		camera.position.x, camera.position.y, camera.position.z,
+		camera.target.x, camera.target.y, camera.target.z,
+		camera.up.x, camera.up.y, camera.up.z);
+}
+
+void SceneRenderer::ConfigureLight(const PointLight& light)
+{
+	const auto ambient = ToGlColor(light.ambient);
+	const auto diffuse = ToGlColor(light.diffuse);
+	const auto specular = ToGlColor(light.specular);
+	const auto position = ToGlPoint(light.position);
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient.data());
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse.data());
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular.data());
+	glLightfv(GL_LIGHT0, GL_POSITION, position.data());
+}
+
+void SceneRenderer::ConfigureSpotLights(const Scene& scene)
+{
+	for (std::size_t i = 0; i < scene.GetSpotLightCount(); ++i)
+	{
+		const GLenum lightId = static_cast<GLenum>(GL_LIGHT1 + i);
+
+		ConfigureSpotLight(lightId, scene.GetSpotLight(i));
+	}
+}
+
+void SceneRenderer::ConfigureSpotLight(const GLenum lightId, const SpotLight& light)
+{
+	glEnable(lightId);
+
+	const auto ambient = ToGlColor(light.ambient);
+	const auto diffuse = ToGlColor(light.diffuse);
+	const auto specular = ToGlColor(light.specular);
+	const auto position = ToGlPoint(light.position);
+	const std::array direction{
+		light.direction.x,
+		light.direction.y,
+		light.direction.z
+	};
+
+	glLightfv(lightId, GL_AMBIENT, ambient.data());
+	glLightfv(lightId, GL_DIFFUSE, diffuse.data());
+	glLightfv(lightId, GL_SPECULAR, specular.data());
+	glLightfv(lightId, GL_POSITION, position.data());
+	glLightfv(lightId, GL_SPOT_DIRECTION, direction.data());
+	glLightf(lightId, GL_SPOT_CUTOFF, light.cutoff);
+	glLightf(lightId, GL_SPOT_EXPONENT, light.exponent);
+}
+
+void SceneRenderer::ConfigureTexture(const std::string& path)
+{
+	if (path.empty())
+	{
+		glDisable(GL_TEXTURE_2D);
+	}
+	else
+	{
+		glEnable(GL_TEXTURE_2D);
+		GetTexture(path).Bind();
+	}
+}
+
+void SceneRenderer::DrawObjects(const std::vector<SceneObject>& objects)
+{
+	for (const SceneObject& object : objects)
+	{
+		DrawObject(object);
+	}
+}
+
+void SceneRenderer::DrawGlowMapObjects(const std::vector<SceneObject>& objects)
+{
+	for (const SceneObject& object : objects)
+	{
+		DrawGlowMapObject(object);
+	}
+}
+
+void SceneRenderer::ApplyMaterial(const MaterialDescription& material)
+{
+	const auto ambient = ToGlColor(material.ambient);
+	const auto diffuse = ToGlColor(material.diffuse);
+	const auto specular = ToGlColor(material.specular);
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient.data());
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse.data());
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular.data());
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material.shininess);
+}
+
+void SceneRenderer::ApplyTransform(const Transform& transform)
+{
+	glTranslatef(transform.position.x, transform.position.y, transform.position.z);
+
+	glRotatef(transform.rotation.x, 1.0f, 0.0f, 0.0f);
+	glRotatef(transform.rotation.y, 0.0f, 1.0f, 0.0f);
+	glRotatef(transform.rotation.z, 0.0f, 0.0f, 1.0f);
+
+	glScalef(transform.scale.x, transform.scale.y, transform.scale.z);
+}
+
+void SceneRenderer::DrawObject(const SceneObject& object)
+{
+	ApplyMaterial(object.material);
+	ConfigureTexture(object.texturePath);
+
+	glPushMatrix();
+	ApplyTransform(object.transform);
+	GeometryRenderer::Draw(object.geometry);
+	glPopMatrix();
+}
+
+void SceneRenderer::DrawGlowMapObject(const SceneObject& object)
+{
+	const RgbColor color = object.glowColor.value_or(RgbColor{});
+	glColor3f(color.red, color.green, color.blue);
+
+	glPushMatrix();
+	ApplyTransform(object.transform);
+	GeometryRenderer::Draw(object.geometry);
+	glPopMatrix();
+}
+
+Texture2D& SceneRenderer::GetTexture(const std::string& path)
+{
+	auto iterator = m_textures.find(path);
+
+	if (iterator == m_textures.end())
+	{
+		const auto texturePath = std::filesystem::path(SOURCE_DIR) / path;
+		auto texture = std::make_unique<Texture2D>(texturePath.string());
+		iterator = m_textures.emplace(path, std::move(texture)).first;
+	}
+
+	return *iterator->second;
+}
