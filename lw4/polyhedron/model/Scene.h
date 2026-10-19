@@ -15,8 +15,6 @@ public:
 	[[nodiscard]] const Mesh& GetMesh() const;
 	[[nodiscard]] const PointLight& GetMainLight() const;
 	[[nodiscard]] const MaterialDescription& GetMaterial() const;
-	[[nodiscard]] bool IsTransparent() const;
-	void ToggleTransparency();
 
 private:
 	Camera m_camera;

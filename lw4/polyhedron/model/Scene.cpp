@@ -57,13 +57,3 @@ const MaterialDescription& Scene::GetMaterial() const
 {
 	return m_material;
 }
-
-bool Scene::IsTransparent() const
-{
-	return m_isTransparent;
-}
-
-void Scene::ToggleTransparency()
-{
-	m_isTransparent = !m_isTransparent;
-}
