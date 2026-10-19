@@ -7,10 +7,10 @@ class SceneRenderer
 public:
 	SceneRenderer();
 
-	void Render(int framebufferWidth, int framebufferHeight) const;
+	void Render(int framebufferWidth, int framebufferHeight);
 
 private:
-	static void SetViewport(int framebufferWidth, int framebufferHeight);
+	[[nodiscard]] static float SetViewport(int framebufferWidth, int framebufferHeight);
 
 	static void DrawRectangle();
 

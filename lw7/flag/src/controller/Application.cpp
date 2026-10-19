@@ -5,15 +5,19 @@ Application::Application()
 {
 }
 
-int Application::Run() const
+int Application::Run()
 {
 	while (!m_window.ShouldClose())
 	{
-		m_renderer.Render(
-			m_window.GetFramebufferWidth(),
-			m_window.GetFramebufferHeight());
-		m_window.SwapBuffers();
 		GlfwWindow::PollEvents();
+		GlfwWindow::PollEvents();
+
+		const glm::ivec2 framebufferSize = m_window.GetFramebufferSize();
+
+		m_renderer.Render(
+			framebufferSize.x,
+			framebufferSize.y);
+		m_window.SwapBuffers();
 	}
 	return 0;
 }

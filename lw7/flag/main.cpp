@@ -7,7 +7,7 @@ int main()
 {
 	try
 	{
-		const Application application;
+		Application application;
 		return application.Run();
 	}
 	catch (const std::exception& exception)

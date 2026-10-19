@@ -2,23 +2,36 @@
 
 varying vec2 v_uv;
 
-const vec3 BackgroundColor = vec3(0.0, 0.0, 0.0);
-const vec3 RingColor = vec3(1.0, 0.82, 0.0);
-const float InnerRadius = 0.25;
-const float OuterRadius = 0.40;
-const float ViewportAspectRatio = 2.0;
+uniform vec3 u_backgroundColor;
+uniform vec3 u_ringColor;
+uniform float u_innerRadius;
+uniform float u_outerRadius;
+uniform float u_viewportAspectRatio;
+uniform vec2 u_center;
+
+float GetDistanceFromCenter(vec2 uv)
+{
+    vec2 offset = uv - u_center;
+
+    offset.x *= u_viewportAspectRatio;
+
+    float fitScale = max(1.0, 1.0 / u_viewportAspectRatio);
+    offset *= fitScale;
+
+    return length(offset);
+}
 
 void main()
 {
-	vec2 offsetFromCenter = v_uv - vec2(0.5);
-	offsetFromCenter.x *= ViewportAspectRatio;
-	float distanceFromCenter = length(offsetFromCenter);
-	vec3 color = BackgroundColor;
+    float distanceFromCenter = GetDistanceFromCenter(v_uv);
 
-	if (distanceFromCenter >= InnerRadius && distanceFromCenter <= OuterRadius)
-	{
-		color = RingColor;
-	}
+    vec3 color = u_backgroundColor;
 
-	gl_FragColor = vec4(color, 1.0);
+    if (distanceFromCenter >= u_innerRadius &&
+        distanceFromCenter <= u_outerRadius)
+    {
+        color = u_ringColor;
+    }
+
+    gl_FragColor = vec4(color, 1.0);
 }

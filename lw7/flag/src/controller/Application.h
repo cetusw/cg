@@ -7,7 +7,7 @@ class Application
 {
 public:
 	Application();
-	[[nodiscard]] int Run() const;
+	[[nodiscard]] int Run();
 
 private:
 	GlfwWindow m_window;

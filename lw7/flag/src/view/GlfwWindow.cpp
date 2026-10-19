@@ -74,6 +74,16 @@ glm::vec2 GlfwWindow::GetWindowSize() const
 	return { width, height };
 }
 
+glm::vec2 GlfwWindow::GetFramebufferSize() const
+{
+	int width = 0;
+	int height = 0;
+
+	glfwGetFramebufferSize(m_window, &width, &height);
+
+	return { width, height };
+}
+
 void GlfwWindow::InitializeGlfw()
 {
 	if (glfwInit() == GLFW_FALSE)
@@ -82,6 +92,7 @@ void GlfwWindow::InitializeGlfw()
 	}
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 }
 
 void GlfwWindow::CreateWindow(const int width, const int height, const char* title)
@@ -140,7 +151,6 @@ void GlfwWindow::CursorPositionCallback(GLFWwindow* window, const double x, cons
 
 void GlfwWindow::FramebufferSizeCallback(GLFWwindow* window, const int width, const int height)
 {
-	glViewport(0, 0, width, height);
 	auto* self = static_cast<GlfwWindow*>(glfwGetWindowUserPointer(window));
 	if (self == nullptr)
 	{

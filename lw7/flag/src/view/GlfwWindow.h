@@ -28,6 +28,7 @@ public:
 	[[nodiscard]] int GetFramebufferWidth() const;
 	[[nodiscard]] int GetFramebufferHeight() const;
 	[[nodiscard]] glm::vec2 GetWindowSize() const;
+	[[nodiscard]] glm::vec2 GetFramebufferSize() const;
 
 private:
 	static void InitializeGlfw();
