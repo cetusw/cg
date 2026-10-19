@@ -15,9 +15,9 @@ void MeshRenderer::Draw(const Mesh& mesh)
 	glDepthMask(GL_FALSE);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
-	DrawFaces(mesh, 0.38f);
+	DrawFaces(mesh, 0.4f);
 	glCullFace(GL_BACK);
-	DrawFaces(mesh, 0.38f);
+	DrawFaces(mesh, 0.4f);
 	glDisable(GL_CULL_FACE);
 	glDepthMask(GL_TRUE);
 	glDisable(GL_BLEND);

@@ -5,7 +5,7 @@
 #include <filesystem>
 
 Application::Application(const std::string& modelPath)
-	: m_window(1000, 750, "Pentagonal Hexecontahedron")
+	: m_window(1000, 750, "Polyhedron")
 	, m_scene(ObjParser::Parse((std::filesystem::path(SOURCE_DIR) / modelPath).string()))
 	, m_cameraController(m_scene.GetCamera())
 {
