@@ -22,7 +22,10 @@ public:
 private:
 	void ValidateGeometry() const;
 	void ValidateFace(const Face& face) const;
-	[[nodiscard]] static glm::vec3 CreateFaceColor(std::uniform_int_distribution<>& distribution, std::unordered_set<uint32_t>& usedColors, std::mt19937& random);
+	[[nodiscard]] static glm::vec3 CreateFaceColor(
+		std::uniform_int_distribution<>& distribution,
+		std::unordered_set<uint32_t>& usedColors,
+		std::mt19937& random);
 	[[nodiscard]] glm::vec3 CalculateNormal(const Face& face) const;
 
 	std::vector<glm::vec3> m_vertices;
