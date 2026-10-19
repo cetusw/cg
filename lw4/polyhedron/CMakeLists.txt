@@ -1,29 +1,35 @@
-cmake_minimum_required(VERSION 4.0)
-project(polyhedron)
+cmake_minimum_required(VERSION 3.20)
+
+project(polyhedron LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(glfw3 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(GLEW REQUIRED)
 find_package(glm REQUIRED)
 
-add_executable(polyhedron main.cpp
-        controller/GLFWApplication.cpp
-        controller/GLFWApplication.h
-        controller/PolyhedronApp.cpp
-        controller/PolyhedronApp.h
-        model/Face.h
-        view/Polyhedron.cpp
-        view/Polyhedron.h
-        controller/DirectLight.cpp
-        controller/DirectLight.h
-        controller/OBJParser.cpp
-        controller/OBJParser.h
+add_executable(polyhedron
+	main.cpp
+	controller/Application.cpp
+	controller/CameraController.cpp
+	io/ObjParser.cpp
+	model/Mesh.cpp
+	model/Scene.cpp
+	view/GlfwWindow.cpp
+	view/MeshRenderer.cpp
+	view/SceneRenderer.cpp
 )
 
-target_link_libraries(polyhedron
-        glfw
-        GL
-        GLU
-        glm::glm
+target_include_directories(polyhedron PRIVATE .)
+target_compile_definitions(polyhedron PRIVATE SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_options(polyhedron PRIVATE -Wall -Wextra -Wpedantic)
+
+target_link_libraries(polyhedron PRIVATE
+	OpenGL::GL
+	OpenGL::GLU
+	glfw
+	GLEW::GLEW
+	glm::glm
 )
