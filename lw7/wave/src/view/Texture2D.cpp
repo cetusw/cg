@@ -56,6 +56,7 @@ Texture2D::~Texture2D()
 
 Texture2D::Texture2D(Texture2D&& other) noexcept
 	: m_id(std::exchange(other.m_id, 0))
+	, m_size(std::exchange(other.m_size, {}))
 {
 }
 
@@ -65,6 +66,7 @@ Texture2D& Texture2D::operator=(Texture2D&& other) noexcept
 	{
 		Release();
 		m_id = std::exchange(other.m_id, 0);
+		m_size = std::exchange(other.m_size, {});
 	}
 	return *this;
 }
@@ -78,6 +80,11 @@ void Texture2D::BindToUnit(const GLuint unit) const
 {
 	glActiveTexture(GL_TEXTURE0 + unit);
 	Bind();
+}
+
+glm::ivec2 Texture2D::GetSize() const
+{
+	return m_size;
 }
 
 void Texture2D::LoadImage(const std::string& path, ImageData& data)
@@ -106,6 +113,7 @@ void Texture2D::CreateTexture(const ImageData& data)
 
 	ConfigureParameters();
 	UploadImage(data, format);
+	m_size = { data.width, data.height };
 }
 
 void Texture2D::ConfigureParameters()
@@ -157,4 +165,5 @@ void Texture2D::Release() noexcept
 		glDeleteTextures(1, &m_id);
 		m_id = 0;
 	}
+	m_size = {};
 }

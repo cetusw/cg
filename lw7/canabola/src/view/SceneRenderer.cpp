@@ -9,7 +9,7 @@
 
 namespace
 {
-constexpr double HalfViewSize = 2.1;
+constexpr double HalfViewSize = 3.0;
 constexpr double ViewCenterY = 0.35;
 }
 
@@ -29,7 +29,7 @@ void SceneRenderer::Initialize()
 	glLineWidth(2.0f);
 }
 
-void SceneRenderer::Render(const Camera& camera)
+void SceneRenderer::Render(const Camera& camera) const
 {
 	PrepareFrame();
 	ConfigureCamera(camera);

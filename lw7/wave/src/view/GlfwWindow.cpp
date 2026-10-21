@@ -140,7 +140,6 @@ void GlfwWindow::CursorPositionCallback(GLFWwindow* window, const double x, cons
 
 void GlfwWindow::FramebufferSizeCallback(GLFWwindow* window, const int width, const int height)
 {
-	glViewport(0, 0, width, height);
 	auto* self = static_cast<GlfwWindow*>(glfwGetWindowUserPointer(window));
 	if (self == nullptr)
 	{

@@ -18,12 +18,22 @@ const float WAVE_ATTENUATION = 6.0;
 
 const float FADE_IN_WIDTH_PERCENTAGE = 0.2;
 
-float GetDistanceToCenter(vec2 uv)
+vec2 GetWaveSpaceOffset(vec2 uv)
 {
-    vec2 delta = uv - u_center;
-    delta.x *= u_aspectRatio;
+    vec2 offset = uv - u_center;
+    offset.x *= u_aspectRatio;
 
-    return length(delta);
+    float fitScale = max(1.0, 1.0 / u_aspectRatio);
+    return offset * fitScale;
+}
+
+vec2 GetUvOffset(vec2 waveSpaceOffset)
+{
+    float fitScale = max(1.0, 1.0 / u_aspectRatio);
+    waveSpaceOffset /= fitScale;
+    waveSpaceOffset.x /= u_aspectRatio;
+
+    return waveSpaceOffset;
 }
 
 float GetWaveRadius()
@@ -67,7 +77,7 @@ float GetWaveAttenuation(float distanceBehindFront)
     return exp(-WAVE_ATTENUATION * max(distanceBehindFront, 0.0));
 }
 
-vec2 DistortUv(vec2 uv, float distanceToCenter, float radius, float width)
+vec2 DistortUv(vec2 uv, vec2 waveSpaceOffset, float distanceToCenter, float radius, float width)
 {
     float distanceBehindFront = radius - distanceToCenter;
 
@@ -77,9 +87,7 @@ vec2 DistortUv(vec2 uv, float distanceToCenter, float radius, float width)
 
     float displacement = envelope * attenuation * oscillation;
 
-    vec2 direction = uv - u_center;
-
-    return uv + direction * displacement;
+    return uv + GetUvOffset(waveSpaceOffset * displacement);
 }
 
 float GetTransition(float distanceToCenter, float radius, float width)
@@ -98,11 +106,12 @@ void main()
 
     if (u_isWaveActive == 1)
     {
-        float distanceToCenter = GetDistanceToCenter(uv);
+        vec2 waveSpaceOffset = GetWaveSpaceOffset(uv);
+        float distanceToCenter = length(waveSpaceOffset);
         float radius = GetWaveRadius();
         float width = GetWaveWidth();
 
-        uv = DistortUv(uv, distanceToCenter, radius, width);
+        uv = DistortUv(uv, waveSpaceOffset, distanceToCenter, radius, width);
         transition = GetTransition(distanceToCenter, radius, width);
     }
 

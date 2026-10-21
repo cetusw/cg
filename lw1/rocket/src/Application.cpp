@@ -34,7 +34,8 @@ void Application::ProcessEvents()
 
         if (const auto *resized = event->getIf<sf::Event::Resized>())
         {
-            m_window.setView(sf::View(sf::FloatRect({0.0f, 0.0f}, sf::Vector2f(resized->size))));
+            m_window.setView(
+                sf::View(sf::FloatRect({0.0f, 0.0f}, sf::Vector2f(resized->size))));
         }
 
         m_pictureController.HandleEvent(*event, m_window);

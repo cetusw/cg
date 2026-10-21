@@ -20,6 +20,7 @@ public:
 
 	void Bind() const;
 	void BindToUnit(GLuint unit) const;
+	[[nodiscard]] glm::ivec2 GetSize() const;
 
 private:
 	void LoadImage(const std::string& path, ImageData& data);
@@ -30,4 +31,5 @@ private:
 	void Release() noexcept;
 
 	GLuint m_id{};
+	glm::ivec2 m_size{};
 };

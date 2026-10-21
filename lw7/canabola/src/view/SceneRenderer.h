@@ -9,7 +9,7 @@ public:
 	SceneRenderer();
 
 	static void Initialize();
-	void Render(const Camera& camera);
+	void Render(const Camera& camera) const;
 	static void SetProjection(int width, int height);
 
 private:
